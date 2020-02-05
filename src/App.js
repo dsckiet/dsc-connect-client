@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
-import "./App.css";
 import NavBar from "./components/navbar";
 import Homepage from "./components/homepage";
 import Login from "./components/login";
 import AddForm from "./components/add";
 import Register from "./components/register";
 import Footer from "./components/footer";
+import axios from "axios";
+import "./App.css";
+
+// const [state, setState] = useState({ isLogged: false, user: "" });
+
+// useEffect(() => {}, []);
 
 function App() {
   return (
