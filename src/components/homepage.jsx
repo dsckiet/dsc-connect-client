@@ -26,10 +26,10 @@ export default function Homepage() {
           Team Size: <strong>32</strong>
         </p>
         <div>
-          <span class="badge b-w mr-2">Web</span>
-          <span class="badge b-m mr-2">ML</span>
-          <span class="badge b-c mr-2">Cloud</span>
-          <span class="badge b-f mr-2">Flutter</span>
+          <span className="badge b-w mr-2">Web</span>
+          <span className="badge b-m mr-2">ML</span>
+          <span className="badge b-c mr-2">Cloud</span>
+          <span className="badge b-f mr-2">Flutter</span>
         </div>
         <div className="mt-3">
           <h6>Social Profiles</h6>
@@ -89,9 +89,9 @@ export default function Homepage() {
             <div>
               <p style={{ fontWeight: "600" }}>Filter</p>
               <form>
-                <div class="form-group">
-                  <label for="county">Country</label>
-                  <select class="form-control" id="country">
+                <div className="form-group">
+                  <label htmlFor="county">Country</label>
+                  <select className="form-control" id="country">
                     <option>India</option>
                     <option>Sri Lanka</option>
                     <option>Australia</option>
@@ -99,9 +99,9 @@ export default function Homepage() {
                     <option>Russia</option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <label for="work">Works on</label>
-                  <select class="form-control" id="work">
+                <div className="form-group">
+                  <label htmlFor="work">Works on</label>
+                  <select className="form-control" id="work">
                     <option>Blockchain</option>
                     <option>Web Development</option>
                     <option>Mobile Development</option>
@@ -109,17 +109,20 @@ export default function Homepage() {
                     <option>Cloud</option>
                   </select>
                 </div>
-                <div class="form-group">
-                  <label for="search">Search</label>
+                <div className="form-group">
+                  <label htmlFor="search">Search</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="search"
                     placeholder="Type here"
                   />
                 </div>
                 <div className="float-right">
-                  <button type="button" class="px-3 btn btn-warning reset-btn">
+                  <button
+                    type="button"
+                    className="px-3 btn btn-warning reset-btn"
+                  >
                     Reset
                   </button>
                 </div>
@@ -155,6 +158,9 @@ export default function Homepage() {
               sustainable and better world
             </p>
             <div className="row">
+              {CommCard}
+              {CommCard}
+              {CommCard}
               {CommCard}
               {CommCard}
               {CommCard}
