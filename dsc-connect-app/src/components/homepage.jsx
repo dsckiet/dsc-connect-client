@@ -1,15 +1,87 @@
 import React from "react";
 
 export default function Homepage() {
+  const CommCard = (
+    <div className="col-lg-4">
+      <div className="card p-3 mb-4" style={{ borderRadius: "12px" }}>
+        <div className="row">
+          <div className="col-12">
+            <img
+              className="img-fluid"
+              src="./assets/images/dsc.png"
+              alt=""
+              width="40"
+              style={{ marginRight: 8 }}
+            />
+            DSC VIT Pune
+          </div>
+        </div>
+        <a href="#" className="mt-1">
+          www.dscvitpune.tech
+        </a>
+        <p className="mt-3 mb-0">
+          Location: <strong>Pune, India</strong>
+        </p>
+        <p>
+          Team Size: <strong>32</strong>
+        </p>
+        <div>
+          <span class="badge b-w mr-2">Web</span>
+          <span class="badge b-m mr-2">ML</span>
+          <span class="badge b-c mr-2">Cloud</span>
+          <span class="badge b-f mr-2">Flutter</span>
+        </div>
+        <div className="mt-3">
+          <h6>Social Profiles</h6>
+          <img
+            className="img-fluid mr-1"
+            src="./assets/images/circle.svg"
+            alt=""
+            height="10%"
+            width="10%"
+          />
+          <img
+            className="img-fluid mr-1"
+            src="./assets/images/circle.svg"
+            alt=""
+            height="10%"
+            width="10%"
+          />
+          <img
+            className="img-fluid mr-1"
+            src="./assets/images/circle.svg"
+            alt=""
+            height="10%"
+            width="10%"
+          />
+          <img
+            className="img-fluid mr-1"
+            src="./assets/images/circle.svg"
+            alt=""
+            height="10%"
+            width="10%"
+          />
+
+          <img
+            className="img-fluid"
+            src="./assets/images/circle.svg"
+            alt=""
+            height="10%"
+            width="10%"
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="container">
       <div className="row">
         <div className="col-lg-3">
           <div
-            className="card"
+            className="card p-4"
             style={{
               height: "100%",
-              padding: "15px",
               fontSize: "20px",
               borderRadius: "8px"
             }}
@@ -47,13 +119,13 @@ export default function Homepage() {
                   />
                 </div>
                 <div className="float-right">
-                  <button type="button" class="btn btn-warning reset-btn">
+                  <button type="button" class="px-3 btn btn-warning reset-btn">
                     Reset
                   </button>
                 </div>
               </form>
               <br />
-              <div className="text-center">
+              <div className="text-center" style={{ bottom: 16 }}>
                 <img
                   className="img-fluid"
                   src="./assets/images/learn.svg"
@@ -63,592 +135,31 @@ export default function Homepage() {
               <div
                 className=""
                 style={{
-                  fontSize: "11px",
+                  fontSize: "10px",
                   fontWeight: "700",
                   alignItems: "center"
                 }}
               >
-                <p>developed by community;for communities</p>
+                <p>developed by community; for communities</p>
               </div>
             </div>
           </div>
         </div>
-        <div className="col-lg-9 list">
-          <h3>
-            <strong>Developer Student Clubs Listing</strong>
-          </h3>
-          <p style={{ color: "#707070", fontWeight: 600 }}>
-            Connect with communities, the people and help each to make the
-            sustainable and better world
-          </p>
-          <div className="row">
-            <div className="col-lg-4">
-              <div
-                className="card p-3"
-                style={{ borderRadius: "10px", marginRight: "-10px" }}
-              >
-                <div className="row">
-                  <div className="col-lg-3">
-                    <img
-                      className="img-fluid"
-                      src="./assets/images/dsc.png"
-                      alt=""
-                    />
-                  </div>
-                  <div className="col-lg-9">
-                    <p>
-                      <strong>DSC VIT Pune</strong>
-                    </p>
-                  </div>
-                </div>
-                <a href="">www.dscvitpune.tech{"   "}</a>
-                <p className="mt-3">
-                  Location: <strong>Pune, India</strong>
-                </p>
-                <p>
-                  Team Size: <strong>32</strong>
-                </p>
-                <div>
-                  <span class="badge b-w mr-2">Web</span>
-                  <span class="badge b-m mr-2">ML</span>
-                  <span class="badge b-c mr-2">Cloud</span>
-                  <span class="badge b-f mr-2">Flutter</span>
-                </div>
-                <div className="mt-3">
-                  <h6>Social Profiles</h6>
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div
-                className="card p-3"
-                style={{
-                  borderRadius: "10px",
-                  marginRight: "-10px",
-                  marginLeft: "-10px"
-                }}
-              >
-                <div className="row">
-                  <div className="col-lg-3">
-                    <img
-                      className="img-fluid"
-                      src="./assets/images/dsc.png"
-                      alt=""
-                    />
-                  </div>
-                  <div className="col-lg-9">
-                    <p>
-                      <strong>DSC VIT Pune</strong>
-                    </p>
-                  </div>
-                </div>
-                <a href="">www.dscvitpune.tech{"   "}</a>
-                <p className="mt-3">
-                  Location: <strong>Pune, India</strong>
-                </p>
-                <p>
-                  Team Size: <strong>32</strong>
-                </p>
-                <div>
-                  <span class="badge b-w mr-2">Web</span>
-                  <span class="badge b-m mr-2">ML</span>
-                  <span class="badge b-c mr-2">Cloud</span>
-                  <span class="badge b-f mr-2">Flutter</span>
-                </div>
-                <div className="mt-3">
-                  <h6>Social Profiles</h6>
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div
-                className="card p-3"
-                style={{ borderRadius: "10px", marginLeft: "-10px" }}
-              >
-                <div className="row">
-                  <div className="col-lg-3">
-                    <img
-                      className="img-fluid"
-                      src="./assets/images/dsc.png"
-                      alt=""
-                    />
-                  </div>
-                  <div className="col-lg-9">
-                    <p>
-                      <strong>DSC VIT Pune</strong>
-                    </p>
-                  </div>
-                </div>
-                <a href="">www.dscvitpune.tech{"   "}</a>
-                <p className="mt-3">
-                  Location: <strong>Pune, India</strong>
-                </p>
-                <p>
-                  Team Size: <strong>32</strong>
-                </p>
-                <div>
-                  <span class="badge b-w mr-2">Web</span>
-                  <span class="badge b-m mr-2">ML</span>
-                  <span class="badge b-c mr-2">Cloud</span>
-                  <span class="badge b-f mr-2">Flutter</span>
-                </div>
-                <div className="mt-3">
-                  <h6>Social Profiles</h6>
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row mt-2">
-            <div className="col-lg-4">
-              <div
-                className="card p-3"
-                style={{ borderRadius: "10px", marginRight: "-10px" }}
-              >
-                <div className="row">
-                  <div className="col-lg-3">
-                    <img
-                      className="img-fluid"
-                      src="./assets/images/dsc.png"
-                      alt=""
-                    />
-                  </div>
-                  <div className="col-lg-9">
-                    <p>
-                      <strong>DSC VIT Pune</strong>
-                    </p>
-                  </div>
-                </div>
-                <a href="">www.dscvitpune.tech{"   "}</a>
-                <p className="mt-3">
-                  Location: <strong>Pune, India</strong>
-                </p>
-                <p>
-                  Team Size: <strong>32</strong>
-                </p>
-                <div>
-                  <span class="badge b-w mr-2">Web</span>
-                  <span class="badge b-m mr-2">ML</span>
-                  <span class="badge b-c mr-2">Cloud</span>
-                  <span class="badge b-f mr-2">Flutter</span>
-                </div>
-                <div className="mt-3">
-                  <h6>Social Profiles</h6>
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div
-                className="card p-3"
-                style={{
-                  borderRadius: "10px",
-                  marginRight: "-10px",
-                  marginLeft: "-10px"
-                }}
-              >
-                <div className="row">
-                  <div className="col-lg-3">
-                    <img
-                      className="img-fluid"
-                      src="./assets/images/dsc.png"
-                      alt=""
-                    />
-                  </div>
-                  <div className="col-lg-9">
-                    <p>
-                      <strong>DSC VIT Pune</strong>
-                    </p>
-                  </div>
-                </div>
-                <a href="">www.dscvitpune.tech{"   "}</a>
-                <p className="mt-3">
-                  Location: <strong>Pune, India</strong>
-                </p>
-                <p>
-                  Team Size: <strong>32</strong>
-                </p>
-                <div>
-                  <span class="badge b-w mr-2">Web</span>
-                  <span class="badge b-m mr-2">ML</span>
-                  <span class="badge b-c mr-2">Cloud</span>
-                  <span class="badge b-f mr-2">Flutter</span>
-                </div>
-                <div className="mt-3">
-                  <h6>Social Profiles</h6>
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4">
-              <div
-                className="card p-3"
-                style={{ borderRadius: "10px", marginLeft: "-10px" }}
-              >
-                <div className="row">
-                  <div className="col-lg-3">
-                    <img
-                      className="img-fluid"
-                      src="./assets/images/dsc.png"
-                      alt=""
-                    />
-                  </div>
-                  <div className="col-lg-9">
-                    <p>
-                      <strong>DSC VIT Pune</strong>
-                    </p>
-                  </div>
-                </div>
-                <a href="">www.dscvitpune.tech{"   "}</a>
-                <p className="mt-3">
-                  Location: <strong>Pune, India</strong>
-                </p>
-                <p>
-                  Team Size: <strong>32</strong>
-                </p>
-                <div>
-                  <span class="badge b-w mr-2">Web</span>
-                  <span class="badge b-m mr-2">ML</span>
-                  <span class="badge b-c mr-2">Cloud</span>
-                  <span class="badge b-f mr-2">Flutter</span>
-                </div>
-                <div className="mt-3">
-                  <h6>Social Profiles</h6>
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid mr-1"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                  <img
-                    className="img-fluid"
-                    src="./assets/images/circle.svg"
-                    alt=""
-                    height="10%"
-                    width="10%"
-                  />
-                </div>
-              </div>
+        <div className="col-lg-9">
+          <div className="list">
+            <h3>
+              <strong>Developer Student Clubs Listing</strong>
+            </h3>
+            <p style={{ color: "#707070", fontWeight: 600 }}>
+              Connect with communities, the people and help each to make the
+              sustainable and better world
+            </p>
+            <div className="row">
+              {CommCard}
+              {CommCard}
+              {CommCard}
+              {CommCard}
+              {CommCard}
             </div>
           </div>
         </div>

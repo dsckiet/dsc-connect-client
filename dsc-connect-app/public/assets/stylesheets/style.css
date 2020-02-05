@@ -1,13 +1,31 @@
-@import url("../fonts/Product\ Sans\ Regular.ttf");
+@font-face {
+  font-family: GoogleSansBd;
+  src: url("../fonts/GoogleSans-Bold.ttf");
+}
+
+@font-face {
+  font-family: GoogleSansRg;
+  src: url("../fonts/GoogleSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: GoogleSansMd;
+  src: url("../fonts/GoogleSans-Medium.ttf");
+}
+
 body {
   overflow-x: hidden !important;
-  font-family: Product Sans;
+  font-family: GoogleSansRg;
   background-color: #f1f1f1;
 }
 
 /* .container {
   margin: 0 50px 0 50px;
 } */
+
+.card {
+  border:0;
+}
 
 .add-btn {
   background-color: #0f9d58;
