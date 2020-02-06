@@ -16,7 +16,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Homepage} />
         <PrivateRoute exact path="/login" component={Login} />
-        <PrivateRoute exact path="/add" component={AddForm} />
+        <Route exact path="/add" component={AddForm} />
         <PrivateRoute exact path="/register" component={Register} />
       </Switch>
       <Footer />
@@ -29,7 +29,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        Data.token === "" ? <Component {...props} /> : <Redirect to="/login" />
+        Data.token !== "" ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );

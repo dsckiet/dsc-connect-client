@@ -31,6 +31,7 @@ export default function Login() {
         user: response.data.data.name,
         token: response.headers["x-auth-token"]
       });
+      window.location = "/";
     } catch (error) {
       console.log(error);
     }
