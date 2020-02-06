@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext, DispatchContext } from "./../contexts/userContext";
 
 export default function NavBar() {
-  const [isLogged, setIsLogged] = useState(false);
-
-  useEffect(() => {
-    const token = JSON.parse(window.localStorage.getItem("token"));
-    if (token) {
-      setIsLogged(true);
-    }
-  }, []);
+  const Data = useContext(AuthContext);
+  const Dispatch = useContext(DispatchContext);
 
   const handleLogout = () => {
-    window.localStorage.removeItem("token");
-    setIsLogged(false);
+    Dispatch({ type: "OUT" });
   };
 
   return (
@@ -45,7 +39,7 @@ export default function NavBar() {
               className="navbar-nav mr-auto justify-content-end"
               style={{ width: "100%" }}
             >
-              {!isLogged ? (
+              {Data.token === "" ? (
                 <>
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/register">

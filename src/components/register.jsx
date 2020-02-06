@@ -1,53 +1,64 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import useInputState from "../hooks/useInputState";
+import axios from "axios";
+import { register } from "../utils/routes";
+import { DispatchContext } from "../contexts/userContext";
 
 export default function Register() {
   const [name, handleNameChange] = useInputState("");
   const [email, handelEmailChange] = useInputState("");
   const [password, handlePasswordChange] = useInputState("");
+  const dispatch = useContext(DispatchContext);
+  const handleSubmit = async e => {
+    e.preventDefault();
+    let body = { name: name, email: email, password: password, isAdmin: true };
 
-  // useEffect(() => {
-
-  // })
-
-  // const handleSubmit = async(e) => {
-
-  // }
+    try {
+      const response = await axios.post(register, body);
+      dispatch({
+        type: "IN",
+        user: response.data.data.name,
+        token: response.headers["x-auth-token"]
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="container">
-      <form>
-        <div class="form-group">
-          <label for="exampleInputText">Name</label>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="exampleInputText">Name</label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="exampleInputText"
             value={name}
             onChange={handleNameChange}
           />
         </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Email address</label>
           <input
             type="email"
-            class="form-control"
+            className="form-control"
             id="exampleInputEmail1"
             value={email}
             onChange={handelEmailChange}
           />
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
+        <div className="form-group">
+          <label htmlFor="exampleInputPassword1">Password</label>
           <input
             type="password"
-            class="form-control"
+            className="form-control"
             id="exampleInputPassword1"
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Register
         </button>
       </form>
