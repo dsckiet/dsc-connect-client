@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { Redirect } from "react-router-dom";
 import useInputState from "../hooks/useInputState";
 import axios from "axios";
 import { login } from "./../utils/routes";
@@ -33,6 +32,7 @@ export default function Login(props) {
       console.log(error);
     }
   };
+
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>

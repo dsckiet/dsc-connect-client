@@ -26,6 +26,8 @@ export default function Homepage() {
     fetchData();
   }, []);
 
+  const handleUpdate = () => {};
+
   return (
     <div className="container">
       <div className="row">
@@ -33,7 +35,6 @@ export default function Homepage() {
           <div
             className="card p-4"
             style={{
-              height: "100%",
               fontSize: "20px",
               borderRadius: "8px"
             }}
@@ -190,18 +191,22 @@ export default function Homepage() {
                           />
                         </div>
                         {item.latitude === 52.5 ? (
-                          <div className="col-lg-3">
-                            <div className="edit-btn">
-                              <Link to="#">
-                                <img
-                                  className="img-fluid mx-auto"
-                                  src="./assets/images/pencil.svg"
-                                  alt=""
-                                  width="50%"
-                                />
-                              </Link>
+                          <>
+                            {console.log(item)}
+
+                            <div className="col-lg-3">
+                              <div className="edit-btn">
+                                <Link to={`/update/${item._id}`}>
+                                  <img
+                                    className="img-fluid mx-auto"
+                                    src="./assets/images/pencil.svg"
+                                    alt=""
+                                    width="50%"
+                                  />
+                                </Link>
+                              </div>
                             </div>
-                          </div>
+                          </>
                         ) : null}
                       </div>
                     </div>
