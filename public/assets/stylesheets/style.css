@@ -24,7 +24,7 @@ body {
 } */
 
 .card {
-  border:0;
+  border: 0;
 }
 
 .add-btn {
@@ -67,4 +67,9 @@ body {
 .footer-text {
   color: #707070;
   font-weight: 600;
+}
+
+.edit-btn {
+  background-color: aquamarine;
+  border-radius: 50%;
 }

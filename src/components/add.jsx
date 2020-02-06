@@ -1,33 +1,33 @@
 import React, { useContext, useEffect } from "react";
 import useInputState from "../hooks/useInputState";
 import { AuthContext } from "./../contexts/userContext";
-import { axios } from "axios";
+import axios from "axios";
 import { add } from "./../utils/routes";
 
-export default function AddForm() {
+export default function AddForm(props) {
   let data = useContext(AuthContext);
   const [x, handleX] = useInputState("");
   const [y, handleY] = useInputState("");
   const [type, handleType] = useInputState("");
-
+  useEffect(() => {
+    console.log("chl");
+  }, [x, y, type]);
   const handleSubmit = async e => {
     e.preventDefault();
     let body = { latitude: x, longitude: y, type: type };
-    const token = data.token;
     try {
-      const response = await axios.post(
-        add,
-        { latitude: x, longitude: y, type: type },
-        {
-          headers: {
-            "x-auth-token": token,
-            "Content-Type": "application/x-www-form-urlencoded"
-          }
+      const token = data.token;
+      console.log(token);
+      const response = await axios.post(add, body, {
+        headers: {
+          "x-auth-token": token
         }
-      );
-      console.log(response);
+      });
+      props.history.push("/");
+      console.log("API REQUEST");
     } catch (error) {
       console.log(error);
+      console.log(error.response);
     }
   };
 

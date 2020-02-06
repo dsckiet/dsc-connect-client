@@ -1,78 +1,30 @@
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
+import axios from "axios";
+import { getdata } from "../utils/routes";
+import { AuthContext } from "./../contexts/userContext";
+import { Link } from "react-router-dom";
 
 export default function Homepage() {
-  const CommCard = (
-    <div className="col-lg-4">
-      <div className="card p-3 mb-4" style={{ borderRadius: "12px" }}>
-        <div className="row">
-          <div className="col-12">
-            <img
-              className="img-fluid"
-              src="./assets/images/dsc.png"
-              alt=""
-              width="40"
-              style={{ marginRight: 8 }}
-            />
-            DSC VIT Pune
-          </div>
-        </div>
-        <a href="#" className="mt-1">
-          www.dscvitpune.tech
-        </a>
-        <p className="mt-3 mb-0">
-          Location: <strong>Pune, India</strong>
-        </p>
-        <p>
-          Team Size: <strong>32</strong>
-        </p>
-        <div>
-          <span className="badge b-w mr-2">Web</span>
-          <span className="badge b-m mr-2">ML</span>
-          <span className="badge b-c mr-2">Cloud</span>
-          <span className="badge b-f mr-2">Flutter</span>
-        </div>
-        <div className="mt-3">
-          <h6>Social Profiles</h6>
-          <img
-            className="img-fluid mr-1"
-            src="./assets/images/circle.svg"
-            alt=""
-            height="10%"
-            width="10%"
-          />
-          <img
-            className="img-fluid mr-1"
-            src="./assets/images/circle.svg"
-            alt=""
-            height="10%"
-            width="10%"
-          />
-          <img
-            className="img-fluid mr-1"
-            src="./assets/images/circle.svg"
-            alt=""
-            height="10%"
-            width="10%"
-          />
-          <img
-            className="img-fluid mr-1"
-            src="./assets/images/circle.svg"
-            alt=""
-            height="10%"
-            width="10%"
-          />
+  const [state, setState] = useState("");
 
-          <img
-            className="img-fluid"
-            src="./assets/images/circle.svg"
-            alt=""
-            height="10%"
-            width="10%"
-          />
-        </div>
-      </div>
-    </div>
-  );
+  const data = useContext(AuthContext);
+
+  useEffect(() => {
+    let token = data.token;
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(getdata, {
+          headers: {
+            "x-auth-token": token
+          }
+        });
+        setState(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="container">
@@ -158,14 +110,103 @@ export default function Homepage() {
               sustainable and better world
             </p>
             <div className="row">
-              {CommCard}
-              {CommCard}
-              {CommCard}
-              {CommCard}
-              {CommCard}
-              {CommCard}
-              {CommCard}
-              {CommCard}
+              {state
+                ? state.map((item, i) => (
+                    <div className="col-lg-4" key={i}>
+                      <div
+                        className="card p-3 mb-4"
+                        style={{ borderRadius: "12px" }}
+                      >
+                        <div className="row">
+                          <div className="col-12">
+                            <img
+                              className="img-fluid"
+                              src="./assets/images/dsc.png"
+                              alt=""
+                              width="40"
+                              style={{ marginRight: 8 }}
+                            />
+                            DSC VIT Pune
+                          </div>
+                        </div>
+                        <Link to="#" className="mt-1">
+                          www.dscvitpune.tech
+                        </Link>
+                        <p className="mt-3 mb-0">
+                          Location: <strong>Pune, India</strong>
+                        </p>
+                        <p>
+                          Team Size: <strong>{item.type}</strong>
+                        </p>
+                        <p>
+                          X: <strong>{item.latitude}</strong>
+                        </p>
+                        <p>
+                          Y : <strong>{item.longitude}</strong>
+                        </p>
+                        <div>
+                          <span className="badge b-w mr-2">Web</span>
+                          <span className="badge b-m mr-2">ML</span>
+                          <span className="badge b-c mr-2">Cloud</span>
+                          <span className="badge b-f mr-2">Flutter</span>
+                        </div>
+                        <div className="mt-3">
+                          <h6>Social Profiles</h6>
+                          <img
+                            className="img-fluid mr-1"
+                            src="./assets/images/circle.svg"
+                            alt=""
+                            height="10%"
+                            width="10%"
+                          />
+                          <img
+                            className="img-fluid mr-1"
+                            src="./assets/images/circle.svg"
+                            alt=""
+                            height="10%"
+                            width="10%"
+                          />
+                          <img
+                            className="img-fluid mr-1"
+                            src="./assets/images/circle.svg"
+                            alt=""
+                            height="10%"
+                            width="10%"
+                          />
+                          <img
+                            className="img-fluid mr-1"
+                            src="./assets/images/circle.svg"
+                            alt=""
+                            height="10%"
+                            width="10%"
+                          />
+
+                          <img
+                            className="img-fluid"
+                            src="./assets/images/circle.svg"
+                            alt=""
+                            height="10%"
+                            width="10%"
+                          />
+                        </div>
+                        {item.latitude === 52.5 ? (
+                          <div className="col-lg-3">
+                            <div className="edit-btn">
+                              <Link to="#">
+                                <img
+                                  className="img-fluid mx-auto"
+                                  src="./assets/images/pencil.svg"
+                                  alt=""
+                                  width="50%"
+                                />
+                              </Link>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+                  ))
+                : null}
             </div>
           </div>
         </div>

@@ -15,9 +15,9 @@ function App() {
       <NavBar />
       <Switch>
         <Route exact path="/" component={Homepage} />
-        <PrivateRoute exact path="/login" component={Login} />
-        <Route exact path="/add" component={AddForm} />
-        <PrivateRoute exact path="/register" component={Register} />
+        <Route exact path="/login" component={Login} />
+        <PrivateRoute exact path="/add" component={AddForm} />
+        <Route exact path="/register" component={Register} />
       </Switch>
       <Footer />
     </>
