@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import axios from "axios";
-import { getdata } from "../utils/routes";
-import { AuthContext } from "../contexts/userContext";
-import useInputState from "../hooks/useInputState";
-import { edit } from "./../utils/routes";
+import { getdata } from "../../utils/routes";
+import { AuthContext } from "../../contexts/userContext";
+import useInputState from "../../hooks/useInputState";
+import { edit } from "../../utils/routes";
 
 export default function Update(props) {
   const data = useContext(AuthContext);

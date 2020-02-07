@@ -1,75 +1,13 @@
-@font-face {
-  font-family: GoogleSansBd;
-  src: url("../fonts/GoogleSans-Bold.ttf");
-}
-
-@font-face {
-  font-family: GoogleSansRg;
-  src: url("../fonts/GoogleSans-Regular.ttf");
-}
-
-@font-face {
-  font-family: GoogleSansMd;
-  src: url("../fonts/GoogleSans-Medium.ttf");
-}
-
-body {
-  overflow-x: hidden !important;
-  font-family: GoogleSansRg;
-  background-color: #f1f1f1;
-}
-
 /* .container {
   margin: 0 50px 0 50px;
 } */
-
-.card {
-  border: 0;
-}
-
-.add-btn {
-  background-color: #0f9d58;
-  border-radius: 12px;
-  padding: 4px 31px 4px 31px;
-}
-
-.reset-btn {
-  color: white;
-  border-radius: 12px;
-  background-color: #f4b400;
-}
-
-.list {
-  margin-left: -15px;
-}
 
 .badge {
   color: white;
   padding: 5px 10px 5px 10px;
 }
 
-.b-w {
-  background-color: #0f9d58;
-}
-
-.b-m {
-  background-color: #db4437;
-}
-
-.b-c {
-  background-color: #4285f4;
-}
-
-.b-f {
-  background-color: #f4b400;
-}
-
 .footer-text {
   color: #707070;
   font-weight: 600;
-}
-
-.edit-btn {
-  background-color: aquamarine;
-  border-radius: 50%;
 }
