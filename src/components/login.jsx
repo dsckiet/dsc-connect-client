@@ -1,22 +1,18 @@
-import React, { useContext } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
 import useInputState from "../hooks/useInputState";
 import axios from "axios";
 import { login } from "./../utils/routes";
-import { DispatchContext } from "../contexts/userContext";
+import { AuthContext, DispatchContext } from "../contexts/userContext";
 
-export default function Login() {
+export default function Login(props) {
   const [email, handleEmailChange] = useInputState("");
   const [password, handlePasswordChange] = useInputState("");
   const dispatch = useContext(DispatchContext);
-  // const [isLogged, setIsLogged] = useState(false);
+  const data = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   const token = JSON.parse(window.localStorage.getItem("token"));
-  //   if (token) {
-  //     setIsLogged(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    data.token !== "" ? props.history.push("/") : props.history.push("/login");
+  }, []);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -26,15 +22,22 @@ export default function Login() {
     };
     try {
       const response = await axios.post(login, body);
+      console.log(response);
       dispatch({
         type: "IN",
-        user: response.data.data.name,
+        user: {
+          name: response.data.data.name,
+          x: response.data.data.latitude,
+          y: response.data.data.longitude
+        },
         token: response.headers["x-auth-token"]
       });
+      props.history.push("/");
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>

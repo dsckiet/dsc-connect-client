@@ -17,7 +17,7 @@ export default function NavBar() {
           <NavLink className="navbar-brand" to="/">
             <img
               className="img-fluid"
-              src="./assets/images/logo.svg"
+              src="/assets/images/logo.svg"
               alt="logo"
               width="95%"
             />

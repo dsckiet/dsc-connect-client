@@ -1,18 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import useInputState from "../hooks/useInputState";
 import axios from "axios";
 import { register } from "../utils/routes";
-import { DispatchContext } from "../contexts/userContext";
+import { AuthContext, DispatchContext } from "../contexts/userContext";
 
-export default function Register() {
+export default function Register(props) {
   const [name, handleNameChange] = useInputState("");
   const [email, handelEmailChange] = useInputState("");
   const [password, handlePasswordChange] = useInputState("");
   const dispatch = useContext(DispatchContext);
+  const data = useContext(AuthContext);
+
+  useEffect(() => {
+    data.token !== ""
+      ? props.history.push("/")
+      : props.history.push("/register");
+  }, []);
+  console.log(data);
   const handleSubmit = async e => {
     e.preventDefault();
     let body = { name: name, email: email, password: password, isAdmin: true };
-
     try {
       const response = await axios.post(register, body);
       dispatch({
@@ -20,6 +27,7 @@ export default function Register() {
         user: response.data.data.name,
         token: response.headers["x-auth-token"]
       });
+      props.history.push("/");
     } catch (error) {
       console.log(error);
     }

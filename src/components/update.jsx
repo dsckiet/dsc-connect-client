@@ -1,35 +1,53 @@
-import React, { useContext, useEffect } from "react";
-import useInputState from "../hooks/useInputState";
-import { AuthContext } from "./../contexts/userContext";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { add } from "./../utils/routes";
+import { getdata } from "../utils/routes";
+import { AuthContext } from "../contexts/userContext";
+import useInputState from "../hooks/useInputState";
+import { edit } from "./../utils/routes";
 
-export default function AddForm(props) {
-  let data = useContext(AuthContext);
-  const [x, handleX] = useInputState("");
-  const [y, handleY] = useInputState("");
-  const [type, handleType] = useInputState("");
+export default function Update(props) {
+  const data = useContext(AuthContext);
+  const [x, handleChangeX, setX] = useInputState(0);
+  const [y, handleChangeY, setY] = useInputState(0);
   useEffect(() => {
-    console.log("chl");
-  }, [x, y, type]);
+    let token = data.token;
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(getdata, {
+          headers: {
+            "x-auth-token": token
+          }
+        });
+        let editData = response.data.data.filter(place => {
+          if (place._id === props.match.params.id) return place;
+        });
+        setX(editData[0].latitude);
+        setY(editData[0].longitude);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [props]);
+
   const handleSubmit = async e => {
     e.preventDefault();
-    let body = { latitude: x, longitude: y, type: type };
     try {
-      const token = data.token;
-      await axios.post(add, body, {
+      let body = {
+        latitude: x,
+        longitude: y,
+        type: "crime"
+      };
+      await axios.put(`${edit}/${props.match.params.id}`, body, {
         headers: {
-          "x-auth-token": token
+          "x-auth-token": data.token
         }
       });
       props.history.push("/");
-      console.log("API REQUEST");
     } catch (error) {
       console.log(error);
-      console.log(error.response);
     }
   };
-
   return (
     <div className="container">
       <div className="col-lg-8 mx-auto" style={{ paddingBottom: "200px" }}>
@@ -51,7 +69,7 @@ export default function AddForm(props) {
                   className="form-control"
                   placeholder="X"
                   value={x}
-                  onChange={handleX}
+                  onChange={handleChangeX}
                 />
               </div>
               <label className="col-sm-2 col-form-label">Y-Axis :</label>
@@ -62,11 +80,11 @@ export default function AddForm(props) {
                   className="form-control"
                   placeholder="Y"
                   value={y}
-                  onChange={handleY}
+                  onChange={handleChangeY}
                 />
               </div>
             </div>
-            <div className="row mt-4">
+            {/* <div className="row mt-4">
               <label className="col-sm-2 label">Type : </label>
               <div className="col-sm-6 form-group ">
                 <select
@@ -81,7 +99,7 @@ export default function AddForm(props) {
                   <option value="accident">Accident</option>
                 </select>
               </div>
-            </div>
+            </div> */}
             <div className="text-right">
               <button type="submit" className="btn btn-primary">
                 Submit
