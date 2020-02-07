@@ -3,10 +3,12 @@ import axios from "axios";
 import { getdata } from "../utils/routes";
 import { AuthContext } from "../contexts/userContext";
 import useInputState from "../hooks/useInputState";
+import { edit } from "./../utils/routes";
 
 export default function Update(props) {
   const data = useContext(AuthContext);
-  const [state, setState] = useState({ X: 0, Y: 0 });
+  const [x, handleChangeX, setX] = useInputState(0);
+  const [y, handleChangeY, setY] = useInputState(0);
   useEffect(() => {
     let token = data.token;
     const fetchData = async () => {
@@ -19,16 +21,33 @@ export default function Update(props) {
         let editData = response.data.data.filter(place => {
           if (place._id === props.match.params.id) return place;
         });
-        setState({ X: editData[0].latitude, Y: editData[0].longitude });
+        setX(editData[0].latitude);
+        setY(editData[0].longitude);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, []);
-  const [x, handleX] = useInputState(state.X);
-  const [y, handleY] = useInputState(state.Y);
+  }, [props]);
 
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      let body = {
+        latitude: x,
+        longitude: y,
+        type: "crime"
+      };
+      await axios.put(`${edit}/${props.match.params.id}`, body, {
+        headers: {
+          "x-auth-token": data.token
+        }
+      });
+      props.history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="container">
       <div className="col-lg-8 mx-auto" style={{ paddingBottom: "200px" }}>
@@ -38,7 +57,7 @@ export default function Update(props) {
           </p>
         </div>
         <div className="card p-4">
-          <form>
+          <form onSubmit={handleSubmit}>
             <label className="label">Co-Ordinates : </label>
 
             <div className="form-group row mt-2">
@@ -50,7 +69,7 @@ export default function Update(props) {
                   className="form-control"
                   placeholder="X"
                   value={x}
-                  onChange={handleX}
+                  onChange={handleChangeX}
                 />
               </div>
               <label className="col-sm-2 col-form-label">Y-Axis :</label>
@@ -61,7 +80,7 @@ export default function Update(props) {
                   className="form-control"
                   placeholder="Y"
                   value={y}
-                  onChange={handleY}
+                  onChange={handleChangeY}
                 />
               </div>
             </div>

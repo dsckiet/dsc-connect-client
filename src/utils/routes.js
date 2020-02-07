@@ -5,3 +5,4 @@ export const register = `${url}/users/register`;
 
 export const add = `${url}/data`;
 export const getdata = `${url}/data`;
+export const edit = `${url}/data`;

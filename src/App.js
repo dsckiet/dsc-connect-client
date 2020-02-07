@@ -18,7 +18,7 @@ function App() {
         <Route exact path="/" component={Homepage} />
         <Route exact path="/login" component={Login} />
         <PrivateRoute exact path="/add" component={AddForm} />
-        <PrivateRoute exact path="/update/:id" component={withRouter(Update)} />
+        <PrivateRoute exact path="/update/:id" component={Update} />
         <Route exact path="/register" component={Register} />
       </Switch>
       <Footer />

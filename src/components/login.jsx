@@ -22,9 +22,14 @@ export default function Login(props) {
     };
     try {
       const response = await axios.post(login, body);
+      console.log(response);
       dispatch({
         type: "IN",
-        user: response.data.data.name,
+        user: {
+          name: response.data.data.name,
+          x: response.data.data.latitude,
+          y: response.data.data.longitude
+        },
         token: response.headers["x-auth-token"]
       });
       props.history.push("/");

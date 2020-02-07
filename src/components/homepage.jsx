@@ -192,8 +192,6 @@ export default function Homepage() {
                         </div>
                         {item.latitude === 52.5 ? (
                           <>
-                            {console.log(item)}
-
                             <div className="col-lg-3">
                               <div className="edit-btn">
                                 <Link to={`/update/${item._id}`}>

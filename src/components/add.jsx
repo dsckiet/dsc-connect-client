@@ -17,8 +17,7 @@ export default function AddForm(props) {
     let body = { latitude: x, longitude: y, type: type };
     try {
       const token = data.token;
-      console.log(token);
-      const response = await axios.post(add, body, {
+      await axios.post(add, body, {
         headers: {
           "x-auth-token": token
         }
