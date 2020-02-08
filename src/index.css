@@ -1,13 +1,24 @@
-/* body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: GoogleSansBd;
+  src: url("./assets/fonts/GoogleSans-Bold.ttf");
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */
+@font-face {
+  font-family: GoogleSansRg;
+  src: url("./assets/fonts/GoogleSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: GoogleSansMd;
+  src: url("./assets/fonts/GoogleSans-Medium.ttf");
+}
+
+body {
+  overflow-x: hidden !important;
+  font-family: GoogleSansRg;
+  background-color: #f1f1f1;
+}
+
+.card {
+  border: 0;
+}

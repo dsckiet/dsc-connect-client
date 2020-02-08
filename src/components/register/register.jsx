@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import useInputState from "../hooks/useInputState";
+import useInputState from "../../hooks/useInputState";
 import axios from "axios";
-import { register } from "../utils/routes";
-import { AuthContext, DispatchContext } from "../contexts/userContext";
+import { register } from "../../utils/routes";
+import { AuthContext, DispatchContext } from "../../contexts/userContext";
 
 export default function Register(props) {
   const [name, handleNameChange] = useInputState("");

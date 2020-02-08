@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import useInputState from "../hooks/useInputState";
-import { AuthContext } from "./../contexts/userContext";
+import useInputState from "../../hooks/useInputState";
+import { AuthContext } from "../../contexts/userContext";
 import axios from "axios";
-import { add } from "./../utils/routes";
+import { add } from "../../utils/routes";
+import styles from "./add.module.css";
 
 export default function AddForm(props) {
   let data = useContext(AuthContext);
@@ -32,11 +33,9 @@ export default function AddForm(props) {
 
   return (
     <div className="container">
-      <div className="col-lg-8 mx-auto" style={{ paddingBottom: "200px" }}>
+      <div className={`col-lg-8 mx-auto ${styles.crdEdit}`}>
         <div className="pt-5">
-          <p className="heading" style={{ fontSize: "32px" }}>
-            Enter Data
-          </p>
+          <p className={`heading ${styles.head}`}>Enter Data</p>
         </div>
         <div className="card p-4">
           <form onSubmit={handleSubmit}>

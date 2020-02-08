@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import useInputState from "../hooks/useInputState";
+import useInputState from "../../hooks/useInputState";
 import axios from "axios";
-import { login } from "./../utils/routes";
-import { AuthContext, DispatchContext } from "../contexts/userContext";
+import { login } from "../../utils/routes";
+import { AuthContext, DispatchContext } from "../../contexts/userContext";
 
 export default function Login(props) {
   const [email, handleEmailChange] = useInputState("");
@@ -22,7 +22,6 @@ export default function Login(props) {
     };
     try {
       const response = await axios.post(login, body);
-      console.log(response);
       dispatch({
         type: "IN",
         user: {

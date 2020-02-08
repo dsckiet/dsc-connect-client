@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { Redirect, Route, Switch, withRouter } from "react-router-dom";
-import NavBar from "./components/navbar";
-import Homepage from "./components/homepage";
-import Login from "./components/login";
-import AddForm from "./components/add";
-import Register from "./components/register";
-import Footer from "./components/footer";
-import "./App.css";
+import { Redirect, Route, Switch } from "react-router-dom";
+import NavBar from "./components/navbar/navbar";
+import Homepage from "./components/homepage/homepage";
+import Login from "./components/login/login";
+import AddForm from "./components/add/add";
+import Register from "./components/register/register";
+import Footer from "./components/footer/footer";
+import Update from "./components/update/update";
 import { AuthContext } from "./contexts/userContext";
-import Update from "./components/update";
+import "./App.css";
 
 function App() {
   return (

@@ -1,0 +1,68 @@
+.resetBtn {
+  color: white;
+  border-radius: 12px;
+  background-color: #f4b400;
+}
+
+.editBtn {
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+
+.cardEdit {
+  font-size: 20px;
+  border-radius: 8px;
+}
+
+.sideHead {
+  font-weight: 600;
+}
+
+.sideFoot {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+@media (max-width: 575.98px) {
+  .sideFooter {
+    display: none;
+  }
+  .filter {
+    display: none;
+  }
+}
+
+@media (min-width: 575.98px) {
+  .filterSM {
+    display: none;
+  }
+}
+
+.list {
+  margin-left: -15px;
+}
+
+.head {
+  color: #707070;
+  font-weight: 600;
+}
+
+.crdHead {
+  border-radius: 12px;
+}
+
+.bW {
+  background-color: #0f9d58;
+}
+
+.bM {
+  background-color: #db4437;
+}
+
+.bC {
+  background-color: #4285f4;
+}
+
+.bF {
+  background-color: #f4b400;
+}
