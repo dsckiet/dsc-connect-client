@@ -4,6 +4,13 @@ import { getdata } from "../../utils/routes";
 import { AuthContext } from "../../contexts/userContext";
 import { Link } from "react-router-dom";
 import styles from "./homepage.module.css";
+import Select from "react-select";
+
+const options = [
+  { value: "chocolate", label: "Chocolate" },
+  { value: "strawberry", label: "Strawberry" },
+  { value: "vanilla", label: "Vanilla" }
+];
 
 export default function Homepage() {
   const [state, setState] = useState("");
@@ -52,33 +59,21 @@ export default function Homepage() {
                     <p className={styles.sideHead}>Filter</p>
                     <form>
                       <div className="form-group">
-                        <label htmlFor="county">Country</label>
-                        <select className="form-control" id="country">
-                          <option value="India">India</option>
-                          <option value="Sri Lanka">Sri Lanka</option>
-                          <option value="Australia">Australia</option>
-                          <option value="Japan">Japan</option>
-                          <option value="Russia">Russia</option>
-                        </select>
+                        <label htmlFor="county" className={styles.crdTxt}>
+                          Country
+                        </label>
+                        <Select options={options} />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="work">Works on</label>
-                        <select className="form-control" id="work">
-                          <option value="Blockchain">Blockchain</option>
-                          <option value="Web Development">
-                            Web Development
-                          </option>
-                          <option value="Mobile Development">
-                            Mobile Development
-                          </option>
-                          <option value="Machine Learning">
-                            Machine Learning
-                          </option>
-                          <option value="Cloud">Cloud</option>
-                        </select>
+                        <label htmlFor="work" className={styles.crdTxt}>
+                          Works on
+                        </label>
+                        <Select options={options} />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="search">Search</label>
+                        <label htmlFor="search" className={styles.crdTxt}>
+                          Search
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -146,23 +141,11 @@ export default function Homepage() {
                         <form>
                           <div className="form-group">
                             <label htmlFor="county">Country</label>
-                            <select className="form-control" id="country">
-                              <option>India</option>
-                              <option>Sri Lanka</option>
-                              <option>Australia</option>
-                              <option>Japan</option>
-                              <option>Russia</option>
-                            </select>
+                            <Select options={options} />
                           </div>
                           <div className="form-group">
                             <label htmlFor="work">Works on</label>
-                            <select className="form-control" id="work">
-                              <option>Blockchain</option>
-                              <option>Web Development</option>
-                              <option>Mobile Development</option>
-                              <option>Machine Learning</option>
-                              <option>Cloud</option>
-                            </select>
+                            <Select options={options} />
                           </div>
                           <div className="form-group">
                             <label htmlFor="search">Search</label>

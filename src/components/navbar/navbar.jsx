@@ -134,11 +134,9 @@ export default function NavBar(props) {
                       aria-expanded="false"
                     >
                       <img
-                        className="img-fluid"
+                        className="img-fluid rounded"
                         src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"
-                        width="40"
-                        height="40"
-                        className="rounded-circle"
+                        width="35"
                         alt=""
                       />
                     </p>
