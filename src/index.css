@@ -19,6 +19,27 @@ body {
   background-color: #f1f1f1;
 }
 
+/* .fluid-container {
+  width: 100%;
+  align-items: center;
+}
+
+.container {
+  margin: 0 100px !important;
+} */
+
 .card {
   border: 0;
+}
+
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+input:focus,
+input:active {
+  outline: none !important;
+  box-shadow: none !important;
 }

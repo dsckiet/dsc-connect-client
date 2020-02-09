@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { NavLink, Redirect } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { AuthContext, DispatchContext } from "../../contexts/userContext";
 import styles from "./navbar.module.css";
 import useInputState from "../../hooks/useInputState";
@@ -16,6 +16,7 @@ export default function NavBar(props) {
 
   const [email, handleEmailChange] = useInputState("");
   const [password, handlePasswordChange] = useInputState("");
+  const [UpIn, setUpIn] = useState();
   const dispatch = useContext(DispatchContext);
   const data = useContext(AuthContext);
 
@@ -23,7 +24,7 @@ export default function NavBar(props) {
   //   data.token !== "" ? props.history.push("/") : props.history.push("/login");
   // }, []);
 
-  const handleSubmit = async e => {
+  const handleLoginSubmit = async e => {
     e.preventDefault();
     let body = {
       email: email,
@@ -40,16 +41,25 @@ export default function NavBar(props) {
         },
         token: response.headers["x-auth-token"]
       });
+      window.location = "/";
       //props.history.push("/");
     } catch (error) {
       console.log(error);
     }
   };
 
+  const loginBtn = () => {
+    setUpIn("login");
+  };
+
+  const registerBtn = () => {
+    setUpIn("register");
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light">
-        <div className="container">
+        <div className="container mx-auto">
           <NavLink className="navbar-brand" to="/">
             <img
               className="img-fluid"
@@ -77,24 +87,27 @@ export default function NavBar(props) {
             >
               {Data.token === "" ? (
                 <>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/register">
-                      Register
+                  <li className="nav-item ">
+                    <NavLink
+                      className="nav-link"
+                      onClick={registerBtn}
+                      to="/"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      Sign Up
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    {/* <NavLink className="nav-link" to="/login">
-                      Login
-                    </NavLink> */}
-                    <NavLink className="nav-link" to="/">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-toggle="modal"
-                        data-target="#exampleModalCenter"
-                      >
-                        Log IN
-                      </button>
+                    <NavLink
+                      className=" btn btn-primarynav-link"
+                      onClick={loginBtn}
+                      to="/"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                      type="button"
+                    >
+                      Sign In
                     </NavLink>
                   </li>
                 </>
@@ -104,16 +117,46 @@ export default function NavBar(props) {
                     <NavLink to="/add">
                       <button
                         type="button"
-                        className={`btn btn-success ${styles.addBtn}`}
+                        className={`btn btn-success mt-2 mr-2 ${styles.addBtn}`}
                       >
                         Add your community
                       </button>
                     </NavLink>
                   </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/" onClick={handleLogout}>
-                      Log Out
-                    </NavLink>
+                  <li className="nav-item dropdown">
+                    <p
+                      className="nav-link dropdown-toggle"
+                      href="#"
+                      id="navbarDropdownMenuLink"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <img
+                        className="img-fluid"
+                        src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"
+                        width="40"
+                        height="40"
+                        className="rounded-circle"
+                        alt=""
+                      />
+                    </p>
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="navbarDropdownMenuLink"
+                    >
+                      <NavLink className="dropdown-item" to="#">
+                        Profile
+                      </NavLink>
+                      <NavLink
+                        className="dropdown-item"
+                        to="/"
+                        onClick={handleLogout}
+                      >
+                        Log Out
+                      </NavLink>
+                    </div>
                   </li>
                 </>
               )}
@@ -121,67 +164,103 @@ export default function NavBar(props) {
           </div>
         </div>
       </nav>
-      {/* <!-- Button trigger modal --> */}
-      {/* <button
-        type="button"
-        class="btn btn-primary"
-        data-toggle="modal"
-        data-target="#exampleModalCenter"
-      >
-        Launch demo modal
-      </button> */}
-      {/* <!-- Modal --> */}
+
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModalCenter"
-        tabindex="-1"
+        tabIndex="-1"
         role="dialog"
         aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalCenterTitle">
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalCenterTitle">
                 Log In
               </h5>
               <button
                 type="button"
-                class="close"
+                className="close"
                 data-dismiss="modal"
                 aria-label="Close"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Email address</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    value={email}
-                    onChange={handleEmailChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="exampleInputPassword1"
-                    value={password}
-                    onChange={handlePasswordChange}
-                  />
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" className="btn btn-primary">
-                    Log In
-                  </button>
-                </div>
-              </form>
+            <div className="modal-body">
+              {UpIn === "login" ? (
+                <form onSubmit={handleLoginSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="exampleInputEmail1">Email address</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="exampleInputEmail1"
+                      value={email}
+                      onChange={handleEmailChange}
+                      placeholder="Enter email"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="exampleInputPassword1">Password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="exampleInputPassword1"
+                      value={password}
+                      onChange={handlePasswordChange}
+                      placeholder="Enter password"
+                    />
+                  </div>
+                  <div className="modal-footer">
+                    <button type="submit" className="btn btn-primary">
+                      Log In
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <form onSubmit={handleLoginSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="exampleInputName1">Name</label>
+                    <input
+                      type="Name"
+                      className="form-control"
+                      id="exampleInputName1"
+                      value={email}
+                      onChange={handleEmailChange}
+                      placeholder="Enter name"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="exampleInputEmail1">Email address</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="exampleInputEmail1"
+                      value={email}
+                      onChange={handleEmailChange}
+                      placeholder="Enter email"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="exampleInputPassword1">Password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="exampleInputPassword1"
+                      value={password}
+                      onChange={handlePasswordChange}
+                      placeholder="Enter password"
+                    />
+                  </div>
+                  <div className="modal-footer">
+                    <button type="submit" className="btn btn-primary">
+                      Log In
+                    </button>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         </div>
