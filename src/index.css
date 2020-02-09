@@ -42,4 +42,5 @@ input:focus,
 input:active {
   outline: none !important;
   box-shadow: none !important;
+  /* border: 2px solid #348afc !important; */
 }

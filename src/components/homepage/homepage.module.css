@@ -4,6 +4,10 @@
   background-color: #f4b400;
 }
 
+.resetBtn:hover {
+  color: white;
+}
+
 .editBtn {
   background-color: aquamarine;
   border-radius: 50%;
@@ -65,4 +69,9 @@
 
 .bF {
   background-color: #f4b400;
+}
+
+.load {
+  margin-top: 200px;
+  margin-bottom: 250px;
 }
