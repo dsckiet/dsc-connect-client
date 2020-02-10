@@ -5,6 +5,7 @@ import { AuthContext } from "../../contexts/userContext";
 import { Link } from "react-router-dom";
 import styles from "./homepage.module.css";
 import Search from "./../search/search";
+import { toast } from "react-toastify";
 
 export default function Homepage() {
   const [state, setState] = useState("");
@@ -25,7 +26,7 @@ export default function Homepage() {
         setState(response.data.data);
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        console.log(error.response.status);
       }
     };
     fetchData();

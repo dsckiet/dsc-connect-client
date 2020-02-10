@@ -6,18 +6,19 @@ import useInputState from "../../hooks/useInputState";
 import axios from "axios";
 import { login } from "./../../utils/routes";
 import Input from "./../common/input";
+import { register } from "../../utils/routes";
+import { toast } from "react-toastify";
 
 function NavBar(props) {
   const Data = useContext(AuthContext);
   const Dispatch = useContext(DispatchContext);
+  const [fname, handlefNameChange] = useInputState("");
+  const [lname, handlelNameChange] = useInputState("");
   const [email, handleEmailChange] = useInputState("");
   const [password, handlePasswordChange] = useInputState("");
   const [UpIn, setUpIn] = useState();
   const dispatch = useContext(DispatchContext);
 
-  const handleLogout = () => {
-    Dispatch({ type: "OUT" });
-  };
   // useEffect(() => {
   //   data.token !== "" ? props.history.push("/") : props.history.push("/login");
   // }, []);
@@ -40,10 +41,42 @@ function NavBar(props) {
         token: response.headers["x-auth-token"]
       });
       window.location = "/";
+      toast.success("Log In successfully");
       // props.history.push("/");
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
+      if (error.response.status === 500) toast.error("Invalid user");
     }
+  };
+
+  const handleRegisterSubmit = async e => {
+    e.preventDefault();
+    let body = {
+      name: `${fname} ${lname}`,
+      email: email,
+      password: password,
+      isAdmin: true
+    };
+    try {
+      const response = await axios.post(register, body);
+      dispatch({
+        type: "IN",
+        user: response.data.data.name,
+        token: response.headers["x-auth-token"]
+      });
+      // props.history.push("/");
+      window.location = "/";
+      toast.success("Sign Up successfully");
+    } catch (error) {
+      console.log(error.response);
+      if (error.response.status === 400)
+        toast.error(`${error.response.data.message}`);
+    }
+  };
+
+  const handleLogout = () => {
+    Dispatch({ type: "OUT" });
+    toast.success("Log out successfully");
   };
 
   const loginBtn = () => {
@@ -251,15 +284,23 @@ function NavBar(props) {
                     </p>
                   </div>
                   <div className="px-4">
-                    <form onSubmit={handleLoginSubmit}>
+                    <form onSubmit={handleRegisterSubmit}>
                       <div className="form-row">
                         <div className="col-md-6">
                           <label htmlFor="Enter first name">First Name</label>
-                          <Input name="Enter first name" />
+                          <Input
+                            name="Enter first name"
+                            value={fname}
+                            onChange={handlefNameChange}
+                          />
                         </div>
                         <div className="col-md-6">
                           <label htmlFor="Enter second name">Last Name</label>
-                          <Input name="Enter second name" />
+                          <Input
+                            name="Enter second name"
+                            value={lname}
+                            onChange={handlelNameChange}
+                          />
                         </div>
                       </div>
                       <div className="form-group">
@@ -268,12 +309,14 @@ function NavBar(props) {
                           name="Enter email"
                           value={email}
                           onChange={handleEmailChange}
+                          type="email"
                         />
                       </div>
                       <div className="form-group">
                         <label htmlFor="Enter password">Password</label>
                         <Input
                           name="Enter password"
+                          type="password"
                           value={password}
                           onChange={handlePasswordChange}
                         />

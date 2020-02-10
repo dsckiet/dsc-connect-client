@@ -4,6 +4,7 @@ import { getdata } from "../../utils/routes";
 import { AuthContext } from "../../contexts/userContext";
 import useInputState from "../../hooks/useInputState";
 import { edit } from "../../utils/routes";
+import { toast } from "react-toastify";
 
 export default function Update(props) {
   const data = useContext(AuthContext);
@@ -43,9 +44,10 @@ export default function Update(props) {
           "x-auth-token": data.token
         }
       });
+      toast.info("Status pending");
       props.history.push("/");
     } catch (error) {
-      console.log(error);
+      toast.error("Error occured");
     }
   };
   return (
