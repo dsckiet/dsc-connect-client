@@ -3,5 +3,19 @@
 }
 
 .head {
-  font-size: 32px;
+  background-color: #ababab;
+  color: white;
+  font-size: 24px;
+}
+
+.addField {
+  background-color: #ababab;
+}
+
+.domain input {
+  border: 0px !important;
+}
+
+.add {
+  background-color: #4285f4;
 }
