@@ -1,49 +1,6 @@
-.resetBtn {
-  color: white;
-  border-radius: 12px;
-  background-color: #f4b400;
-}
-
-.resetBtn:hover {
-  color: white;
-}
-
 .editBtn {
   background-color: aquamarine;
   border-radius: 50%;
-}
-
-.cardEdit {
-  border-radius: 8px;
-}
-
-.crdTxt {
-  font-size: 20px;
-}
-
-.sideHead {
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.sideFoot {
-  font-size: 10px;
-  font-weight: 600;
-}
-.sideFooter {
-  margin-top: 160px;
-}
-
-@media (max-width: 575.98px) {
-  .filter {
-    display: none;
-  }
-}
-
-@media (min-width: 575.98px) {
-  .filterSM {
-    display: none;
-  }
 }
 
 .list {

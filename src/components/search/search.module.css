@@ -1,0 +1,41 @@
+.cardEdit {
+  border-radius: 8px;
+}
+
+.sideHead {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.crdTxt {
+  font-size: 20px;
+}
+.resetBtn {
+  color: white;
+  border-radius: 12px;
+  background-color: #f4b400;
+}
+
+.resetBtn:hover {
+  color: white;
+}
+
+.sideFoot {
+  font-size: 10px;
+  font-weight: 600;
+}
+.sideFooter {
+  margin-top: 160px;
+}
+
+@media (max-width: 575.98px) {
+  .filter {
+    display: none;
+  }
+}
+
+@media (min-width: 575.98px) {
+  .filterSM {
+    display: none;
+  }
+}
