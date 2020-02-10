@@ -18,18 +18,26 @@
 
 .bW {
   background-color: #0f9d58;
+  color: white;
+  padding: 5px 10px 5px 10px;
 }
 
 .bM {
   background-color: #db4437;
+  color: white;
+  padding: 5px 10px 5px 10px;
 }
 
 .bC {
   background-color: #4285f4;
+  color: white;
+  padding: 5px 10px 5px 10px;
 }
 
 .bF {
   background-color: #f4b400;
+  color: white;
+  padding: 5px 10px 5px 10px;
 }
 
 .load {

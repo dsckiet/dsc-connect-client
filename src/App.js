@@ -9,6 +9,7 @@ import Footer from "./components/footer/footer";
 import Update from "./components/update/update";
 import { AuthContext } from "./contexts/userContext";
 import "./App.css";
+import Profile from "./components/profile/profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <PrivateRoute exact path="/add" component={AddForm} />
         <PrivateRoute exact path="/update/:id" component={Update} />
+        <PrivateRoute exact path="/profile" component={Profile} />
         <Route exact path="/register" component={Register} />
       </Switch>
       <Footer />

@@ -1,28 +1,27 @@
 import React, { useState, useContext } from "react";
-import { NavLink, withRouter } from "react-router-dom";
+import { NavLink, withRouter, Link } from "react-router-dom";
 import { AuthContext, DispatchContext } from "../../contexts/userContext";
 import styles from "./navbar.module.css";
 import useInputState from "../../hooks/useInputState";
 import axios from "axios";
 import { login } from "./../../utils/routes";
+import Input from "./../common/input";
 
 function NavBar(props) {
   const Data = useContext(AuthContext);
   const Dispatch = useContext(DispatchContext);
-
-  const handleLogout = () => {
-    Dispatch({ type: "OUT" });
-  };
-
   const [email, handleEmailChange] = useInputState("");
   const [password, handlePasswordChange] = useInputState("");
   const [UpIn, setUpIn] = useState();
   const dispatch = useContext(DispatchContext);
-  const data = useContext(AuthContext);
 
+  const handleLogout = () => {
+    Dispatch({ type: "OUT" });
+  };
   // useEffect(() => {
   //   data.token !== "" ? props.history.push("/") : props.history.push("/login");
   // }, []);
+
   const handleLoginSubmit = async e => {
     e.preventDefault();
     let body = {
@@ -127,15 +126,15 @@ function NavBar(props) {
                       className="nav-link dropdown-toggle"
                       href="#"
                       id="navbarDropdownMenuLink"
-                      role=""
+                      role="button"
                       data-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
                       <img
                         className="img-fluid rounded"
-                        src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"
-                        width="35"
+                        src="./assets/images/avatar.svg"
+                        width="32"
                         alt=""
                       />
                     </p>
@@ -143,11 +142,11 @@ function NavBar(props) {
                       className="dropdown-menu"
                       aria-labelledby="navbarDropdownMenuLink"
                     >
-                      <NavLink className="dropdown-item" to="#">
+                      <NavLink className="nav-link" to="/profile">
                         Profile
                       </NavLink>
                       <NavLink
-                        className="dropdown-item"
+                        className="nav-link"
                         to="/"
                         onClick={handleLogout}
                       >
@@ -157,7 +156,7 @@ function NavBar(props) {
                   </li>
                   <div className={`navSm ${styles.navSM}`}>
                     <li className="nav-item ">
-                      <NavLink className="nav-link" to="#">
+                      <NavLink className="nav-link" to="/profile">
                         Profile
                       </NavLink>
                     </li>
@@ -188,145 +187,107 @@ function NavBar(props) {
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
-            <div className="p-3">
-              {/* <p>
-                Welcome to <br />
-                <img src="./assets/images/logo.svg" alt="" width="250" />
-              </p> */}
-              <img
-                className="img-fluid"
-                src="./assets/images/loginLogo.png"
-                alt=""
-                width="220"
-              />
-              <button
-                type="button"
-                className="close mt-2"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <form onSubmit={handleLoginSubmit}>
-                <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Email address</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    value={email}
-                    onChange={handleEmailChange}
-                    placeholder="Enter email"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="exampleInputPassword1">Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="exampleInputPassword1"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    placeholder="Enter password"
-                  />
-                </div>
-                <div className="modal-footer">
-                  <button type="submit" className="btn btn-primary">
-                    Log In
-                  </button>
-                </div>
-              </form>
-            </div>
-
-            {/* <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalCenterTitle">
-                Log In
-              </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
+            <div className="p-2">
               {UpIn === "login" ? (
-                <form onSubmit={handleLoginSubmit}>
-                  <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Email address</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="exampleInputEmail1"
-                      value={email}
-                      onChange={handleEmailChange}
-                      placeholder="Enter email"
-                    />
+                <>
+                  <div className="card-head pt-3 pl-4">
+                    <p
+                      style={{
+                        fontSize: "24px",
+                        fontWeight: "700",
+                        color: "#707070"
+                      }}
+                    >
+                      <span style={{ color: "#DB4437" }}>Welcome,</span> <br />{" "}
+                      <span>Log In</span> to continue
+                    </p>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Password</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="exampleInputPassword1"
-                      value={password}
-                      onChange={handlePasswordChange}
-                      placeholder="Enter password"
-                    />
+                  <div className="px-4">
+                    <form onSubmit={handleLoginSubmit}>
+                      <div className="form-group">
+                        <label htmlFor="exampleInputEmail1">
+                          Email address
+                        </label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          id="exampleInputEmail1"
+                          value={email}
+                          onChange={handleEmailChange}
+                          placeholder="Enter email"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">Password</label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          id="exampleInputPassword1"
+                          value={password}
+                          onChange={handlePasswordChange}
+                          placeholder="Enter password"
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <button type="submit" className="btn btn-primary">
+                          Sign In
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                  <div className="modal-footer">
-                    <button type="submit" className="btn btn-primary">
-                      Log In
-                    </button>
-                  </div>
-                </form>
+                </>
               ) : (
-                <form onSubmit={handleLoginSubmit}>
-                  <div className="form-group">
-                    <label htmlFor="exampleInputName1">Name</label>
-                    <input
-                      type="Name"
-                      className="form-control"
-                      id="exampleInputName1"
-                      value={email}
-                      onChange={handleEmailChange}
-                      placeholder="Enter name"
-                    />
+                <>
+                  <div className="card-head pt-3 pl-4">
+                    <p
+                      style={{
+                        fontSize: "24px",
+                        fontWeight: "700",
+                        color: "#707070"
+                      }}
+                    >
+                      <span style={{ color: "#DB4437" }}>Welcome,</span> <br />{" "}
+                      <span>Sign Up</span> to continue
+                    </p>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Email address</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="exampleInputEmail1"
-                      value={email}
-                      onChange={handleEmailChange}
-                      placeholder="Enter email"
-                    />
+                  <div className="px-4">
+                    <form onSubmit={handleLoginSubmit}>
+                      <div className="form-row">
+                        <div className="col-md-6">
+                          <label htmlFor="Enter first name">First Name</label>
+                          <Input name="Enter first name" />
+                        </div>
+                        <div className="col-md-6">
+                          <label htmlFor="Enter second name">Last Name</label>
+                          <Input name="Enter second name" />
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="Enter email">Email address</label>
+                        <Input
+                          name="Enter email"
+                          value={email}
+                          onChange={handleEmailChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="Enter password">Password</label>
+                        <Input
+                          name="Enter password"
+                          value={password}
+                          onChange={handlePasswordChange}
+                        />
+                      </div>
+                      <div className="mb-4">
+                        <button type="submit" className="btn btn-primary">
+                          Sign up
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Password</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="exampleInputPassword1"
-                      value={password}
-                      onChange={handlePasswordChange}
-                      placeholder="Enter password"
-                    />
-                  </div>
-                  <div className="modal-footer">
-                    <button type="submit" className="btn btn-primary">
-                      Log In
-                    </button>
-                  </div>
-                </form>
+                </>
               )}
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
