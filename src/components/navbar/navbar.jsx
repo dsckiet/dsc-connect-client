@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import { AuthContext, DispatchContext } from "../../contexts/userContext";
 import styles from "./navbar.module.css";
 import useInputState from "../../hooks/useInputState";
 import axios from "axios";
 import { login } from "./../../utils/routes";
 
-export default function NavBar(props) {
+function NavBar(props) {
   const Data = useContext(AuthContext);
   const Dispatch = useContext(DispatchContext);
 
@@ -23,7 +23,6 @@ export default function NavBar(props) {
   // useEffect(() => {
   //   data.token !== "" ? props.history.push("/") : props.history.push("/login");
   // }, []);
-
   const handleLoginSubmit = async e => {
     e.preventDefault();
     let body = {
@@ -42,7 +41,7 @@ export default function NavBar(props) {
         token: response.headers["x-auth-token"]
       });
       window.location = "/";
-      //props.history.push("/");
+      // props.history.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -100,7 +99,7 @@ export default function NavBar(props) {
                   </li>
                   <li className="nav-item">
                     <NavLink
-                      className=" btn btn-primarynav-link"
+                      className="nav-link"
                       onClick={loginBtn}
                       to="/"
                       data-toggle="modal"
@@ -123,12 +122,12 @@ export default function NavBar(props) {
                       </button>
                     </NavLink>
                   </li>
-                  <li className="nav-item dropdown">
+                  <li className={`nav-item dropdown navLg ${styles.navLg}`}>
                     <p
                       className="nav-link dropdown-toggle"
                       href="#"
                       id="navbarDropdownMenuLink"
-                      role="button"
+                      role=""
                       data-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false"
@@ -156,6 +155,22 @@ export default function NavBar(props) {
                       </NavLink>
                     </div>
                   </li>
+                  <div className={`navSm ${styles.navSM}`}>
+                    <li className="nav-item ">
+                      <NavLink className="nav-link" to="#">
+                        Profile
+                      </NavLink>
+                    </li>
+                    <li className="nav-item">
+                      <NavLink
+                        className="nav-link"
+                        to="/"
+                        onClick={handleLogout}
+                      >
+                        Log Out
+                      </NavLink>
+                    </li>
+                  </div>
                 </>
               )}
             </ul>
@@ -173,7 +188,59 @@ export default function NavBar(props) {
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
-            <div className="modal-header">
+            <div className="p-3">
+              {/* <p>
+                Welcome to <br />
+                <img src="./assets/images/logo.svg" alt="" width="250" />
+              </p> */}
+              <img
+                className="img-fluid"
+                src="./assets/images/loginLogo.png"
+                alt=""
+                width="220"
+              />
+              <button
+                type="button"
+                className="close mt-2"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleLoginSubmit}>
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Email address</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    value={email}
+                    onChange={handleEmailChange}
+                    placeholder="Enter email"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">Password</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="exampleInputPassword1"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    placeholder="Enter password"
+                  />
+                </div>
+                <div className="modal-footer">
+                  <button type="submit" className="btn btn-primary">
+                    Log In
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* <div className="modal-header">
               <h5 className="modal-title" id="exampleModalCenterTitle">
                 Log In
               </h5>
@@ -259,10 +326,12 @@ export default function NavBar(props) {
                   </div>
                 </form>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
     </>
   );
 }
+
+export default withRouter(NavBar);
