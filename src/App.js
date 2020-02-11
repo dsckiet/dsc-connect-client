@@ -8,18 +8,21 @@ import Register from "./components/register/register";
 import Footer from "./components/footer/footer";
 import Update from "./components/update/update";
 import { AuthContext } from "./contexts/userContext";
+import { ToastContainer } from "react-toastify";
 import "./App.css";
+import Profile from "./components/profile/profile";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
+      <ToastContainer />
       <NavBar />
       <Switch>
         <Route exact path="/" component={Homepage} />
-        <Route exact path="/login" component={Login} />
         <PrivateRoute exact path="/add" component={AddForm} />
         <PrivateRoute exact path="/update/:id" component={Update} />
-        <Route exact path="/register" component={Register} />
+        <PrivateRoute exact path="/profile" component={Profile} />
       </Switch>
       <Footer />
     </>
