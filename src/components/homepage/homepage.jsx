@@ -23,10 +23,11 @@ export default function Homepage() {
             "x-auth-token": token
           }
         });
+        console.log(response.data.data);
         setState(response.data.data);
         setLoading(false);
       } catch (error) {
-        console.log(error.response.status);
+        console.log(error.response);
       }
     };
     fetchData();
@@ -34,29 +35,36 @@ export default function Homepage() {
 
   return (
     <>
-      {isLoading ? (
-        <div className={`col-12 text-center ${styles.load}`}>
-          <img className="img-fluid" src="./assets/images/load.gif" alt="" />
-        </div>
-      ) : (
-        <div className="fluid-container mx-auto">
-          <div className="container ">
-            <div className="row">
-              <Search />
-              <div className="col-lg-9 col-md-8 col-sm-8 mt-4">
-                <div className="list">
-                  <h3>
-                    <strong>Developer Student Clubs Listing</strong>
-                  </h3>
-                  <p className={styles.head}>
-                    Connect with communities, the people and help each to make
-                    the sustainable and better world
-                  </p>
+      <div className="fluid-container mx-auto">
+        <div className="container ">
+          <div className="row">
+            <Search />
+            <div className="col-lg-9 col-md-8 col-sm-8 mt-4">
+              <div className="list">
+                <h3>
+                  <strong>Developer Student Clubs Listing</strong>
+                </h3>
+                <p className={styles.head}>
+                  Connect with communities, the people and help each to make the
+                  sustainable and better world
+                </p>
+                {isLoading ? (
+                  <div className={`col-12 text-center ${styles.load}`}>
+                    <img
+                      className="img-fluid"
+                      src="./assets/images/load.gif"
+                      alt=""
+                    />
+                  </div>
+                ) : (
                   <div className="row">
                     {state
-                      ? state.map((item, i) => (
+                      ? state.map((dsc, i) => (
                           <div className="col-lg-4" key={i}>
-                            <div className={`card p-3 mb-4 ${styles.crdHead}`}>
+                            <div
+                              className={`card p-3 mb-4 ${styles.crdHead}`}
+                              style={{ height: "100%" }}
+                            >
                               <div className="row">
                                 <div className="col-12">
                                   <img
@@ -65,104 +73,149 @@ export default function Homepage() {
                                     alt=""
                                     width="40"
                                   />
-                                  DSC VIT Pune
+                                  {dsc.name}
                                 </div>
                               </div>
-                              <Link to="#" className="mt-1">
-                                www.dscvitpune.tech
-                              </Link>
+                              <a
+                                href={dsc.webLink}
+                                className="mt-1"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {dsc.webLink}
+                              </a>
                               <p className="mt-3 mb-0">
-                                Location: <strong>Pune, India</strong>
+                                Location:{" "}
+                                <strong>
+                                  {dsc.city} {dsc.state}, {dsc.country}
+                                </strong>
                               </p>
                               <p>
-                                Team Size: <strong>{item.type}</strong>
-                              </p>
-                              <p>
-                                X: <strong>{item.latitude}</strong>
-                              </p>
-                              <p>
-                                Y : <strong>{item.longitude}</strong>
+                                Team Size: <strong>{dsc.size}</strong>
                               </p>
                               <div>
-                                <span className={`badge mr-2 ${styles.bW}`}>
-                                  Web
-                                </span>
-                                <span className={`badge mr-2 ${styles.bM}`}>
-                                  ML
-                                </span>
-                                <span className={`badge mr-2 ${styles.bC}`}>
-                                  Cloud
-                                </span>
-                                <span className={`badge mr-2 ${styles.bF}`}>
-                                  Flutter
-                                </span>
+                                {dsc.domains ? (
+                                  <span className={`badge mr-2 ${styles.bW}`}>
+                                    {dsc.domains[0]}
+                                  </span>
+                                ) : null}
+                                {dsc.domains ? (
+                                  <span className={`badge mr-2 ${styles.bM}`}>
+                                    {dsc.domains[1]}
+                                  </span>
+                                ) : null}
+                                {dsc.domains ? (
+                                  <span className={`badge mr-2 ${styles.bC}`}>
+                                    {dsc.domains[2]}
+                                  </span>
+                                ) : null}
+                                {dsc.domains ? (
+                                  <span className={`badge mr-2 ${styles.bF}`}>
+                                    {dsc.domains[3]}
+                                  </span>
+                                ) : null}
                               </div>
-                              <div className="mt-3">
+                              <div
+                                className="align-text-bottom mt-3"
+                                style={{ verticalAlign: "bottom" }}
+                              >
                                 <h6>Social Profiles</h6>
-                                <img
-                                  className="img-fluid mr-1"
-                                  src="./assets/images/circle.svg"
-                                  alt=""
-                                  height="10%"
-                                  width="10%"
-                                />
-                                <img
-                                  className="img-fluid mr-1"
-                                  src="./assets/images/circle.svg"
-                                  alt=""
-                                  height="10%"
-                                  width="10%"
-                                />
-                                <img
-                                  className="img-fluid mr-1"
-                                  src="./assets/images/circle.svg"
-                                  alt=""
-                                  height="10%"
-                                  width="10%"
-                                />
-                                <img
-                                  className="img-fluid mr-1"
-                                  src="./assets/images/circle.svg"
-                                  alt=""
-                                  height="10%"
-                                  width="10%"
-                                />
-
-                                <img
-                                  className="img-fluid"
-                                  src="./assets/images/circle.svg"
-                                  alt=""
-                                  height="10%"
-                                  width="10%"
-                                />
+                                <a
+                                  href={dsc.fbLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/facebook.svg"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.instaLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/instagram.svg"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.twitterLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/twitter.png"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.youtubeLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/youtube.png"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.linkedinLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/linkedin.png"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.mediumLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/medium.png"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.githubLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/github.png"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
                               </div>
-                              {item.latitude === 52.5 && data.token !== "" ? (
-                                <>
-                                  <div className="col-lg-3">
-                                    <div className={styles.editBtn}>
-                                      <Link to={`/update/${item._id}`}>
-                                        <img
-                                          className="img-fluid mx-auto"
-                                          src="./assets/images/pencil.svg"
-                                          alt=""
-                                          width="50%"
-                                        />
-                                      </Link>
-                                    </div>
-                                  </div>
-                                </>
-                              ) : null}
                             </div>
                           </div>
                         ))
                       : null}
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

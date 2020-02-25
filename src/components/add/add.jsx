@@ -46,6 +46,7 @@ export default function AddForm(props) {
   const handleChange = option => {
     setOption({ selectedOption: option });
   };
+  console.log(option);
 
   // handleClick = () => {
   //   let domain = []
