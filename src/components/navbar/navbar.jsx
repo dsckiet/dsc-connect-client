@@ -44,8 +44,7 @@ function NavBar(props) {
       toast.success("Log In successfully");
       // props.history.push("/");
     } catch (error) {
-      console.log(error.response);
-      if (error.response.status === 500) toast.error("Invalid user");
+      toast.error("Invalid user");
     }
   };
 
@@ -69,8 +68,8 @@ function NavBar(props) {
       toast.success("Sign Up successfully");
     } catch (error) {
       console.log(error.response);
-      if (error.response.status === 400)
-        toast.error(`${error.response.data.message}`);
+      // if (error.response.status === 400)
+      toast.error(`${error.response.data.message}`);
     }
   };
 

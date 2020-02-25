@@ -4,9 +4,10 @@ import styles from "./search.module.css";
 import Input from "./../common/input";
 
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" }
+  { value: "Mobile", label: "Mobile" },
+  { value: "web", label: "Web" },
+  { value: "ml", label: "ML" },
+  { value: "cloud", label: "Cloud" }
 ];
 
 export default function Search() {
@@ -25,23 +26,31 @@ export default function Search() {
             <form>
               <div className="form-group">
                 <label htmlFor="county" className={styles.crdTxt}>
-                  Country
+                  Location
                 </label>
-                <Select options={options} />
+                <Input name="Location" />
               </div>
               <div className="form-group">
                 <label htmlFor="work" className={styles.crdTxt}>
-                  Works on
+                  Domains
                 </label>
                 <Select options={options} />
               </div>
+              <div className="text-right">
+                <button
+                  type="button"
+                  className={`px-3 btn btn-warning ${styles.resetBtn}`}
+                >
+                  Filter
+                </button>
+              </div>
               <div className="form-group">
-                <label htmlFor="search" className={styles.crdTxt}>
-                  Search
-                </label>
+                <div>
+                  <label className={styles.sideHead}>Search</label>
+                </div>
                 <Input name="Search" />
               </div>
-              <div className="float-right">
+              <div className="text-right">
                 <button
                   type="button"
                   className={`px-3 btn btn-warning ${styles.resetBtn}`}
@@ -80,6 +89,7 @@ export default function Search() {
                 data-target="#collapseOne"
                 aria-expanded="true"
                 aria-controls="collapseOne"
+                onClick={handleArrow}
               >
                 Filter
                 <span className="float-right" onClick={handleArrow}>
@@ -100,23 +110,32 @@ export default function Search() {
               <div className="card-body">
                 <form>
                   <div className="form-group">
-                    <label htmlFor="county">Country</label>
+                    <label htmlFor="county" className={styles.crdTxt}>
+                      Location
+                    </label>
                     <Select options={options} />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="work">Works on</label>
+                    <label htmlFor="work" className={styles.crdTxt}>
+                      Domains
+                    </label>
                     <Select options={options} />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="search">Search</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="search"
-                      placeholder="Type here"
-                    />
+                  <div className="text-right">
+                    <button
+                      type="button"
+                      className={`px-3 btn btn-warning ${styles.resetBtn}`}
+                    >
+                      Filter
+                    </button>
                   </div>
-                  <div className="float-right mb-4">
+                  <div className="form-group">
+                    <div>
+                      <label className={styles.sideHead}>Search</label>
+                    </div>
+                    <Input name="Search" />
+                  </div>
+                  <div className="text-right">
                     <button
                       type="button"
                       className={`px-3 btn btn-warning ${styles.resetBtn}`}

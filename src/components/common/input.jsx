@@ -8,7 +8,6 @@ const Input = ({ name, onChange, value, ...rest }) => {
         {...rest}
         name={name}
         className="form-control"
-        id={name}
         value={value}
         onChange={onChange}
         placeholder={name}
