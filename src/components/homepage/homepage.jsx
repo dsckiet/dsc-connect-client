@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { getdata } from "../../utils/routes";
 import { AuthContext } from "../../contexts/userContext";
-import { Link } from "react-router-dom";
 import styles from "./homepage.module.css";
 import Search from "./../search/search";
 import { toast } from "react-toastify";
@@ -23,7 +22,6 @@ export default function Homepage() {
             "x-auth-token": token
           }
         });
-        console.log(response.data.data);
         setState(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -33,12 +31,28 @@ export default function Homepage() {
     fetchData();
   }, []);
 
+  const getData = async data => {
+    let location, domain, name;
+    if (data.location) location = data.location;
+    if (data.domain) domain = data.domain;
+    if (data.name) location = data.name;
+    console.log(location);
+    console.log(domain);
+    console.log(name);
+
+    // try {
+    //   const response = await axios.get(`${getdata}?location=`)
+    // } catch (error) {
+
+    // }
+  };
+
   return (
     <>
       <div className="fluid-container mx-auto">
         <div className="container ">
           <div className="row">
-            <Search />
+            <Search getData={getData} />
             <div className="col-lg-9 col-md-8 col-sm-8 mt-4">
               <div className="list">
                 <h3>

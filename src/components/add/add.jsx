@@ -46,14 +46,17 @@ export default function AddForm(props) {
   const handleChange = option => {
     setOption({ selectedOption: option });
   };
-  console.log(option);
 
-  // handleClick = () => {
-  //   let domain = []
-  //   let all = this.state;
-  //   all.value.map((item) => {domain.push(item.value)})
-  //   console.log(domain);
-  // }
+  const handleClick = e => {
+    e.preventDefault();
+    let domain = [];
+    let all = option.selectedOption;
+    console.log(all);
+    all.map(item => {
+      domain.push(item.value);
+    });
+    console.log(domain);
+  };
 
   // useEffect(() => {
   //   console.log("chl");
@@ -166,6 +169,7 @@ export default function AddForm(props) {
                   <button
                     type="submit"
                     className={`col-lg-6 col-sm-6 col-md-6 btn btn-primary mx_auto ${styles.add}`}
+                    onClick={handleClick}
                   >
                     Add Community
                   </button>
