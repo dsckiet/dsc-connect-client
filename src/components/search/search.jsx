@@ -11,7 +11,7 @@ const options = [
   { value: "cloud", label: "Cloud" }
 ];
 
-export default function Search({ getData }) {
+export default function Search({ getFilterData, getSearchData }) {
   const [pos, setPos] = useState(true);
   const [location, handleLocation] = useInputState("");
   const [search, handleSearch] = useInputState("");
@@ -31,8 +31,7 @@ export default function Search({ getData }) {
     if (location) data = { location: location, domain: null, name: null };
     if (domain)
       data = { location: location, domain: domain.domain, name: null };
-    if (search) data = { location: location, domian: null, name: search };
-    getData(data);
+    getFilterData(data);
   };
 
   return (
@@ -60,7 +59,7 @@ export default function Search({ getData }) {
                   isClearable
                   onChange={handleChange}
                   options={options}
-                  closeMenuOnSelect={false}
+                  closeMenuOnSelect={true}
                   placeholder="Domain"
                 />
               </div>
@@ -86,7 +85,7 @@ export default function Search({ getData }) {
                   type="button"
                   className={`px-3 btn btn-warning ${styles.resetBtn}`}
                   onClick={() => {
-                    query();
+                    getSearchData(search);
                   }}
                 >
                   Search
@@ -169,7 +168,6 @@ export default function Search({ getData }) {
                     <button
                       type="button"
                       className={`px-3 btn btn-warning ${styles.resetBtn}`}
-                      onClick={getData}
                     >
                       Filter
                     </button>
@@ -188,7 +186,6 @@ export default function Search({ getData }) {
                     <button
                       type="button"
                       className={`px-3 btn btn-warning ${styles.resetBtn}`}
-                      onClick={getData}
                     >
                       Search
                     </button>
