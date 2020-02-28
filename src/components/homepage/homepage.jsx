@@ -1,8 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { getdata } from "../../utils/routes";
-import { AuthContext } from "../../contexts/userContext";
-import { Link } from "react-router-dom";
 import styles from "./homepage.module.css";
 import Search from "./../search/search";
 import { toast } from "react-toastify";
@@ -11,19 +9,11 @@ export default function Homepage() {
   const [state, setState] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  const data = useContext(AuthContext);
-
   useEffect(() => {
     setLoading(true);
-    let token = data.token;
     const fetchData = async () => {
       try {
-        const response = await axios.get(getdata, {
-          headers: {
-            "x-auth-token": token
-          }
-        });
-        console.log(response.data.data);
+        const response = await axios.get(getdata);
         setState(response.data.data);
         setLoading(false);
       } catch (error) {
@@ -33,12 +23,76 @@ export default function Homepage() {
     fetchData();
   }, []);
 
+  const getFilterData = async data => {
+    let location, domain;
+    if (data.location) location = data.location;
+    if (data.domain) domain = data.domain;
+    try {
+      if (location && domain) {
+        setLoading(true);
+        const response = await axios.get(
+          `${getdata}?location=${location}&domain=${domain}`
+        );
+        let len = Object.keys(response.data.data).length;
+        if (len > 0) {
+          setState(response.data.data);
+          setLoading(false);
+        } else {
+          toast.error("Invalid Search");
+          setLoading(false);
+        }
+      } else if (location) {
+        setLoading(true);
+        const response = await axios.get(`${getdata}?location=${location}`);
+        let len = Object.keys(response.data.data).length;
+        if (len > 0) {
+          setState(response.data.data);
+          setLoading(false);
+        } else {
+          toast.error("Invalid Search");
+          setLoading(false);
+        }
+      } else if (domain) {
+        setLoading(true);
+        const response = await axios.get(`${getdata}?domain=${domain}`);
+        let len = Object.keys(response.data.data).length;
+        if (len > 0) {
+          setState(response.data.data);
+          setLoading(false);
+        } else {
+          toast.error("Invalid Search");
+          setLoading(false);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getSearchData = async data => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`${getdata}?name=${data}`);
+      let len = Object.keys(response.data.data).length;
+      if (len > 0) {
+        setState(response.data.data);
+        setLoading(false);
+      } else {
+        toast.error("Invalid Search");
+        setLoading(false);
+      }
+    } catch (error) {}
+  };
+
   return (
     <>
       <div className="fluid-container mx-auto">
         <div className="container ">
           <div className="row">
-            <Search />
+            <Search
+              getFilterData={getFilterData}
+              getSearchData={getSearchData}
+            />
             <div className="col-lg-9 col-md-8 col-sm-8 mt-4">
               <div className="list">
                 <h3>

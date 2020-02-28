@@ -22,7 +22,9 @@ const fields = [
 export default function AddForm(props) {
   let data = useContext(AuthContext);
   const [name, handleName] = useInputState("");
-  const [location, handleLocation] = useInputState("");
+  const [city, handleCity] = useInputState("");
+  const [state, handleState] = useInputState("");
+  const [country, handleCountry] = useInputState("");
   const [size, handleSize] = useInputState("");
   const [web, handleWeb] = useInputState("");
   const [fb, handleFB] = useInputState("");
@@ -46,14 +48,16 @@ export default function AddForm(props) {
   const handleChange = option => {
     setOption({ selectedOption: option });
   };
-  console.log(option);
 
-  // handleClick = () => {
-  //   let domain = []
-  //   let all = this.state;
-  //   all.value.map((item) => {domain.push(item.value)})
-  //   console.log(domain);
-  // }
+  const handleClick = e => {
+    e.preventDefault();
+    let domain = [];
+    let all = option.selectedOption;
+    all.map(item => {
+      return domain.push(item.value);
+    });
+    console.log(domain);
+  };
 
   // useEffect(() => {
   //   console.log("chl");
@@ -88,14 +92,38 @@ export default function AddForm(props) {
             <div className="card-body">
               <form>
                 <div className="form-group">
-                  <Input name="Name" value={name} onChange={handleName} />
+                  <Input
+                    name="Name"
+                    value={name}
+                    onChange={handleName}
+                    placeholder="Name"
+                  />
+                </div>
+                <div className="form-row">
+                  <div className="col-md-6">
+                    <Input
+                      name="City"
+                      value={city}
+                      onChange={handleCity}
+                      placeholder="City"
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <Input
+                      name="State"
+                      value={state}
+                      onChange={handleState}
+                      placeholder="State"
+                    />
+                  </div>
                 </div>
                 <div className="form-row">
                   <div className="col-md-6">
                     <Input
                       name="Location"
-                      value={location}
-                      onChange={handleLocation}
+                      value={country}
+                      onChange={handleCountry}
+                      placeholder="Country"
                     />
                   </div>
                   <div className="col-md-6">
@@ -104,6 +132,7 @@ export default function AddForm(props) {
                       value={size}
                       onChange={handleSize}
                       type="number"
+                      placeholder="Size"
                     />
                   </div>
                 </div>
@@ -124,7 +153,7 @@ export default function AddForm(props) {
                         name="Website"
                         value={web}
                         onChange={handleWeb}
-                        placeholder="Website"
+                        placeholder="Website "
                       />
                     </div>
                     <div className="col-md-6">
@@ -135,6 +164,7 @@ export default function AddForm(props) {
                         name="Instagram"
                         value={insta}
                         onChange={handleInsta}
+                        placeholder="Instagram"
                       />
                     </div>
                     <div className="col-md-6">
@@ -166,6 +196,7 @@ export default function AddForm(props) {
                   <button
                     type="submit"
                     className={`col-lg-6 col-sm-6 col-md-6 btn btn-primary mx_auto ${styles.add}`}
+                    onClick={handleClick}
                   >
                     Add Community
                   </button>

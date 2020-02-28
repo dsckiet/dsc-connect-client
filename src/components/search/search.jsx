@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 import styles from "./search.module.css";
 import Input from "./../common/input";
+import useInputState from "../../hooks/useInputState";
 
 const options = [
   { value: "Mobile", label: "Mobile" },
@@ -10,11 +11,27 @@ const options = [
   { value: "cloud", label: "Cloud" }
 ];
 
-export default function Search() {
+export default function Search({ getFilterData, getSearchData }) {
   const [pos, setPos] = useState(true);
+  const [location, handleLocation] = useInputState("");
+  const [search, handleSearch] = useInputState("");
+  const [domain, handleDomain] = useState();
 
   const handleArrow = () => {
     setPos(!pos);
+  };
+
+  const handleChange = domain => {
+    if (domain) handleDomain({ domain: domain.value });
+    if (!domain) handleDomain({ domain: null });
+  };
+
+  const query = () => {
+    let data = {};
+    if (location) data = { location: location, domain: null, name: null };
+    if (domain)
+      data = { location: location, domain: domain.domain, name: null };
+    getFilterData(data);
   };
 
   return (
@@ -28,18 +45,31 @@ export default function Search() {
                 <label htmlFor="county" className={styles.crdTxt}>
                   Location
                 </label>
-                <Input name="Location" />
+                <Input
+                  name="Location"
+                  value={location}
+                  onChange={handleLocation}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="work" className={styles.crdTxt}>
                   Domains
                 </label>
-                <Select options={options} />
+                <CreatableSelect
+                  isClearable
+                  onChange={handleChange}
+                  options={options}
+                  closeMenuOnSelect={true}
+                  placeholder="Domain"
+                />
               </div>
               <div className="text-right">
                 <button
                   type="button"
                   className={`px-3 btn btn-warning ${styles.resetBtn}`}
+                  onClick={() => {
+                    query();
+                  }}
                 >
                   Filter
                 </button>
@@ -48,12 +78,15 @@ export default function Search() {
                 <div>
                   <label className={styles.sideHead}>Search</label>
                 </div>
-                <Input name="Search" />
+                <Input name="Search" value={search} onChange={handleSearch} />
               </div>
               <div className="text-right">
                 <button
                   type="button"
                   className={`px-3 btn btn-warning ${styles.resetBtn}`}
+                  onClick={() => {
+                    getSearchData(search);
+                  }}
                 >
                   Search
                 </button>
@@ -113,13 +146,23 @@ export default function Search() {
                     <label htmlFor="county" className={styles.crdTxt}>
                       Location
                     </label>
-                    <Select options={options} />
+                    <Input
+                      name="Location"
+                      value={location}
+                      onChange={handleLocation}
+                    />
                   </div>
                   <div className="form-group">
                     <label htmlFor="work" className={styles.crdTxt}>
                       Domains
                     </label>
-                    <Select options={options} />
+                    <CreatableSelect
+                      isClearable
+                      onChange={handleChange}
+                      options={options}
+                      closeMenuOnSelect={false}
+                      placeholder="Domain"
+                    />
                   </div>
                   <div className="text-right">
                     <button
@@ -133,7 +176,11 @@ export default function Search() {
                     <div>
                       <label className={styles.sideHead}>Search</label>
                     </div>
-                    <Input name="Search" />
+                    <Input
+                      name="Search"
+                      value={search}
+                      onChange={handleSearch}
+                    />
                   </div>
                   <div className="text-right">
                     <button
