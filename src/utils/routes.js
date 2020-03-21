@@ -1,4 +1,4 @@
-const url = process.env.REACT_APP_APIURL;
+const url = "http://localhost:5000/api/v1";
 
 export const login = `${url}/users/login`;
 export const register = `${url}/users/register`;

@@ -112,8 +112,9 @@ export default function Homepage() {
                   </div>
                 ) : (
                   <div className="row">
-                    {state
-                      ? state.map((dsc, i) => (
+                    {state.length > 0 ? (
+                      state.map((dsc, i) =>
+                        dsc.isPublished ? (
                           <div className="col-lg-4" key={i}>
                             <div
                               className={`card p-3 mb-4 ${styles.crdHead}`}
@@ -261,8 +262,11 @@ export default function Homepage() {
                               </div>
                             </div>
                           </div>
-                        ))
-                      : null}
+                        ) : null
+                      )
+                    ) : (
+                      <h1>No DSC</h1>
+                    )}
                   </div>
                 )}
               </div>

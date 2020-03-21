@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import useInputState from "../../hooks/useInputState";
-import { AuthContext } from "../../contexts/userContext";
+import { AuthContext, DispatchContext } from "../../contexts/userContext";
 import axios from "axios";
 import { add } from "../../utils/routes";
 import styles from "./add.module.css";
 import CreatableSelect from "react-select/creatable";
 import Input from "./../common/input";
+import { toast } from "react-toastify";
 
 const fields = [
   "Website",
@@ -21,20 +22,21 @@ const fields = [
 
 export default function AddForm(props) {
   let data = useContext(AuthContext);
+  const dispatch = useContext(DispatchContext);
+
   const [name, handleName] = useInputState("");
   const [city, handleCity] = useInputState("");
   const [state, handleState] = useInputState("");
   const [country, handleCountry] = useInputState("");
   const [size, handleSize] = useInputState("");
-  const [web, handleWeb] = useInputState("");
-  const [fb, handleFB] = useInputState("");
-  const [insta, handleInsta] = useInputState("");
-  const [twitter, handleTwitter] = useInputState("");
-  const [medium, handleMedium] = useInputState("");
-  const [git, handleGit] = useInputState("");
-  const [yt, handleYT] = useInputState("");
-  const [In, handleIN] = useInputState("");
-
+  const [webLink, handleWeb] = useInputState("");
+  const [fbLink, handleFB] = useInputState("");
+  const [instaLink, handleInsta] = useInputState("");
+  const [twitterLink, handleTwitter] = useInputState("");
+  const [mediumLink, handleMedium] = useInputState("");
+  const [githubLink, handleGit] = useInputState("");
+  const [youtubeLink, handleYT] = useInputState("");
+  const [linkedinLink, handleIN] = useInputState("");
   const [option, setOption] = useState({ selectedOption: [] });
 
   const defaultOptions = [
@@ -45,41 +47,70 @@ export default function AddForm(props) {
     { value: "Ar/Vr", label: "Ar/Vr" }
   ];
 
-  const handleChange = option => {
+  const handleChangeDomain = option => {
     setOption({ selectedOption: option });
-  };
-
-  const handleClick = e => {
-    e.preventDefault();
-    let domain = [];
-    let all = option.selectedOption;
-    all.map(item => {
-      return domain.push(item.value);
-    });
-    console.log(domain);
   };
 
   // useEffect(() => {
   //   console.log("chl");
   // }, [x, y, type]);
 
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-  //   let body = { latitude: x, longitude: y, type: type };
-  //   try {
-  //     const token = data.token;
-  //     await axios.post(add, body, {
-  //       headers: {
-  //         "x-auth-token": token
-  //       }
-  //     });
-  //     props.history.push("/");
-  //     console.log("API REQUEST");
-  //   } catch (error) {
-  //     console.log(error);
-  //     console.log(error.response);
-  //   }
-  // };
+  const handleSubmit = async e => {
+    e.preventDefault();
+    let domain = [];
+    let all = option.selectedOption;
+    all.map(item => {
+      return domain.push(item.value);
+    });
+    let body = {
+      name,
+      city,
+      state,
+      country,
+      domain,
+      size,
+      webLink,
+      fbLink,
+      instaLink,
+      twitterLink,
+      linkedinLink,
+      mediumLink,
+      githubLink,
+      youtubeLink
+    };
+    try {
+      const token = data.token;
+      await axios.post(add, body, {
+        headers: {
+          "x-auth-token": token
+        }
+      });
+      dispatch({
+        type: "IN",
+        user: {
+          isAdmin: data.isAdmin,
+          isSubmitted: true,
+          isPublished: data.isPublished,
+          isVerified: data.isVerified,
+          name: data.name,
+          email: data.email
+        },
+        token: data.token
+      });
+      // props.history.push("/");
+      toast.success("DSC added successfully");
+      window.location = "/";
+    } catch (error) {
+      if (error.response.data.message === "DSC is already registered") {
+        toast.error(error.response.data.message);
+        window.location = "/";
+      } else {
+        toast.error(error.response.data.message);
+      }
+    }
+  };
+
+  console.log(data);
 
   return (
     <div className="fluid-conatiner">
@@ -120,7 +151,7 @@ export default function AddForm(props) {
                 <div className="form-row">
                   <div className="col-md-6">
                     <Input
-                      name="Location"
+                      name="Country"
                       value={country}
                       onChange={handleCountry}
                       placeholder="Country"
@@ -140,7 +171,7 @@ export default function AddForm(props) {
                   <CreatableSelect
                     value={option.selectedOption}
                     isMulti
-                    onChange={handleChange}
+                    onChange={handleChangeDomain}
                     options={defaultOptions}
                     closeMenuOnSelect={false}
                     placeholder="Domain"
@@ -151,18 +182,22 @@ export default function AddForm(props) {
                     <div className="col-md-6">
                       <Input
                         name="Website"
-                        value={web}
+                        value={webLink}
                         onChange={handleWeb}
                         placeholder="Website "
                       />
                     </div>
                     <div className="col-md-6">
-                      <Input name="Facebook" value={fb} onChange={handleFB} />
+                      <Input
+                        name="Facebook"
+                        value={fbLink}
+                        onChange={handleFB}
+                      />
                     </div>
                     <div className="col-md-6">
                       <Input
                         name="Instagram"
-                        value={insta}
+                        value={instaLink}
                         onChange={handleInsta}
                         placeholder="Instagram"
                       />
@@ -170,25 +205,37 @@ export default function AddForm(props) {
                     <div className="col-md-6">
                       <Input
                         name="Twitter"
-                        value={twitter}
+                        value={twitterLink}
                         onChange={handleTwitter}
                       />
                     </div>
                     <div className="col-md-6">
-                      <Input name="Linked In" value={In} onChange={handleIN} />
+                      <Input
+                        name="Linked In"
+                        value={linkedinLink}
+                        onChange={handleIN}
+                      />
                     </div>
                     <div className="col-md-6">
                       <Input
                         name="Medium"
-                        value={medium}
+                        value={mediumLink}
                         onChange={handleMedium}
                       />
                     </div>
                     <div className="col-md-6">
-                      <Input name="Github" value={git} onChange={handleGit} />
+                      <Input
+                        name="Github"
+                        value={githubLink}
+                        onChange={handleGit}
+                      />
                     </div>
                     <div className="col-md-6">
-                      <Input name="YouTube" value={yt} onChange={handleYT} />
+                      <Input
+                        name="YouTube"
+                        value={youtubeLink}
+                        onChange={handleYT}
+                      />
                     </div>
                   </div>
                 </div>
@@ -196,7 +243,7 @@ export default function AddForm(props) {
                   <button
                     type="submit"
                     className={`col-lg-6 col-sm-6 col-md-6 btn btn-primary mx_auto ${styles.add}`}
-                    onClick={handleClick}
+                    onClick={handleSubmit}
                   >
                     Add Community
                   </button>

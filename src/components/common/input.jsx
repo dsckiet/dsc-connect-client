@@ -12,7 +12,7 @@ const Input = ({ name, onChange, value, ...rest }) => {
         onChange={onChange}
         placeholder={name}
       />
-      {/* {errors && <div className="alert alert-danger mt-2">{errors}</div>} */}
+      {/* {errors && <div className="alert  alert-danger mt-2">{errors}</div>} */}
     </div>
   );
 };

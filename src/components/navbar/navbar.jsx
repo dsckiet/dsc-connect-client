@@ -8,14 +8,17 @@ import { login } from "./../../utils/routes";
 import Input from "./../common/input";
 import { register } from "../../utils/routes";
 import { toast } from "react-toastify";
+import TextField from "@material-ui/core/TextField";
 
 function NavBar(props) {
   const Data = useContext(AuthContext);
   const Dispatch = useContext(DispatchContext);
   const [fname, handlefNameChange] = useInputState("");
   const [lname, handlelNameChange] = useInputState("");
-  const [email, handleEmailChange] = useInputState("");
-  const [password, handlePasswordChange] = useInputState("");
+  const [email, handleEmailChange, noUse, resetEmail] = useInputState("");
+  const [password, handlePasswordChange, noUSEE, resetPassword] = useInputState(
+    ""
+  );
   const [UpIn, setUpIn] = useState();
   const dispatch = useContext(DispatchContext);
 
@@ -29,22 +32,30 @@ function NavBar(props) {
       email: email,
       password: password
     };
+
     try {
       const response = await axios.post(login, body);
       dispatch({
         type: "IN",
         user: {
+          isAdmin: response.data.data.isAdmin,
+          isSubmitted: response.data.data.isSubmitted,
+          isPublished: response.data.data.isPublished,
+          isVerified: response.data.data.isVerified,
           name: response.data.data.name,
-          x: response.data.data.latitude,
-          y: response.data.data.longitude
+          email: response.data.data.email
         },
         token: response.headers["x-auth-token"]
       });
-      window.location = "/";
       toast.success("Log In successfully");
+      window.location = "/";
+      resetEmail();
+      resetPassword();
       // props.history.push("/");
     } catch (error) {
       toast.error("Invalid user");
+      resetEmail();
+      resetPassword();
     }
   };
 
@@ -60,14 +71,24 @@ function NavBar(props) {
       const response = await axios.post(register, body);
       dispatch({
         type: "IN",
-        user: response.data.data.name,
+        user: {
+          isAdmin: response.data.data.isAdmin,
+          isSubmitted: response.data.data.isSubmitted,
+          isPublished: response.data.data.isPublished,
+          isVerified: response.data.data.isVerified,
+          name: response.data.data.name,
+          email: response.data.data.email
+        },
         token: response.headers["x-auth-token"]
       });
       // props.history.push("/");
-      window.location = "/";
       toast.success("Sign Up successfully");
+      window.location = "/";
+      resetEmail();
+      resetPassword();
     } catch (error) {
-      console.log(error.response);
+      resetEmail();
+      resetPassword();
       // if (error.response.status === 400)
       toast.error(`${error.response.data.message}`);
     }
@@ -85,7 +106,7 @@ function NavBar(props) {
   const registerBtn = () => {
     setUpIn("register");
   };
-
+  console.log(Data);
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -143,16 +164,19 @@ function NavBar(props) {
                 </>
               ) : (
                 <>
-                  <li>
-                    <NavLink to="/add">
-                      <button
-                        type="button"
-                        className={`btn btn-success mt-2 mr-2 ${styles.addBtn}`}
-                      >
-                        Add your community
-                      </button>
-                    </NavLink>
-                  </li>
+                  {!Data.user.isSubmitted ? (
+                    <li>
+                      <NavLink to="/add">
+                        <button
+                          type="button"
+                          className={`btn btn-success mt-2 mr-2 ${styles.addBtn}`}
+                        >
+                          Add your community
+                        </button>
+                      </NavLink>
+                    </li>
+                  ) : null}
+
                   <li className={`nav-item dropdown navLg ${styles.navLg}`}>
                     <p
                       className="nav-link dropdown-toggle"
@@ -237,27 +261,24 @@ function NavBar(props) {
                   <div className="px-4">
                     <form onSubmit={handleLoginSubmit}>
                       <div className="form-group">
-                        <label htmlFor="exampleInputEmail1">
-                          Email address
-                        </label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          id="exampleInputEmail1"
+                        <TextField
+                          id="outlined-uncontrolled"
+                          label="Email"
                           value={email}
                           onChange={handleEmailChange}
-                          placeholder="Enter email"
+                          autoFocus
+                          fullWidth
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="exampleInputPassword1">Password</label>
-                        <input
+                        <TextField
+                          id="outlined-uncontrolled"
+                          label="Password"
                           type="password"
-                          className="form-control"
-                          id="exampleInputPassword1"
                           value={password}
                           onChange={handlePasswordChange}
-                          placeholder="Enter password"
+                          autoFocus
+                          fullWidth
                         />
                       </div>
                       <div className="mb-4">
