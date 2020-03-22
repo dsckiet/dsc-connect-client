@@ -1,26 +1,38 @@
-import React, { useState, useContext } from "react";
-import { NavLink, withRouter, Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { NavLink, withRouter } from "react-router-dom";
 import { AuthContext, DispatchContext } from "../../contexts/userContext";
 import styles from "./navbar.module.css";
 import useInputState from "../../hooks/useInputState";
 import axios from "axios";
-import { login } from "./../../utils/routes";
 import Input from "./../common/input";
-import { register } from "../../utils/routes";
+import { login, register, profile } from "../../utils/routes";
 import { toast } from "react-toastify";
+import TextField from "@material-ui/core/TextField";
 
 function NavBar(props) {
   const Data = useContext(AuthContext);
   const Dispatch = useContext(DispatchContext);
   const [fname, handlefNameChange] = useInputState("");
   const [lname, handlelNameChange] = useInputState("");
-  const [email, handleEmailChange] = useInputState("");
-  const [password, handlePasswordChange] = useInputState("");
+  const [email, handleEmailChange, noUse, resetEmail] = useInputState("");
+  const [password, handlePasswordChange, noUSEE, resetPassword] = useInputState(
+    ""
+  );
   const [UpIn, setUpIn] = useState();
   const dispatch = useContext(DispatchContext);
 
+  // let userRef;
   // useEffect(() => {
-  //   data.token !== "" ? props.history.push("/") : props.history.push("/login");
+  //   const fetchData = async () => {
+  //     try {
+
+  //       userRef = user;
+  //       console.log(userRef);
+  //     } catch (error) {
+  //       console.log(error.response);
+  //     }
+  //   };
+  //   fetchData();
   // }, []);
 
   const handleLoginSubmit = async e => {
@@ -29,22 +41,30 @@ function NavBar(props) {
       email: email,
       password: password
     };
+
     try {
       const response = await axios.post(login, body);
       dispatch({
         type: "IN",
         user: {
+          isAdmin: response.data.data.isAdmin,
+          isSubmitted: response.data.data.isSubmitted,
+          isPublished: response.data.data.isPublished,
+          isVerified: response.data.data.isVerified,
           name: response.data.data.name,
-          x: response.data.data.latitude,
-          y: response.data.data.longitude
+          email: response.data.data.email
         },
         token: response.headers["x-auth-token"]
       });
-      window.location = "/";
       toast.success("Log In successfully");
+      window.location = "/";
+      resetEmail();
+      resetPassword();
       // props.history.push("/");
     } catch (error) {
       toast.error("Invalid user");
+      resetEmail();
+      resetPassword();
     }
   };
 
@@ -60,14 +80,24 @@ function NavBar(props) {
       const response = await axios.post(register, body);
       dispatch({
         type: "IN",
-        user: response.data.data.name,
+        user: {
+          isAdmin: response.data.data.isAdmin,
+          isSubmitted: response.data.data.isSubmitted,
+          isPublished: response.data.data.isPublished,
+          isVerified: response.data.data.isVerified,
+          name: response.data.data.name,
+          email: response.data.data.email
+        },
         token: response.headers["x-auth-token"]
       });
       // props.history.push("/");
-      window.location = "/";
       toast.success("Sign Up successfully");
+      window.location = "/";
+      resetEmail();
+      resetPassword();
     } catch (error) {
-      console.log(error.response);
+      resetEmail();
+      resetPassword();
       // if (error.response.status === 400)
       toast.error(`${error.response.data.message}`);
     }
@@ -78,6 +108,21 @@ function NavBar(props) {
     toast.success("Log out successfully");
   };
 
+  const handleAdd = async () => {
+    const token = Data.token;
+    let user = await axios.get(profile, {
+      headers: {
+        "x-auth-token": token
+      }
+    });
+    console.log(user.data.data.isVerified);
+    if (user.data.data.isVerified) {
+      window.location = "/add";
+    } else {
+      toast.error("Email not verified");
+    }
+  };
+
   const loginBtn = () => {
     setUpIn("login");
   };
@@ -85,7 +130,7 @@ function NavBar(props) {
   const registerBtn = () => {
     setUpIn("register");
   };
-
+  console.log(Data);
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -143,16 +188,19 @@ function NavBar(props) {
                 </>
               ) : (
                 <>
-                  <li>
-                    <NavLink to="/add">
-                      <button
-                        type="button"
-                        className={`btn btn-success mt-2 mr-2 ${styles.addBtn}`}
-                      >
-                        Add your community
-                      </button>
-                    </NavLink>
-                  </li>
+                  {!Data.user.isSubmitted ? (
+                    <li>
+                      <NavLink to="#" onClick={handleAdd}>
+                        <button
+                          type="button"
+                          className={`btn btn-success mt-2 mr-2 ${styles.addBtn}`}
+                        >
+                          Add your community
+                        </button>
+                      </NavLink>
+                    </li>
+                  ) : null}
+
                   <li className={`nav-item dropdown navLg ${styles.navLg}`}>
                     <p
                       className="nav-link dropdown-toggle"
@@ -237,27 +285,24 @@ function NavBar(props) {
                   <div className="px-4">
                     <form onSubmit={handleLoginSubmit}>
                       <div className="form-group">
-                        <label htmlFor="exampleInputEmail1">
-                          Email address
-                        </label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          id="exampleInputEmail1"
+                        <TextField
+                          id="outlined-uncontrolled"
+                          label="Email"
                           value={email}
                           onChange={handleEmailChange}
-                          placeholder="Enter email"
+                          autoFocus
+                          fullWidth
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="exampleInputPassword1">Password</label>
-                        <input
+                        <TextField
+                          id="outlined-uncontrolled"
+                          label="Password"
                           type="password"
-                          className="form-control"
-                          id="exampleInputPassword1"
                           value={password}
                           onChange={handlePasswordChange}
-                          placeholder="Enter password"
+                          autoFocus
+                          fullWidth
                         />
                       </div>
                       <div className="mb-4">

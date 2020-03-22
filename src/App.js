@@ -8,7 +8,7 @@ import Register from "./components/register/register";
 import Footer from "./components/footer/footer";
 import Update from "./components/update/update";
 import { AuthContext } from "./contexts/userContext";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "./App.css";
 import Profile from "./components/profile/profile";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,7 +16,17 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <>
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnVisibilityChange
+        draggable
+        pauseOnHover
+      />
       <NavBar />
       <Switch>
         <Route exact path="/" component={Homepage} />
