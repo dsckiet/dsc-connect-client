@@ -1,12 +1,11 @@
-import React, { useState, useContext } from "react";
-import { NavLink, withRouter, Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { NavLink, withRouter } from "react-router-dom";
 import { AuthContext, DispatchContext } from "../../contexts/userContext";
 import styles from "./navbar.module.css";
 import useInputState from "../../hooks/useInputState";
 import axios from "axios";
-import { login } from "./../../utils/routes";
 import Input from "./../common/input";
-import { register } from "../../utils/routes";
+import { login, register, profile } from "../../utils/routes";
 import { toast } from "react-toastify";
 import TextField from "@material-ui/core/TextField";
 
@@ -22,8 +21,18 @@ function NavBar(props) {
   const [UpIn, setUpIn] = useState();
   const dispatch = useContext(DispatchContext);
 
+  // let userRef;
   // useEffect(() => {
-  //   data.token !== "" ? props.history.push("/") : props.history.push("/login");
+  //   const fetchData = async () => {
+  //     try {
+
+  //       userRef = user;
+  //       console.log(userRef);
+  //     } catch (error) {
+  //       console.log(error.response);
+  //     }
+  //   };
+  //   fetchData();
   // }, []);
 
   const handleLoginSubmit = async e => {
@@ -99,6 +108,21 @@ function NavBar(props) {
     toast.success("Log out successfully");
   };
 
+  const handleAdd = async () => {
+    const token = Data.token;
+    let user = await axios.get(profile, {
+      headers: {
+        "x-auth-token": token
+      }
+    });
+    console.log(user.data.data.isVerified);
+    if (user.data.data.isVerified) {
+      window.location = "/add";
+    } else {
+      toast.error("Email not verified");
+    }
+  };
+
   const loginBtn = () => {
     setUpIn("login");
   };
@@ -166,7 +190,7 @@ function NavBar(props) {
                 <>
                   {!Data.user.isSubmitted ? (
                     <li>
-                      <NavLink to="/add">
+                      <NavLink to="#" onClick={handleAdd}>
                         <button
                           type="button"
                           className={`btn btn-success mt-2 mr-2 ${styles.addBtn}`}

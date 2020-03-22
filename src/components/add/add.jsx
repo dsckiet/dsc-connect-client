@@ -57,17 +57,17 @@ export default function AddForm(props) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    let domain = [];
+    let domains = [];
     let all = option.selectedOption;
     all.map(item => {
-      return domain.push(item.value);
+      return domains.push(item.value);
     });
     let body = {
       name,
       city,
       state,
       country,
-      domain,
+      domains,
       size,
       webLink,
       fbLink,
@@ -78,6 +78,7 @@ export default function AddForm(props) {
       githubLink,
       youtubeLink
     };
+    console.log(body);
     try {
       const token = data.token;
       await axios.post(add, body, {
@@ -99,7 +100,7 @@ export default function AddForm(props) {
       });
       // props.history.push("/");
       toast.success("DSC added successfully");
-      window.location = "/";
+      window.location = "/profile";
     } catch (error) {
       if (error.response.data.message === "DSC is already registered") {
         toast.error(error.response.data.message);
