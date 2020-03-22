@@ -47,15 +47,15 @@ function NavBar(props) {
       dispatch({
         type: "IN",
         user: {
+          id: response.data.data._id,
           isAdmin: response.data.data.isAdmin,
           isSubmitted: response.data.data.isSubmitted,
-          isPublished: response.data.data.isPublished,
-          isVerified: response.data.data.isVerified,
           name: response.data.data.name,
           email: response.data.data.email
         },
         token: response.headers["x-auth-token"]
       });
+      console.log(response);
       toast.success("Log In successfully");
       window.location = "/";
       resetEmail();
@@ -81,10 +81,9 @@ function NavBar(props) {
       dispatch({
         type: "IN",
         user: {
+          id: response.data.data._id,
           isAdmin: response.data.data.isAdmin,
           isSubmitted: response.data.data.isSubmitted,
-          isPublished: response.data.data.isPublished,
-          isVerified: response.data.data.isVerified,
           name: response.data.data.name,
           email: response.data.data.email
         },

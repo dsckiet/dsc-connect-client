@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getdata } from "../../utils/routes";
 import styles from "./homepage.module.css";

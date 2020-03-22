@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import useInputState from "../../hooks/useInputState";
 import { AuthContext, DispatchContext } from "../../contexts/userContext";
 import axios from "axios";
@@ -7,18 +7,6 @@ import styles from "./add.module.css";
 import CreatableSelect from "react-select/creatable";
 import Input from "./../common/input";
 import { toast } from "react-toastify";
-
-const fields = [
-  "Website",
-  "Facebook",
-  "Instagram",
-  "Twitter",
-  "LinkedIn",
-  "Medium",
-  "YouTube",
-  "Dribble",
-  "Pinterest"
-];
 
 export default function AddForm(props) {
   let data = useContext(AuthContext);
@@ -89,12 +77,9 @@ export default function AddForm(props) {
       dispatch({
         type: "IN",
         user: {
-          isAdmin: data.isAdmin,
+          ...data,
           isSubmitted: true,
-          isPublished: data.isPublished,
-          isVerified: data.isVerified,
-          name: data.name,
-          email: data.email
+          ...data
         },
         token: data.token
       });
