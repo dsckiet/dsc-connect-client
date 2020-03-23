@@ -40,6 +40,20 @@ function App() {
 }
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const Data = useContext(AuthContext);
+  if (Component === "AddForm") {
+    return (
+      <Route
+        {...rest}
+        render={props =>
+          Data.token !== "" && Data.user.user.isSubmitted ? (
+            <Component {...props} />
+          ) : (
+            <Redirect to="/" />
+          )
+        }
+      />
+    );
+  }
   return (
     <Route
       {...rest}
