@@ -9,6 +9,7 @@ import { login, register, profile } from "../../utils/routes";
 import { toast } from "react-toastify";
 import TextField from "@material-ui/core/TextField";
 import Login from "./../login/login";
+import Register from "./../register/register";
 
 function NavBar(props) {
   const Data = useContext(AuthContext);
@@ -20,7 +21,8 @@ function NavBar(props) {
     ""
   );
   const [UpIn, setUpIn] = useState();
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [loginModalIsOpen, setLoginIsOpen] = useState(false);
+  const [registerModalIsOpen, setRegisterIsOpen] = useState(false);
   const dispatch = useContext(DispatchContext);
 
   // let userRef;
@@ -70,39 +72,39 @@ function NavBar(props) {
   //   }
   // };
 
-  const handleRegisterSubmit = async e => {
-    e.preventDefault();
-    let body = {
-      name: `${fname} ${lname}`,
-      email: email,
-      password: password,
-      isAdmin: true
-    };
-    try {
-      const response = await axios.post(register, body);
-      dispatch({
-        type: "IN",
-        user: {
-          id: response.data.data._id,
-          isAdmin: response.data.data.isAdmin,
-          isSubmitted: response.data.data.isSubmitted,
-          name: response.data.data.name,
-          email: response.data.data.email
-        },
-        token: response.headers["x-auth-token"]
-      });
-      // props.history.push("/");
-      toast.success("Sign Up successfully");
-      window.location = "/";
-      resetEmail();
-      resetPassword();
-    } catch (error) {
-      resetEmail();
-      resetPassword();
-      // if (error.response.status === 400)
-      toast.error(`${error.response.data.message}`);
-    }
-  };
+  // const handleRegisterSubmit = async e => {
+  //   e.preventDefault();
+  //   let body = {
+  //     name: `${fname} ${lname}`,
+  //     email: email,
+  //     password: password,
+  //     isAdmin: true
+  //   };
+  //   try {
+  //     const response = await axios.post(register, body);
+  //     dispatch({
+  //       type: "IN",
+  //       user: {
+  //         id: response.data.data._id,
+  //         isAdmin: response.data.data.isAdmin,
+  //         isSubmitted: response.data.data.isSubmitted,
+  //         name: response.data.data.name,
+  //         email: response.data.data.email
+  //       },
+  //       token: response.headers["x-auth-token"]
+  //     });
+  //     // props.history.push("/");
+  //     toast.success("Sign Up successfully");
+  //     window.location = "/";
+  //     resetEmail();
+  //     resetPassword();
+  //   } catch (error) {
+  //     resetEmail();
+  //     resetPassword();
+  //     // if (error.response.status === 400)
+  //     toast.error(`${error.response.data.message}`);
+  //   }
+  // };
 
   const handleLogout = () => {
     Dispatch({ type: "OUT" });
@@ -124,16 +126,11 @@ function NavBar(props) {
     }
   };
 
-  const loginBtn = () => {
-    setUpIn("login");
+  const closeLoginModal = value => {
+    setLoginIsOpen(value);
   };
-
-  const registerBtn = () => {
-    setUpIn("register");
-  };
-
-  const closeModal = value => {
-    setIsOpen(value);
+  const closeRegisterModal = value => {
+    setRegisterIsOpen(value);
   };
   return (
     <>
@@ -169,10 +166,9 @@ function NavBar(props) {
                   <li className="nav-item ">
                     <NavLink
                       className="nav-link"
-                      onClick={registerBtn}
+                      onClick={() => closeRegisterModal(true)}
                       to="/"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
+                      type="button"
                     >
                       Sign Up
                     </NavLink>
@@ -180,7 +176,7 @@ function NavBar(props) {
                   <li className="nav-item">
                     <NavLink
                       className="nav-link"
-                      onClick={() => closeModal(true)}
+                      onClick={() => closeLoginModal(true)}
                       to="/"
                       type="button"
                     >
@@ -258,129 +254,11 @@ function NavBar(props) {
           </div>
         </div>
       </nav>
-
-      <div
-        className="modal fade"
-        id="exampleModalCenter"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="p-2">
-              {UpIn === "login" ? (
-                <>
-                  <div className="card-head pt-3 pl-4">
-                    <p
-                      style={{
-                        fontSize: "24px",
-                        fontWeight: "700",
-                        color: "#707070"
-                      }}
-                    >
-                      <span style={{ color: "#DB4437" }}>Welcome,</span> <br />{" "}
-                      <span>Log In</span> to continue
-                    </p>
-                  </div>
-                  <div className="px-4">
-                    <form>
-                      <div className="form-group">
-                        <TextField
-                          id="outlined-uncontrolled"
-                          label="Email"
-                          value={email}
-                          onChange={handleEmailChange}
-                          autoFocus
-                          fullWidth
-                        />
-                      </div>
-                      <div className="form-group">
-                        <TextField
-                          id="outlined-uncontrolled"
-                          label="Password"
-                          type="password"
-                          value={password}
-                          onChange={handlePasswordChange}
-                          autoFocus
-                          fullWidth
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <button type="submit" className="btn btn-primary">
-                          Sign In
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="card-head pt-3 pl-4">
-                    <p
-                      style={{
-                        fontSize: "24px",
-                        fontWeight: "700",
-                        color: "#707070"
-                      }}
-                    >
-                      <span style={{ color: "#DB4437" }}>Welcome,</span> <br />{" "}
-                      <span>Sign Up</span> to continue
-                    </p>
-                  </div>
-                  <div className="px-4">
-                    <form onSubmit={handleRegisterSubmit}>
-                      <div className="form-row">
-                        <div className="col-md-6">
-                          <label htmlFor="Enter first name">First Name</label>
-                          <Input
-                            name="Enter first name"
-                            value={fname}
-                            onChange={handlefNameChange}
-                          />
-                        </div>
-                        <div className="col-md-6">
-                          <label htmlFor="Enter second name">Last Name</label>
-                          <Input
-                            name="Enter second name"
-                            value={lname}
-                            onChange={handlelNameChange}
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="Enter email">Email address</label>
-                        <Input
-                          name="Enter email"
-                          value={email}
-                          onChange={handleEmailChange}
-                          type="email"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="Enter password">Password</label>
-                        <Input
-                          name="Enter password"
-                          type="password"
-                          value={password}
-                          onChange={handlePasswordChange}
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <button type="submit" className="btn btn-primary">
-                          Sign up
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      <Login closeModal={closeModal} modalIsOpen={modalIsOpen} />
+      <Login closeModal={closeLoginModal} modalIsOpen={loginModalIsOpen} />
+      <Register
+        closeModal={closeRegisterModal}
+        modalIsOpen={registerModalIsOpen}
+      />
     </>
   );
 }

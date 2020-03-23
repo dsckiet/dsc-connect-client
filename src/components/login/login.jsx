@@ -4,7 +4,19 @@ import axios from "axios";
 import { login } from "../../utils/routes";
 import { AuthContext, DispatchContext } from "../../contexts/userContext";
 import { toast } from "react-toastify";
-import Modal from "react-modal";
+import Modal from "react-responsive-modal";
+import styles from "./login.module.css";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)"
+  }
+};
 
 export default function Login({ modalIsOpen, closeModal }) {
   const [email, handleEmailChange, e, resetEmail] = useInputState("");
@@ -50,35 +62,34 @@ export default function Login({ modalIsOpen, closeModal }) {
   };
 
   return (
-    <Modal isOpen={modalIsOpen} onRequestClose={() => closeModal(false)}>
-      <h1>Hello</h1>
+    <Modal open={modalIsOpen} onClose={() => closeModal(false)} center>
+      <div className="container">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="exampleInputEmail1">Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              id="exampleInputEmail1"
+              value={email}
+              onChange={handleEmailChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="exampleInputPassword1">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              id="exampleInputPassword1"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Log In
+          </button>
+        </form>
+      </div>
     </Modal>
-    // <div className="container">
-    //   <form onSubmit={handleSubmit}>
-    //     <div className="form-group">
-    //       <label htmlFor="exampleInputEmail1">Email address</label>
-    //       <input
-    //         type="email"
-    //         className="form-control"
-    //         id="exampleInputEmail1"
-    //         value={email}
-    //         onChange={handleEmailChange}
-    //       />
-    //     </div>
-    //     <div className="form-group">
-    //       <label htmlFor="exampleInputPassword1">Password</label>
-    //       <input
-    //         type="password"
-    //         className="form-control"
-    //         id="exampleInputPassword1"
-    //         value={password}
-    //         onChange={handlePasswordChange}
-    //       />
-    //     </div>
-    //     <button type="submit" className="btn btn-primary">
-    //       Log In
-    //     </button>
-    //   </form>
-    // </div>
   );
 }
