@@ -85,17 +85,17 @@ export default function AddForm(props) {
           "x-auth-token": token
         }
       });
-      Dispatch({
-        type: "ADD",
-        user: {
-          id: Data.user.user.id,
-          isAdmin: Data.user.user.isAdmin,
-          isSubmitted: true,
-          name: Data.user.user.name,
-          email: Data.user.user.email
-        },
-        token: Data.token
-      });
+      // Dispatch({
+      //   type: "ADD",
+      //   user: {
+      //     id: Data.user.user.id,
+      //     isAdmin: Data.user.user.isAdmin,
+      //     isSubmitted: true,
+      //     name: Data.user.user.name,
+      //     email: Data.user.user.email
+      //   },
+      //   token: Data.token
+      // });
       // props.history.push("/");
       toast.success("DSC added successfully");
       window.location = "/profile";
