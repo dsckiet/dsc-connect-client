@@ -8,6 +8,7 @@ import Input from "./../common/input";
 import { login, register, profile } from "../../utils/routes";
 import { toast } from "react-toastify";
 import TextField from "@material-ui/core/TextField";
+import Login from "./../login/login";
 
 function NavBar(props) {
   const Data = useContext(AuthContext);
@@ -19,6 +20,7 @@ function NavBar(props) {
     ""
   );
   const [UpIn, setUpIn] = useState();
+  const [modalIsOpen, setIsOpen] = useState(false);
   const dispatch = useContext(DispatchContext);
 
   // let userRef;
@@ -35,38 +37,38 @@ function NavBar(props) {
   //   fetchData();
   // }, []);
 
-  const handleLoginSubmit = async e => {
-    e.preventDefault();
-    let body = {
-      email: email,
-      password: password
-    };
+  // const handleLoginSubmit = async e => {
+  //   e.preventDefault();
+  //   let body = {
+  //     email: email,
+  //     password: password
+  //   };
 
-    try {
-      const response = await axios.post(login, body);
-      dispatch({
-        type: "IN",
-        user: {
-          id: response.data.data._id,
-          isAdmin: response.data.data.isAdmin,
-          isSubmitted: response.data.data.isSubmitted,
-          name: response.data.data.name,
-          email: response.data.data.email
-        },
-        token: response.headers["x-auth-token"]
-      });
-      console.log(response);
-      toast.success("Log In successfully");
-      window.location = "/";
-      resetEmail();
-      resetPassword();
-      // props.history.push("/");
-    } catch (error) {
-      toast.error("Invalid user");
-      resetEmail();
-      resetPassword();
-    }
-  };
+  //   try {
+  //     const response = await axios.post(login, body);
+  //     dispatch({
+  //       type: "IN",
+  //       user: {
+  //         id: response.data.data._id,
+  //         isAdmin: response.data.data.isAdmin,
+  //         isSubmitted: response.data.data.isSubmitted,
+  //         name: response.data.data.name,
+  //         email: response.data.data.email
+  //       },
+  //       token: response.headers["x-auth-token"]
+  //     });
+  //     console.log(response);
+  //     toast.success("Log In successfully");
+  //     window.location = "/";
+  //     resetEmail();
+  //     resetPassword();
+  //     // props.history.push("/");
+  //   } catch (error) {
+  //     toast.error("Invalid user");
+  //     resetEmail();
+  //     resetPassword();
+  //   }
+  // };
 
   const handleRegisterSubmit = async e => {
     e.preventDefault();
@@ -129,7 +131,10 @@ function NavBar(props) {
   const registerBtn = () => {
     setUpIn("register");
   };
-  console.log(Data);
+
+  const closeModal = value => {
+    setIsOpen(value);
+  };
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -175,10 +180,8 @@ function NavBar(props) {
                   <li className="nav-item">
                     <NavLink
                       className="nav-link"
-                      onClick={loginBtn}
+                      onClick={() => closeModal(true)}
                       to="/"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
                       type="button"
                     >
                       Sign In
@@ -282,7 +285,7 @@ function NavBar(props) {
                     </p>
                   </div>
                   <div className="px-4">
-                    <form onSubmit={handleLoginSubmit}>
+                    <form>
                       <div className="form-group">
                         <TextField
                           id="outlined-uncontrolled"
@@ -377,6 +380,7 @@ function NavBar(props) {
           </div>
         </div>
       </div>
+      <Login closeModal={closeModal} modalIsOpen={modalIsOpen} />
     </>
   );
 }
