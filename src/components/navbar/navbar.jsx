@@ -17,10 +17,10 @@ function NavBar(props) {
     toast.success("Log out successfully");
   };
 
-  const closeLoginModal = value => {
+  const toggleLoginModal = value => {
     setLoginIsOpen(value);
   };
-  const closeRegisterModal = value => {
+  const toggleRegisterModal = value => {
     setRegisterIsOpen(value);
   };
   return (
@@ -57,21 +57,21 @@ function NavBar(props) {
                   <li className="nav-item ">
                     <NavLink
                       className="nav-link"
-                      onClick={() => closeRegisterModal(true)}
+                      onClick={() => toggleRegisterModal(true)}
                       to="/"
                       type="button"
                     >
-                      Sign Up
+                      Register
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink
                       className="nav-link"
-                      onClick={() => closeLoginModal(true)}
+                      onClick={() => toggleLoginModal(true)}
                       to="/"
                       type="button"
                     >
-                      Sign In
+                      Log In
                     </NavLink>
                   </li>
                 </>
@@ -145,9 +145,9 @@ function NavBar(props) {
           </div>
         </div>
       </nav>
-      <Login closeModal={closeLoginModal} modalIsOpen={loginModalIsOpen} />
+      <Login toggleModal={toggleLoginModal} modalIsOpen={loginModalIsOpen} />
       <Register
-        closeModal={closeRegisterModal}
+        toggleModal={toggleRegisterModal}
         modalIsOpen={registerModalIsOpen}
       />
     </>

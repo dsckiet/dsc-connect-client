@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import useInputState from "../../hooks/useInputState";
 import axios from "axios";
 import { login } from "../../utils/routes";
-import { AuthContext, DispatchContext } from "../../contexts/userContext";
+import { DispatchContext } from "../../contexts/userContext";
 import { toast } from "react-toastify";
 import Modal from "react-responsive-modal";
-import styles from "./login.module.css";
 
 const customStyles = {
   content: {
@@ -18,15 +17,10 @@ const customStyles = {
   }
 };
 
-export default function Login({ modalIsOpen, closeModal }) {
+export default function Login({ modalIsOpen, toggleModal }) {
   const [email, handleEmailChange, e, resetEmail] = useInputState("");
   const [password, handlePasswordChange, p, resetPassword] = useInputState("");
   const dispatch = useContext(DispatchContext);
-  const data = useContext(AuthContext);
-
-  // useEffect(() => {
-  //   data.token !== "" ? props.history.push("/") : props.history.push("/login");
-  // }, []);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -50,10 +44,9 @@ export default function Login({ modalIsOpen, closeModal }) {
       });
       console.log(response);
       toast.success("Log In successfully");
-      window.location = "/";
+      toggleModal(false);
       resetEmail();
       resetPassword();
-      // props.history.push("/");
     } catch (error) {
       toast.error("Invalid user");
       resetEmail();
@@ -62,7 +55,7 @@ export default function Login({ modalIsOpen, closeModal }) {
   };
 
   return (
-    <Modal open={modalIsOpen} onClose={() => closeModal(false)} center>
+    <Modal open={modalIsOpen} onClose={() => toggleModal(false)} center>
       <div className="container">
         <form onSubmit={handleSubmit}>
           <div className="form-group">

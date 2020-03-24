@@ -6,35 +6,12 @@ import { register } from "../../utils/routes";
 import { toast } from "react-toastify";
 import Modal from "react-responsive-modal";
 
-export default function Register({ modalIsOpen, closeModal }) {
+export default function Register({ modalIsOpen, toggleModal }) {
   const [fname, handlefNameChange] = useInputState("");
   const [lname, handlelNameChange] = useInputState("");
   const [email, handelEmailChange, e, resetEmail] = useInputState("");
   const [password, handlePasswordChange, p, resetPassword] = useInputState("");
   const dispatch = useContext(DispatchContext);
-  const data = useContext(AuthContext);
-
-  // useEffect(() => {
-  //   data.token !== ""
-  //     ? props.history.push("/")
-  //     : props.history.push("/register");
-  // }, []);
-
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-  //   let body = { name: name, email: email, password: password, isAdmin: true };
-  //   try {
-  //     const response = await axios.post(register, body);
-  //     dispatch({
-  //       type: "IN",
-  //       user: response.data.data.name,
-  //       token: response.headers["x-auth-token"]
-  //     });
-  //     props.history.push("/");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -57,21 +34,20 @@ export default function Register({ modalIsOpen, closeModal }) {
         },
         token: response.headers["x-auth-token"]
       });
-      // props.history.push("/");
       toast.success("Sign Up successfully");
-      window.location = "/";
+      toggleModal(false);
       resetEmail();
       resetPassword();
     } catch (error) {
       resetEmail();
       resetPassword();
       // if (error.response.status === 400)
-      toast.error(`${error.response.data.message}`);
+      toast.error(error.response.data.message);
     }
   };
 
   return (
-    <Modal open={modalIsOpen} onClose={() => closeModal(false)} center>
+    <Modal open={modalIsOpen} onClose={() => toggleModal(false)} center>
       <div className="container">
         <form onSubmit={handleSubmit}>
           <div className="form-row">

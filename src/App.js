@@ -29,6 +29,7 @@ function App() {
       />
       <NavBar />
       <Switch>
+        {/* <Route exact path="/login" component={Login} /> */}
         <Route exact path="/" component={Homepage} />
         <PrivateRoute exact path="/add" component={AddForm} />
         <PrivateRoute exact path="/update/:id" component={Update} />
