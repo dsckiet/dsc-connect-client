@@ -85,27 +85,32 @@ export default function AddForm(props) {
           "x-auth-token": token
         }
       });
-      // Dispatch({
-      //   type: "ADD",
-      //   user: {
-      //     id: Data.user.user.id,
-      //     isAdmin: Data.user.user.isAdmin,
-      //     isSubmitted: true,
-      //     name: Data.user.user.name,
-      //     email: Data.user.user.email
-      //   },
-      //   token: Data.token
-      // });
-      // props.history.push("/");
+      let user = await axios.get(profile, {
+        headers: { "x-auth-token": token }
+      });
+      console.log(user);
+      Dispatch({
+        type: "ADD",
+        user: {
+          id: user.data.data._id,
+          isAdmin: user.data.data.isAdmin,
+          isSubmitted: user.data.data.isSubmitted,
+          name: user.data.data.name,
+          email: user.data.data.email
+        },
+        token: Data.token
+      });
+      props.history.push("/profile");
       toast.success("DSC added successfully");
-      window.location = "/profile";
     } catch (error) {
-      if (error.response.data.message === "DSC is already registered") {
-        toast.error(error.response.data.message);
-        window.location = "/";
-      } else {
-        toast.error(error.response.data.message);
-      }
+      console.log(error.message);
+      console.log(error);
+      // if (error.response.data.message === "DSC is already registered") {
+      //   toast.error(error.response.data.message);
+      //   props.history.push("/");
+      // } else {
+      //   toast.error(error.response.data.message);
+      // }
     }
   };
 

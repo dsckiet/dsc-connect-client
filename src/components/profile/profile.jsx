@@ -11,10 +11,10 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let response = await axios.get(`${getdata}?id=${Data.user.user.id}`);
+        let response = await axios.get(`${getdata}?id=${Data.user.id}`);
         setProfile(response.data);
       } catch (error) {
-        console.log(error.response);
+        console.log(error);
       }
     };
     fetchData();
