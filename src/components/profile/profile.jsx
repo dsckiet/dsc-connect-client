@@ -5,20 +5,21 @@ import { getdata } from "../../utils/routes";
 import axios from "axios";
 
 export default function Profile() {
-  let data = useContext(AuthContext);
+  let Data = useContext(AuthContext);
   const [profile, setProfile] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let response = await axios.get(`${getdata}?id=${data.user.user.id}`);
+        let response = await axios.get(`${getdata}?id=${Data.user.id}`);
         setProfile(response.data);
       } catch (error) {
-        console.log(error.response);
+        console.log(error);
       }
     };
     fetchData();
   }, []);
+  console.log(Data);
   return (
     <div className="container">
       <div className="col-lg-10 mx-auto">

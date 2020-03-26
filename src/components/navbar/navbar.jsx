@@ -1,135 +1,28 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { AuthContext, DispatchContext } from "../../contexts/userContext";
 import styles from "./navbar.module.css";
-import useInputState from "../../hooks/useInputState";
-import axios from "axios";
-import Input from "./../common/input";
-import { login, register, profile } from "../../utils/routes";
 import { toast } from "react-toastify";
-import TextField from "@material-ui/core/TextField";
+import Login from "./../login/login";
+import Register from "./../register/register";
 
 function NavBar(props) {
   const Data = useContext(AuthContext);
   const Dispatch = useContext(DispatchContext);
-  const [fname, handlefNameChange] = useInputState("");
-  const [lname, handlelNameChange] = useInputState("");
-  const [email, handleEmailChange, noUse, resetEmail] = useInputState("");
-  const [password, handlePasswordChange, noUSEE, resetPassword] = useInputState(
-    ""
-  );
-  const [UpIn, setUpIn] = useState();
-  const dispatch = useContext(DispatchContext);
-
-  // let userRef;
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-
-  //       userRef = user;
-  //       console.log(userRef);
-  //     } catch (error) {
-  //       console.log(error.response);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
-  const handleLoginSubmit = async e => {
-    e.preventDefault();
-    let body = {
-      email: email,
-      password: password
-    };
-
-    try {
-      const response = await axios.post(login, body);
-      dispatch({
-        type: "IN",
-        user: {
-          id: response.data.data._id,
-          isAdmin: response.data.data.isAdmin,
-          isSubmitted: response.data.data.isSubmitted,
-          name: response.data.data.name,
-          email: response.data.data.email
-        },
-        token: response.headers["x-auth-token"]
-      });
-      console.log(response);
-      toast.success("Log In successfully");
-      window.location = "/";
-      resetEmail();
-      resetPassword();
-      // props.history.push("/");
-    } catch (error) {
-      toast.error("Invalid user");
-      resetEmail();
-      resetPassword();
-    }
-  };
-
-  const handleRegisterSubmit = async e => {
-    e.preventDefault();
-    let body = {
-      name: `${fname} ${lname}`,
-      email: email,
-      password: password,
-      isAdmin: true
-    };
-    try {
-      const response = await axios.post(register, body);
-      dispatch({
-        type: "IN",
-        user: {
-          id: response.data.data._id,
-          isAdmin: response.data.data.isAdmin,
-          isSubmitted: response.data.data.isSubmitted,
-          name: response.data.data.name,
-          email: response.data.data.email
-        },
-        token: response.headers["x-auth-token"]
-      });
-      // props.history.push("/");
-      toast.success("Sign Up successfully");
-      window.location = "/";
-      resetEmail();
-      resetPassword();
-    } catch (error) {
-      resetEmail();
-      resetPassword();
-      // if (error.response.status === 400)
-      toast.error(`${error.response.data.message}`);
-    }
-  };
+  const [loginModalIsOpen, setLoginIsOpen] = useState(false);
+  const [registerModalIsOpen, setRegisterIsOpen] = useState(false);
 
   const handleLogout = () => {
     Dispatch({ type: "OUT" });
     toast.success("Log out successfully");
   };
 
-  const handleAdd = async () => {
-    const token = Data.token;
-    let user = await axios.get(profile, {
-      headers: {
-        "x-auth-token": token
-      }
-    });
-    console.log(user.data.data.isVerified);
-    if (user.data.data.isVerified) {
-      window.location = "/add";
-    } else {
-      toast.error("Email not verified");
-    }
+  const toggleLoginModal = value => {
+    setLoginIsOpen(value);
   };
-
-  const loginBtn = () => {
-    setUpIn("login");
+  const toggleRegisterModal = value => {
+    setRegisterIsOpen(value);
   };
-
-  const registerBtn = () => {
-    setUpIn("register");
-  };
-  console.log(Data);
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -164,24 +57,21 @@ function NavBar(props) {
                   <li className="nav-item ">
                     <NavLink
                       className="nav-link"
-                      onClick={registerBtn}
+                      onClick={() => toggleRegisterModal(true)}
                       to="/"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
+                      type="button"
                     >
-                      Sign Up
+                      Register
                     </NavLink>
                   </li>
                   <li className="nav-item">
                     <NavLink
                       className="nav-link"
-                      onClick={loginBtn}
+                      onClick={() => toggleLoginModal(true)}
                       to="/"
-                      data-toggle="modal"
-                      data-target="#exampleModalCenter"
                       type="button"
                     >
-                      Sign In
+                      Log In
                     </NavLink>
                   </li>
                 </>
@@ -189,7 +79,7 @@ function NavBar(props) {
                 <>
                   {!Data.user.isSubmitted ? (
                     <li>
-                      <NavLink to="#" onClick={handleAdd}>
+                      <NavLink to="/add">
                         <button
                           type="button"
                           className={`btn btn-success mt-2 mr-2 ${styles.addBtn}`}
@@ -255,128 +145,11 @@ function NavBar(props) {
           </div>
         </div>
       </nav>
-
-      <div
-        className="modal fade"
-        id="exampleModalCenter"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="p-2">
-              {UpIn === "login" ? (
-                <>
-                  <div className="card-head pt-3 pl-4">
-                    <p
-                      style={{
-                        fontSize: "24px",
-                        fontWeight: "700",
-                        color: "#707070"
-                      }}
-                    >
-                      <span style={{ color: "#DB4437" }}>Welcome,</span> <br />{" "}
-                      <span>Log In</span> to continue
-                    </p>
-                  </div>
-                  <div className="px-4">
-                    <form onSubmit={handleLoginSubmit}>
-                      <div className="form-group">
-                        <TextField
-                          id="outlined-uncontrolled"
-                          label="Email"
-                          value={email}
-                          onChange={handleEmailChange}
-                          autoFocus
-                          fullWidth
-                        />
-                      </div>
-                      <div className="form-group">
-                        <TextField
-                          id="outlined-uncontrolled"
-                          label="Password"
-                          type="password"
-                          value={password}
-                          onChange={handlePasswordChange}
-                          autoFocus
-                          fullWidth
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <button type="submit" className="btn btn-primary">
-                          Sign In
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="card-head pt-3 pl-4">
-                    <p
-                      style={{
-                        fontSize: "24px",
-                        fontWeight: "700",
-                        color: "#707070"
-                      }}
-                    >
-                      <span style={{ color: "#DB4437" }}>Welcome,</span> <br />{" "}
-                      <span>Sign Up</span> to continue
-                    </p>
-                  </div>
-                  <div className="px-4">
-                    <form onSubmit={handleRegisterSubmit}>
-                      <div className="form-row">
-                        <div className="col-md-6">
-                          <label htmlFor="Enter first name">First Name</label>
-                          <Input
-                            name="Enter first name"
-                            value={fname}
-                            onChange={handlefNameChange}
-                          />
-                        </div>
-                        <div className="col-md-6">
-                          <label htmlFor="Enter second name">Last Name</label>
-                          <Input
-                            name="Enter second name"
-                            value={lname}
-                            onChange={handlelNameChange}
-                          />
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="Enter email">Email address</label>
-                        <Input
-                          name="Enter email"
-                          value={email}
-                          onChange={handleEmailChange}
-                          type="email"
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="Enter password">Password</label>
-                        <Input
-                          name="Enter password"
-                          type="password"
-                          value={password}
-                          onChange={handlePasswordChange}
-                        />
-                      </div>
-                      <div className="mb-4">
-                        <button type="submit" className="btn btn-primary">
-                          Sign up
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+      <Login toggleModal={toggleLoginModal} modalIsOpen={loginModalIsOpen} />
+      <Register
+        toggleModal={toggleRegisterModal}
+        modalIsOpen={registerModalIsOpen}
+      />
     </>
   );
 }

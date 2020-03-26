@@ -7,23 +7,15 @@ import { edit } from "../../utils/routes";
 import { toast } from "react-toastify";
 
 export default function Update(props) {
-  const data = useContext(AuthContext);
+  const Data = useContext(AuthContext);
   const [x, handleChangeX, setX] = useInputState(0);
   const [y, handleChangeY, setY] = useInputState(0);
   useEffect(() => {
-    let token = data.token;
+    let token = Data.token;
     const fetchData = async () => {
       try {
-        const response = await axios.get(getdata, {
-          headers: {
-            "x-auth-token": token
-          }
-        });
-        let editData = response.data.data.filter(place => {
-          if (place._id === props.match.params.id) return place;
-        });
-        setX(editData[0].latitude);
-        setY(editData[0].longitude);
+        let response = await axios.get(`${getdata}?id=${Data.user.user.id}`);
+        console.log(response);
       } catch (error) {
         console.log(error);
       }
@@ -41,7 +33,7 @@ export default function Update(props) {
       };
       await axios.put(`${edit}/${props.match.params.id}`, body, {
         headers: {
-          "x-auth-token": data.token
+          "x-auth-token": Data.token
         }
       });
       toast.info("Status pending");
