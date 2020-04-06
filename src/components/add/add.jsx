@@ -14,7 +14,7 @@ const defaultOptions = [
   { value: "Mobile", label: "Mobile" },
   { value: "ML", label: "ML" },
   { value: "Cloud", label: "Cloud" },
-  { value: "Ar/Vr", label: "Ar/Vr" }
+  { value: "Ar/Vr", label: "Ar/Vr" },
 ];
 export default function AddForm(props) {
   let Data = useContext(AuthContext);
@@ -34,16 +34,19 @@ export default function AddForm(props) {
   const [linkedinLink, handleIN] = useInputState("");
   const [option, setOption] = useState({ selectedOption: [] });
   const [verify, setVerify] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       try {
         const token = Data.token;
         let user = await axios.get(profile, {
           headers: {
-            "x-auth-token": token
-          }
+            "x-auth-token": token,
+          },
         });
         setVerify(user.data.data.isVerified);
+        setLoading(false);
       } catch (error) {
         console.log(error.response);
       }
@@ -51,15 +54,15 @@ export default function AddForm(props) {
     fetchData();
   }, []);
 
-  const handleChangeDomain = option => {
+  const handleChangeDomain = (option) => {
     setOption({ selectedOption: option });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let domains = [];
     let all = option.selectedOption;
-    all.map(item => {
+    all.map((item) => {
       return domains.push(item.value);
     });
     let body = {
@@ -76,17 +79,18 @@ export default function AddForm(props) {
       linkedinLink,
       mediumLink,
       githubLink,
-      youtubeLink
+      youtubeLink,
     };
+    console.log(body);
     try {
       const token = Data.token;
       await axios.post(add, body, {
         headers: {
-          "x-auth-token": token
-        }
+          "x-auth-token": token,
+        },
       });
       let user = await axios.get(profile, {
-        headers: { "x-auth-token": token }
+        headers: { "x-auth-token": token },
       });
       console.log(user);
       Dispatch({
@@ -96,15 +100,15 @@ export default function AddForm(props) {
           isAdmin: user.data.data.isAdmin,
           isSubmitted: user.data.data.isSubmitted,
           name: user.data.data.name,
-          email: user.data.data.email
+          email: user.data.data.email,
         },
-        token: Data.token
+        token: Data.token,
       });
       props.history.push("/profile");
       toast.success("DSC added successfully");
     } catch (error) {
       console.log(error.message);
-      console.log(error);
+      console.log(error.response.data.message);
       // if (error.response.data.message === "DSC is already registered") {
       //   toast.error(error.response.data.message);
       //   props.history.push("/");
@@ -118,150 +122,156 @@ export default function AddForm(props) {
 
   return (
     <div className="fluid-conatiner">
-      <div className="container">
-        {verify ? (
-          <div className="col-lg-8 mx-auto">
-            <div className="card mt-5">
-              <div className={`card-header p-3 ${styles.head}`}>
-                Community Details
-              </div>
-              <div className="card-body">
-                <form>
-                  <div className="form-group">
-                    <Input
-                      name="Name"
-                      value={name}
-                      onChange={handleName}
-                      placeholder="Name"
-                    />
-                  </div>
-                  <div className="form-row">
-                    <div className="col-md-6">
+      {isLoading ? (
+        <div className={`col-12 text-center ${styles.load}`}>
+          <img className="img-fluid" src="./assets/images/load.gif" alt="" />
+        </div>
+      ) : (
+        <div className="container">
+          {verify ? (
+            <div className="col-lg-8 mx-auto">
+              <div className="card mt-5">
+                <div className={`card-header p-3 ${styles.head}`}>
+                  Community Details
+                </div>
+                <div className="card-body">
+                  <form>
+                    <div className="form-group">
                       <Input
-                        name="City"
-                        value={city}
-                        onChange={handleCity}
-                        placeholder="City"
+                        name="Name"
+                        value={name}
+                        onChange={handleName}
+                        placeholder="Name"
                       />
                     </div>
-                    <div className="col-md-6">
-                      <Input
-                        name="State"
-                        value={state}
-                        onChange={handleState}
-                        placeholder="State"
-                      />
-                    </div>
-                  </div>
-                  <div className="form-row">
-                    <div className="col-md-6">
-                      <Input
-                        name="Country"
-                        value={country}
-                        onChange={handleCountry}
-                        placeholder="Country"
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <Input
-                        name="Size"
-                        value={size}
-                        onChange={handleSize}
-                        type="number"
-                        placeholder="Size"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-10 mx-auto mb-3" styles={styles.domain}>
-                    <CreatableSelect
-                      value={option.selectedOption}
-                      isMulti
-                      onChange={handleChangeDomain}
-                      options={defaultOptions}
-                      closeMenuOnSelect={false}
-                      placeholder="Domain"
-                    />
-                  </div>
-                  <div className="form-group">
                     <div className="form-row">
                       <div className="col-md-6">
                         <Input
-                          name="Website"
-                          value={webLink}
-                          onChange={handleWeb}
-                          placeholder="Website "
+                          name="City"
+                          value={city}
+                          onChange={handleCity}
+                          placeholder="City"
                         />
                       </div>
                       <div className="col-md-6">
                         <Input
-                          name="Facebook"
-                          value={fbLink}
-                          onChange={handleFB}
-                          placeholder="Facebook"
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <Input
-                          name="Instagram"
-                          value={instaLink}
-                          onChange={handleInsta}
-                          placeholder="Instagram"
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <Input
-                          name="Twitter"
-                          value={twitterLink}
-                          onChange={handleTwitter}
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <Input
-                          name="Linked In"
-                          value={linkedinLink}
-                          onChange={handleIN}
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <Input
-                          name="Medium"
-                          value={mediumLink}
-                          onChange={handleMedium}
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <Input
-                          name="Github"
-                          value={githubLink}
-                          onChange={handleGit}
-                        />
-                      </div>
-                      <div className="col-md-6">
-                        <Input
-                          name="YouTube"
-                          value={youtubeLink}
-                          onChange={handleYT}
+                          name="State"
+                          value={state}
+                          onChange={handleState}
+                          placeholder="State"
                         />
                       </div>
                     </div>
-                  </div>
-                  <div className="text-center">
-                    <button
-                      type="submit"
-                      className={`col-lg-6 col-sm-6 col-md-6 btn btn-primary mx_auto ${styles.add}`}
-                      onClick={handleSubmit}
-                    >
-                      Add Community
-                    </button>
-                  </div>
-                </form>
+                    <div className="form-row">
+                      <div className="col-md-6">
+                        <Input
+                          name="Country"
+                          value={country}
+                          onChange={handleCountry}
+                          placeholder="Country"
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <Input
+                          name="Size"
+                          value={size}
+                          onChange={handleSize}
+                          type="number"
+                          placeholder="Size"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-10 mx-auto mb-3" styles={styles.domain}>
+                      <CreatableSelect
+                        value={option.selectedOption}
+                        isMulti
+                        onChange={handleChangeDomain}
+                        options={defaultOptions}
+                        closeMenuOnSelect={false}
+                        placeholder="Domain"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <div className="form-row">
+                        <div className="col-md-6">
+                          <Input
+                            name="Website"
+                            value={webLink}
+                            onChange={handleWeb}
+                            placeholder="Website "
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <Input
+                            name="Facebook"
+                            value={fbLink}
+                            onChange={handleFB}
+                            placeholder="Facebook"
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <Input
+                            name="Instagram"
+                            value={instaLink}
+                            onChange={handleInsta}
+                            placeholder="Instagram"
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <Input
+                            name="Twitter"
+                            value={twitterLink}
+                            onChange={handleTwitter}
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <Input
+                            name="Linked In"
+                            value={linkedinLink}
+                            onChange={handleIN}
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <Input
+                            name="Medium"
+                            value={mediumLink}
+                            onChange={handleMedium}
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <Input
+                            name="Github"
+                            value={githubLink}
+                            onChange={handleGit}
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <Input
+                            name="YouTube"
+                            value={youtubeLink}
+                            onChange={handleYT}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <button
+                        type="submit"
+                        className={`col-lg-6 col-sm-6 col-md-6 btn btn-primary mx_auto ${styles.add}`}
+                        onClick={handleSubmit}
+                      >
+                        Add Community
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <h1>First verify your account.</h1>
-        )}
-      </div>
+          ) : (
+            <h1>First verify your account.</h1>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { getdata } from "../../utils/routes";
 import { AuthContext } from "../../contexts/userContext";
@@ -8,13 +8,25 @@ import { toast } from "react-toastify";
 
 export default function Update(props) {
   const Data = useContext(AuthContext);
-  const [x, handleChangeX, setX] = useInputState(0);
-  const [y, handleChangeY, setY] = useInputState(0);
+  const [name, handleName] = useInputState("");
+  const [city, handleCity] = useInputState("");
+  const [state, handleState] = useInputState("");
+  const [country, handleCountry] = useInputState("");
+  const [size, handleSize] = useInputState("");
+  const [webLink, handleWeb] = useInputState("");
+  const [fbLink, handleFB] = useInputState("");
+  const [instaLink, handleInsta] = useInputState("");
+  const [twitterLink, handleTwitter] = useInputState("");
+  const [mediumLink, handleMedium] = useInputState("");
+  const [githubLink, handleGit] = useInputState("");
+  const [youtubeLink, handleYT] = useInputState("");
+  const [linkedinLink, handleIN] = useInputState("");
+  const [option, setOption] = useState({ selectedOption: [] });
   useEffect(() => {
     let token = Data.token;
     const fetchData = async () => {
       try {
-        let response = await axios.get(`${getdata}?id=${Data.user.user.id}`);
+        let response = await axios.get(`${getdata}?id=${Data.user.id}`);
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -23,25 +35,25 @@ export default function Update(props) {
     fetchData();
   }, [props]);
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    try {
-      let body = {
-        latitude: x,
-        longitude: y,
-        type: "crime"
-      };
-      await axios.put(`${edit}/${props.match.params.id}`, body, {
-        headers: {
-          "x-auth-token": Data.token
-        }
-      });
-      toast.info("Status pending");
-      props.history.push("/");
-    } catch (error) {
-      toast.error("Error occured");
-    }
-  };
+  // const handleSubmit = async e => {
+  //   e.preventDefault();
+  //   try {
+  //     let body = {
+  //       latitude: x,
+  //       longitude: y,
+  //       type: "crime"
+  //     };
+  //     await axios.put(`${edit}/${props.match.params.id}`, body, {
+  //       headers: {
+  //         "x-auth-token": Data.token
+  //       }
+  //     });
+  //     toast.info("Status pending");
+  //     props.history.push("/");
+  //   } catch (error) {
+  //     toast.error("Error occured");
+  //   }
+  // };
   return (
     <div className="container">
       <div className="col-lg-8 mx-auto" style={{ paddingBottom: "200px" }}>
@@ -51,7 +63,7 @@ export default function Update(props) {
           </p>
         </div>
         <div className="card p-4">
-          <form onSubmit={handleSubmit}>
+          <form>
             <label className="label">Co-Ordinates : </label>
 
             <div className="form-group row mt-2">
@@ -62,8 +74,8 @@ export default function Update(props) {
                   name="x"
                   className="form-control"
                   placeholder="X"
-                  value={x}
-                  onChange={handleChangeX}
+                  // value={x}
+                  // onChange={handleChangeX}
                 />
               </div>
               <label className="col-sm-2 col-form-label">Y-Axis :</label>
@@ -73,8 +85,8 @@ export default function Update(props) {
                   name="y"
                   className="form-control"
                   placeholder="Y"
-                  value={y}
-                  onChange={handleChangeY}
+                  // value={y}
+                  // onChange={handleChangeY}
                 />
               </div>
             </div>
