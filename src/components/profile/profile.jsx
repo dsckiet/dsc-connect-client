@@ -99,6 +99,9 @@ export default function Profile() {
                               </p>
                             </div>
                           </div>
+                          <Link to="/update" type="button">
+                            Update
+                          </Link>
                         </>
                       ) : null}
                     </div>
@@ -120,9 +123,6 @@ export default function Profile() {
             </>
           )}
         </div>
-        <Link to="/update" type="button">
-          Update
-        </Link>
       </div>
     </div>
   );

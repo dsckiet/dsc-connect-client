@@ -32,7 +32,7 @@ function App() {
         {/* <Route exact path="/login" component={Login} /> */}
         <Route exact path="/" component={Homepage} />
         <PrivateRoute exact path="/add" component={AddForm} />
-        <PrivateRoute exact path="/update/:id" component={Update} />
+        <PrivateRoute exact path="/update" component={Update} />
         <PrivateRoute exact path="/profile" component={Profile} />
       </Switch>
       <Footer />
@@ -44,7 +44,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         Data.token !== "" ? <Component {...props} /> : <Redirect to="/" />
       }
     />

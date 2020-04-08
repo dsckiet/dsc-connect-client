@@ -55,6 +55,7 @@ export default function AddForm(props) {
   }, []);
 
   const handleChangeDomain = (option) => {
+    console.log(option);
     setOption({ selectedOption: option });
   };
 
@@ -107,14 +108,7 @@ export default function AddForm(props) {
       props.history.push("/profile");
       toast.success("DSC added successfully");
     } catch (error) {
-      console.log(error.message);
-      console.log(error.response.data.message);
-      // if (error.response.data.message === "DSC is already registered") {
-      //   toast.error(error.response.data.message);
-      //   props.history.push("/");
-      // } else {
-      //   toast.error(error.response.data.message);
-      // }
+      toast.error(error.response.data.message);
     }
   };
 
