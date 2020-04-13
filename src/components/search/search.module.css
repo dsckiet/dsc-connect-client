@@ -1,5 +1,5 @@
 .cardEdit {
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 .sideHead {
@@ -10,19 +10,22 @@
 .crdTxt {
   font-size: 20px;
 }
+
 .resetBtn {
   color: white;
-  border-radius: 12px;
+  border-radius: 6px;
   background-color: #f4b400;
 }
 
 .resetBtn:hover {
   color: white;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 1px 3px 1px rgba(60, 64, 67, 0.15) !important;
 }
 
 .sideFoot {
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
 }
 .sideFooter {
   margin-top: 160px;
@@ -38,4 +41,17 @@
   .filterSM {
     display: none;
   }
+}
+
+.crdStyle {
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 1px 3px 1px rgba(60, 64, 67, 0.15) !important;
+}
+
+label {
+  font-size: 14px !important;
+}
+
+.search-input {
+  width: 400px !important;
 }

@@ -8,7 +8,7 @@ const options = [
   { value: "Mobile", label: "Mobile" },
   { value: "web", label: "Web" },
   { value: "ml", label: "ML" },
-  { value: "cloud", label: "Cloud" }
+  { value: "cloud", label: "Cloud" },
 ];
 
 export default function Search({ getFilterData, getSearchData }) {
@@ -21,7 +21,7 @@ export default function Search({ getFilterData, getSearchData }) {
     setPos(!pos);
   };
 
-  const handleChange = domain => {
+  const handleChange = (domain) => {
     if (domain) handleDomain({ domain: domain.value });
     if (!domain) handleDomain({ domain: null });
   };
@@ -36,51 +36,57 @@ export default function Search({ getFilterData, getSearchData }) {
 
   return (
     <>
-      <div className={`col-lg-3 col-md-4 col-sm-4 mt-4 ${styles.filter}`}>
-        <div className={`card p-4 ${styles.cardEdit}`}>
+      <div className={`mt-4 ${styles.filter}`}>
+        <div className={`card p-4 ${styles.cardEdit}  ${styles.crdStyle}`}>
           <div>
-            <p className={styles.sideHead}>Filter</p>
+            {/* <p className={styles.sideHead}>Filter</p> */}
             <form>
-              <div className="form-group">
-                <label htmlFor="county" className={styles.crdTxt}>
-                  Location
-                </label>
-                <Input
-                  name="Location"
-                  value={location}
-                  onChange={handleLocation}
-                />
+              <div className="row">
+                <div className="col-lg-4 form-group">
+                  <label htmlFor="county" className={styles.crdTxt}>
+                    Location
+                  </label>
+                  <Input
+                    name="Location"
+                    value={location}
+                    onChange={handleLocation}
+                  />
+                </div>
+                <div className="col-lg-4 form-group">
+                  <label htmlFor="work" className={styles.crdTxt}>
+                    Domains
+                  </label>
+                  <CreatableSelect
+                    isClearable
+                    onChange={handleChange}
+                    options={options}
+                    closeMenuOnSelect={true}
+                    placeholder="Domain"
+                  />
+                </div>
+
+                <div className="col-lg-4 form-group">
+                  <label htmlFor="work" className={styles.crdTxt}>
+                    .
+                  </label>
+                  <br />
+                  <button
+                    type="button"
+                    className={`px-3 btn btn-warning ${styles.resetBtn}`}
+                    onClick={() => {
+                      query();
+                    }}
+                  >
+                    Filter
+                  </button>
+                </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="work" className={styles.crdTxt}>
-                  Domains
-                </label>
-                <CreatableSelect
-                  isClearable
-                  onChange={handleChange}
-                  options={options}
-                  closeMenuOnSelect={true}
-                  placeholder="Domain"
-                />
-              </div>
-              <div className="text-right">
-                <button
-                  type="button"
-                  className={`px-3 btn btn-warning ${styles.resetBtn}`}
-                  onClick={() => {
-                    query();
-                  }}
-                >
-                  Filter
-                </button>
-              </div>
+
               <div className="form-group">
                 <div>
                   <label className={styles.sideHead}>Search</label>
                 </div>
                 <Input name="Search" value={search} onChange={handleSearch} />
-              </div>
-              <div className="text-right">
                 <button
                   type="button"
                   className={`px-3 btn btn-warning ${styles.resetBtn}`}
@@ -92,7 +98,7 @@ export default function Search({ getFilterData, getSearchData }) {
                 </button>
               </div>
             </form>
-            <br />
+            {/* <br />
             <div className={`text-center ${styles.sideFooter}`}>
               <img
                 className="img-fluid"
@@ -104,13 +110,13 @@ export default function Search({ getFilterData, getSearchData }) {
                   <p>developed by community; for communities</p>
                 </center>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
       <div className={`col-lg-3 col-md-4 col-sm-3 ${styles.filterSM}`}>
         <div className="accordion" id="accordionExample">
-          <div className={`card ${styles.cardEdit}`}>
+          <div className={`card ${styles.cardEdit} ${styles.crdStyle}`}>
             <div
               className="card-header"
               id="headingOne"

@@ -1,46 +1,56 @@
 .editBtn {
-  background-color: aquamarine;
-  border-radius: 50%;
+	background-color: aquamarine;
+	border-radius: 50%;
 }
 
 .list {
-  margin-left: -15px;
+	margin-left: -15px;
 }
 
 .head {
-  color: #707070;
-  font-weight: 600;
+	color: #707070;
+	font-weight: 600;
 }
 
 .crdHead {
-  border-radius: 12px;
+	border-radius: 6px;
 }
 
 .bW {
-  background-color: #0f9d58;
-  color: white;
-  padding: 5px 10px 5px 10px;
+	background-color: #0f9d58;
+	color: white;
+	padding: 5px 10px 5px 10px;
 }
 
 .bM {
-  background-color: #db4437;
-  color: white;
-  padding: 5px 10px 5px 10px;
+	background-color: #db4437;
+	color: white;
+	padding: 5px 10px 5px 10px;
 }
 
 .bC {
-  background-color: #4285f4;
-  color: white;
-  padding: 5px 10px 5px 10px;
+	background-color: #4285f4;
+	color: white;
+	padding: 5px 10px 5px 10px;
 }
 
 .bF {
-  background-color: #f4b400;
-  color: white;
-  padding: 5px 10px 5px 10px;
+	background-color: #f4b400;
+	color: white;
+	padding: 5px 10px 5px 10px;
 }
 
 .load {
-  margin-top: 200px;
-  margin-bottom: 250px;
+	margin-top: 200px;
+	margin-bottom: 250px;
+}
+
+.title,
+h3 {
+	font-weight: 700 !important;
+}
+
+.crdStyle {
+	box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+		0 1px 3px 1px rgba(60, 64, 67, 0.15);
 }
