@@ -43,7 +43,7 @@ export default function Profile() {
             </div>
           </div>
           {Data.user.isSubmitted === false ? (
-            <button>Add</button>
+            <button className="btn btn-primary">Add</button>
           ) : (
             <>
               <div>
