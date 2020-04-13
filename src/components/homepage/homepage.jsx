@@ -1,189 +1,125 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getdata } from "../../utils/routes";
-import { AuthContext } from "../../contexts/userContext";
-import { Link } from "react-router-dom";
 import styles from "./homepage.module.css";
-import Select from "react-select";
-
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" }
-];
+import Search from "./../search/search";
+import { toast } from "react-toastify";
 
 export default function Homepage() {
   const [state, setState] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const [pos, setPos] = useState(true);
-
-  const data = useContext(AuthContext);
 
   useEffect(() => {
     setLoading(true);
-    let token = data.token;
     const fetchData = async () => {
       try {
-        const response = await axios.get(getdata, {
-          headers: {
-            "x-auth-token": token
-          }
-        });
+        const response = await axios.get(getdata);
         setState(response.data.data);
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        console.log(error.response);
       }
     };
     fetchData();
   }, []);
 
-  const handleArrow = () => {
-    setPos(!pos);
+  const getFilterData = async data => {
+    let location, domain;
+    if (data.location) location = data.location;
+    if (data.domain) domain = data.domain;
+    try {
+      if (location && domain) {
+        setLoading(true);
+        const response = await axios.get(
+          `${getdata}?location=${location}&domain=${domain}`
+        );
+        let len = Object.keys(response.data.data).length;
+        if (len > 0) {
+          setState(response.data.data);
+          setLoading(false);
+        } else {
+          toast.error("Invalid Search");
+          setLoading(false);
+        }
+      } else if (location) {
+        setLoading(true);
+        const response = await axios.get(`${getdata}?location=${location}`);
+        let len = Object.keys(response.data.data).length;
+        if (len > 0) {
+          setState(response.data.data);
+          setLoading(false);
+        } else {
+          toast.error("Invalid Search");
+          setLoading(false);
+        }
+      } else if (domain) {
+        setLoading(true);
+        const response = await axios.get(`${getdata}?domain=${domain}`);
+        let len = Object.keys(response.data.data).length;
+        if (len > 0) {
+          setState(response.data.data);
+          setLoading(false);
+        } else {
+          toast.error("Invalid Search");
+          setLoading(false);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const getSearchData = async data => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`${getdata}?name=${data}`);
+      let len = Object.keys(response.data.data).length;
+      if (len > 0) {
+        setState(response.data.data);
+        setLoading(false);
+      } else {
+        toast.error("Invalid Search");
+        setLoading(false);
+      }
+    } catch (error) {}
+  };
+
   return (
     <>
-      {isLoading ? (
-        <div className={`col-12 text-center ${styles.load}`}>
-          <img className="img-fluid" src="./assets/images/load.gif" alt="" />
-        </div>
-      ) : (
-        <div className="fluid-container mx-auto">
-          <div className="container ">
-            <div className="row">
-              <div
-                className={`col-lg-3 col-md-4 col-sm-4 mt-4 ${styles.filter}`}
-              >
-                <div className={`card p-4 ${styles.cardEdit}`}>
-                  <div>
-                    <p className={styles.sideHead}>Filter</p>
-                    <form>
-                      <div className="form-group">
-                        <label htmlFor="county" className={styles.crdTxt}>
-                          Country
-                        </label>
-                        <Select options={options} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="work" className={styles.crdTxt}>
-                          Works on
-                        </label>
-                        <Select options={options} />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="search" className={styles.crdTxt}>
-                          Search
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="search"
-                          placeholder="Type here"
-                        />
-                      </div>
-                      <div className="float-right">
-                        <button
-                          type="button"
-                          className={`px-3 btn btn-warning ${styles.resetBtn}`}
-                        >
-                          Reset
-                        </button>
-                      </div>
-                    </form>
-                    <br />
-                    <div className={`text-center ${styles.sideFooter}`}>
-                      <img
-                        className="img-fluid"
-                        src="./assets/images/learn.svg"
-                        alt=""
-                      />
-                      <div className={styles.sideFoot}>
-                        <center>
-                          <p>developed by community; for communities</p>
-                        </center>
-                      </div>
-                    </div>
+      <div className="fluid-container mx-auto">
+        <div className="container ">
+          <div className="row">
+            <Search
+              getFilterData={getFilterData}
+              getSearchData={getSearchData}
+            />
+            <div className="col-lg-9 col-md-8 col-sm-8 mt-4">
+              <div className="list">
+                <h3>
+                  <strong>Developer Student Clubs Listing</strong>
+                </h3>
+                <p className={styles.head}>
+                  Connect with communities, the people and help each to make the
+                  sustainable and better world
+                </p>
+                {isLoading ? (
+                  <div className={`col-12 text-center ${styles.load}`}>
+                    <img
+                      className="img-fluid"
+                      src="./assets/images/load.gif"
+                      alt=""
+                    />
                   </div>
-                </div>
-              </div>
-              <div className={`col-lg-3 col-md-4 col-sm-3 ${styles.filterSM}`}>
-                <div className="accordion" id="accordionExample">
-                  <div className={`card ${styles.cardEdit}`}>
-                    <div
-                      className="card-header"
-                      id="headingOne"
-                      style={{ backgroundColor: "white" }}
-                    >
-                      <p
-                        className={`pt-1 ${styles.sideHead}`}
-                        data-toggle="collapse"
-                        data-target="#collapseOne"
-                        aria-expanded="true"
-                        aria-controls="collapseOne"
-                      >
-                        Filter
-                        <span className="float-right" onClick={handleArrow}>
-                          {pos ? (
-                            <i className="fas fa-chevron-down ml-2  "></i>
-                          ) : (
-                            <i className="fas fa-chevron-up ml-2"></i>
-                          )}
-                        </span>
-                      </p>
-                    </div>
-                    <div
-                      id="collapseOne"
-                      className="collapse"
-                      aria-labelledby="headingOne"
-                      data-parent="#accordionExample"
-                    >
-                      <div className="card-body">
-                        <form>
-                          <div className="form-group">
-                            <label htmlFor="county">Country</label>
-                            <Select options={options} />
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="work">Works on</label>
-                            <Select options={options} />
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="search">Search</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="search"
-                              placeholder="Type here"
-                            />
-                          </div>
-                          <div className="float-right mb-4">
-                            <button
-                              type="button"
-                              className={`px-3 btn btn-warning ${styles.resetBtn}`}
-                            >
-                              Reset
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-9 col-md-8 col-sm-8 mt-4">
-                <div className="list">
-                  <h3>
-                    <strong>Developer Student Clubs Listing</strong>
-                  </h3>
-                  <p className={styles.head}>
-                    Connect with communities, the people and help each to make
-                    the sustainable and better world
-                  </p>
+                ) : (
                   <div className="row">
-                    {state
-                      ? state.map((item, i) => (
+                    {state.length > 0 ? (
+                      state.map((dsc, i) =>
+                        dsc.isPublished ? (
                           <div className="col-lg-4" key={i}>
-                            <div className={`card p-3 mb-4 ${styles.crdHead}`}>
+                            <div
+                              className={`card p-3 mb-4 ${styles.crdHead}`}
+                              style={{ height: "100%" }}
+                            >
                               <div className="row">
                                 <div className="col-12">
                                   <img
@@ -192,104 +128,152 @@ export default function Homepage() {
                                     alt=""
                                     width="40"
                                   />
-                                  DSC VIT Pune
+                                  {dsc.name}
                                 </div>
                               </div>
-                              <Link to="#" className="mt-1">
-                                www.dscvitpune.tech
-                              </Link>
+                              <a
+                                href={dsc.webLink}
+                                className="mt-1"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {dsc.webLink}
+                              </a>
                               <p className="mt-3 mb-0">
-                                Location: <strong>Pune, India</strong>
+                                Location:{" "}
+                                <strong>
+                                  {dsc.city} {dsc.state}, {dsc.country}
+                                </strong>
                               </p>
                               <p>
-                                Team Size: <strong>{item.type}</strong>
-                              </p>
-                              <p>
-                                X: <strong>{item.latitude}</strong>
-                              </p>
-                              <p>
-                                Y : <strong>{item.longitude}</strong>
+                                Team Size: <strong>{dsc.size}</strong>
                               </p>
                               <div>
-                                <span className={`badge mr-2 ${styles.bW}`}>
-                                  Web
-                                </span>
-                                <span className={`badge mr-2 ${styles.bM}`}>
-                                  ML
-                                </span>
-                                <span className={`badge mr-2 ${styles.bC}`}>
-                                  Cloud
-                                </span>
-                                <span className={`badge mr-2 ${styles.bF}`}>
-                                  Flutter
-                                </span>
+                                {dsc.domains ? (
+                                  <span className={`badge mr-2 ${styles.bW}`}>
+                                    {dsc.domains[0]}
+                                  </span>
+                                ) : null}
+                                {dsc.domains ? (
+                                  <span className={`badge mr-2 ${styles.bM}`}>
+                                    {dsc.domains[1]}
+                                  </span>
+                                ) : null}
+                                {dsc.domains ? (
+                                  <span className={`badge mr-2 ${styles.bC}`}>
+                                    {dsc.domains[2]}
+                                  </span>
+                                ) : null}
+                                {dsc.domains ? (
+                                  <span className={`badge mr-2 ${styles.bF}`}>
+                                    {dsc.domains[3]}
+                                  </span>
+                                ) : null}
                               </div>
-                              <div className="mt-3">
+                              <div
+                                className="align-text-bottom mt-3"
+                                style={{ verticalAlign: "bottom" }}
+                              >
                                 <h6>Social Profiles</h6>
-                                <img
-                                  className="img-fluid mr-1"
-                                  src="./assets/images/circle.svg"
-                                  alt=""
-                                  height="10%"
-                                  width="10%"
-                                />
-                                <img
-                                  className="img-fluid mr-1"
-                                  src="./assets/images/circle.svg"
-                                  alt=""
-                                  height="10%"
-                                  width="10%"
-                                />
-                                <img
-                                  className="img-fluid mr-1"
-                                  src="./assets/images/circle.svg"
-                                  alt=""
-                                  height="10%"
-                                  width="10%"
-                                />
-                                <img
-                                  className="img-fluid mr-1"
-                                  src="./assets/images/circle.svg"
-                                  alt=""
-                                  height="10%"
-                                  width="10%"
-                                />
-
-                                <img
-                                  className="img-fluid"
-                                  src="./assets/images/circle.svg"
-                                  alt=""
-                                  height="10%"
-                                  width="10%"
-                                />
+                                <a
+                                  href={dsc.fbLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/facebook.svg"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.instaLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/instagram.svg"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.twitterLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/twitter.png"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.youtubeLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/youtube.png"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.linkedinLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/linkedin.png"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.mediumLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/medium.png"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
+                                <a
+                                  href={dsc.githubLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <img
+                                    className="img-fluid rounded-circle mr-1"
+                                    src="./assets/images/github.png"
+                                    alt=""
+                                    width="12%"
+                                  />
+                                </a>
                               </div>
-                              {item.latitude === 52.5 && data.token !== "" ? (
-                                <>
-                                  <div className="col-lg-3">
-                                    <div className={styles.editBtn}>
-                                      <Link to={`/update/${item._id}`}>
-                                        <img
-                                          className="img-fluid mx-auto"
-                                          src="./assets/images/pencil.svg"
-                                          alt=""
-                                          width="50%"
-                                        />
-                                      </Link>
-                                    </div>
-                                  </div>
-                                </>
-                              ) : null}
                             </div>
                           </div>
-                        ))
-                      : null}
+                        ) : null
+                      )
+                    ) : (
+                      <h1>No DSC</h1>
+                    )}
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

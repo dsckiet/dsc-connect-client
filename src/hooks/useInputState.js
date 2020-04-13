@@ -5,6 +5,8 @@ export default initialVal => {
   const handleChange = e => {
     setValue(e.target.value);
   };
-
-  return [value, handleChange, setValue];
+  const reset = () => {
+    setValue("");
+  };
+  return [value, handleChange, setValue, reset];
 };

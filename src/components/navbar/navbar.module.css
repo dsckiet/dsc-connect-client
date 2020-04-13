@@ -14,3 +14,13 @@
   border-radius: 12px;
   padding: 4px 31px 4px 31px;
 }
+
+@media (max-width: 992px) {
+  .navSM {
+    display: block !important;
+    margin-top: 10px;
+  }
+  .navLg {
+    display: none !important;
+  }
+}
