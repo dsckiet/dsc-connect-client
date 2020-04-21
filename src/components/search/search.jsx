@@ -43,17 +43,19 @@ export default function Search({ getFilterData, getSearchData }) {
             <form>
               <div className="row">
                 <div className="col-lg-4 form-group">
-                  <label htmlFor="county" className={styles.crdTxt}>
+                  <label htmlFor="county" className={styles.sideHead}>
                     Location
                   </label>
                   <Input
                     name="Location"
                     value={location}
                     onChange={handleLocation}
+                    type="search"
+                    aria-label="Search"
                   />
                 </div>
                 <div className="col-lg-4 form-group">
-                  <label htmlFor="work" className={styles.crdTxt}>
+                  <label htmlFor="work" className={styles.sideHead}>
                     Domains
                   </label>
                   <CreatableSelect

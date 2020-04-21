@@ -17,10 +17,10 @@ function NavBar(props) {
     toast.success("Log out successfully");
   };
 
-  const toggleLoginModal = value => {
+  const toggleLoginModal = (value) => {
     setLoginIsOpen(value);
   };
-  const toggleRegisterModal = value => {
+  const toggleRegisterModal = (value) => {
     setRegisterIsOpen(value);
   };
   return (
@@ -77,18 +77,16 @@ function NavBar(props) {
                 </>
               ) : (
                 <>
-                  {!Data.user.isSubmitted ? (
-                    <li>
-                      <NavLink to="/add">
-                        <button
-                          type="button"
-                          className={`btn btn-success mt-2 mr-2 ${styles.addBtn}`}
-                        >
-                          Add your community
-                        </button>
-                      </NavLink>
-                    </li>
-                  ) : null}
+                  <li>
+                    <NavLink to="/add">
+                      <button
+                        type="button"
+                        className={`btn btn-success mt-2 mr-2 ${styles.addBtn}`}
+                      >
+                        Add your community
+                      </button>
+                    </NavLink>
+                  </li>
 
                   <li className={`nav-item dropdown navLg ${styles.navLg}`}>
                     <p

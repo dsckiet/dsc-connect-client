@@ -7,3 +7,5 @@ export const profile = `${url}/users/profile`;
 export const add = `${url}/data`;
 export const getdata = `${url}/data`;
 export const edit = `${url}/data`;
+
+export const verify = `${url}/index/verifyEmail`;

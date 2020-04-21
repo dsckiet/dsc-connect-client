@@ -2,16 +2,15 @@ import React, { useContext } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import NavBar from "./components/navbar/navbar";
 import Homepage from "./components/homepage/homepage";
-import Login from "./components/login/login";
-import AddForm from "./components/add/add";
-import Register from "./components/register/register";
+import Add from "./components/add/add";
 import Footer from "./components/footer/footer";
 import Update from "./components/update/update";
 import { AuthContext } from "./contexts/userContext";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "./App.css";
 import Profile from "./components/profile/profile";
 import "react-toastify/dist/ReactToastify.css";
+import verifyEmail from "./components/verify/verifyEmail";
 
 function App() {
   return (
@@ -31,7 +30,8 @@ function App() {
       <Switch>
         {/* <Route exact path="/login" component={Login} /> */}
         <Route exact path="/" component={Homepage} />
-        <PrivateRoute exact path="/add" component={AddForm} />
+        <Route exact path="/verify/:id" component={verifyEmail} />
+        <PrivateRoute exact path="/add" component={Add} />
         <PrivateRoute exact path="/update" component={Update} />
         <PrivateRoute exact path="/profile" component={Profile} />
       </Switch>
