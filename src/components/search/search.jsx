@@ -50,6 +50,8 @@ export default function Search({ getFilterData, getSearchData }) {
                     name="Location"
                     value={location}
                     onChange={handleLocation}
+                    type="search"
+                    aria-label="Search"
                   />
                 </div>
                 <div className="col-lg-4 form-group">

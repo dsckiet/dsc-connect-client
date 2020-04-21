@@ -191,7 +191,9 @@ export default function Homepage() {
                             dsc.mediumLink !== "" &&
                             dsc.githubLink !== "" ? (
                               <h6>Social Profiles</h6>
-                            ) : null}
+                            ) : (
+                              <h6>No Social Profile</h6>
+                            )}
                             {dsc.fbLink !== "" ? (
                               <a
                                 href={dsc.fbLink}
