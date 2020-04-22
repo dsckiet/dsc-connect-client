@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { AuthContext } from "./contexts/userContext";
+import { ToastContainer } from "react-toastify";
 import NavBar from "./components/navbar/navbar";
 import Homepage from "./components/homepage/homepage";
 import Add from "./components/add/add";
 import Footer from "./components/footer/footer";
 import Update from "./components/update/update";
-import { AuthContext } from "./contexts/userContext";
-import { ToastContainer } from "react-toastify";
-import "./App.css";
+import verifyEmail from "./components/verify/verifyEmail";
 import Profile from "./components/profile/profile";
 import "react-toastify/dist/ReactToastify.css";
-import verifyEmail from "./components/verify/verifyEmail";
+import "./App.css";
 
 function App() {
   return (

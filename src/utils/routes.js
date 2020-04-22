@@ -1,4 +1,4 @@
-const url = "https://dsc-connect.herokuapp.com/api/v1";
+const url = process.env.REACT_APP_URL;
 
 export const login = `${url}/users/login`;
 export const register = `${url}/users/register`;
