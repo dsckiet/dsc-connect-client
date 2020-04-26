@@ -7,14 +7,9 @@ import { toast } from "react-toastify";
 import Modal from "react-responsive-modal";
 
 const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)"
-  }
+  modal: {
+    borderRadius: "6px",
+  },
 };
 
 export default function Login({ modalIsOpen, toggleModal }) {
@@ -22,11 +17,11 @@ export default function Login({ modalIsOpen, toggleModal }) {
   const [password, handlePasswordChange, p, resetPassword] = useInputState("");
   const dispatch = useContext(DispatchContext);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let body = {
       email: email,
-      password: password
+      password: password,
     };
 
     try {
@@ -38,9 +33,9 @@ export default function Login({ modalIsOpen, toggleModal }) {
           isAdmin: response.data.data.isAdmin,
           isSubmitted: response.data.data.isSubmitted,
           name: response.data.data.name,
-          email: response.data.data.email
+          email: response.data.data.email,
         },
-        token: response.headers["x-auth-token"]
+        token: response.headers["x-auth-token"],
       });
       console.log(response);
       toast.success("Log In successfully");
@@ -55,7 +50,12 @@ export default function Login({ modalIsOpen, toggleModal }) {
   };
 
   return (
-    <Modal open={modalIsOpen} onClose={() => toggleModal(false)} center>
+    <Modal
+      open={modalIsOpen}
+      onClose={() => toggleModal(false)}
+      center
+      styles={customStyles}
+    >
       <div className="container">
         <form onSubmit={handleSubmit}>
           <div className="form-group">

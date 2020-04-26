@@ -305,7 +305,14 @@ export default function Homepage() {
                     ) : null
                   )
                 ) : (
-                  <h1>No DSC</h1>
+                  <div className="text-center mx-auto p-3">
+                    <img
+                      className="img-fluid"
+                      src="./assets/images/notFound.png"
+                      alt="not found"
+                      width="60%"
+                    />
+                  </div>
                 )}
               </div>
             )}

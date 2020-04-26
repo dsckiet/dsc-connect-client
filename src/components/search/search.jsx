@@ -39,7 +39,6 @@ export default function Search({ getFilterData, getSearchData }) {
       <div className={`mt-4 ${styles.filter}`}>
         <div className={`card p-4 ${styles.cardEdit}  ${styles.crdStyle}`}>
           <div>
-            {/* <p className={styles.sideHead}>Filter</p> */}
             <form>
               <div className="row">
                 <div className="col-lg-4 form-group">
@@ -84,20 +83,24 @@ export default function Search({ getFilterData, getSearchData }) {
                 </div>
               </div>
 
-              <div className="form-group">
-                <div>
-                  <label className={styles.sideHead}>Search</label>
+              <div>
+                <label className={styles.sideHead}>Search</label>
+              </div>
+              <div className="row form-group">
+                <div className="col-lg-10">
+                  <Input name="Search" value={search} onChange={handleSearch} />
                 </div>
-                <Input name="Search" value={search} onChange={handleSearch} />
-                <button
-                  type="button"
-                  className={`px-3 btn btn-warning ${styles.resetBtn}`}
-                  onClick={() => {
-                    getSearchData(search);
-                  }}
-                >
-                  Search
-                </button>
+                <div className="col-lg-2">
+                  <button
+                    type="button"
+                    className={`px-3 btn btn-warning ${styles.resetBtn}`}
+                    onClick={() => {
+                      getSearchData(search);
+                    }}
+                  >
+                    Search
+                  </button>
+                </div>
               </div>
             </form>
             {/* <br />

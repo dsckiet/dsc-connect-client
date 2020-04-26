@@ -1,10 +1,16 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import useInputState from "../../hooks/useInputState";
 import axios from "axios";
-import { AuthContext, DispatchContext } from "../../contexts/userContext";
+import { DispatchContext } from "../../contexts/userContext";
 import { register } from "../../utils/routes";
 import { toast } from "react-toastify";
 import Modal from "react-responsive-modal";
+
+const customStyles = {
+  modal: {
+    borderRadius: "6px",
+  },
+};
 
 export default function Register({ modalIsOpen, toggleModal }) {
   const [fname, handlefNameChange] = useInputState("");
@@ -13,13 +19,13 @@ export default function Register({ modalIsOpen, toggleModal }) {
   const [password, handlePasswordChange, p, resetPassword] = useInputState("");
   const dispatch = useContext(DispatchContext);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let body = {
       name: `${fname} ${lname}`,
       email: email,
       password: password,
-      isAdmin: true
+      isAdmin: true,
     };
     try {
       const response = await axios.post(register, body);
@@ -30,9 +36,9 @@ export default function Register({ modalIsOpen, toggleModal }) {
           isAdmin: response.data.data.isAdmin,
           isSubmitted: response.data.data.isSubmitted,
           name: response.data.data.name,
-          email: response.data.data.email
+          email: response.data.data.email,
         },
-        token: response.headers["x-auth-token"]
+        token: response.headers["x-auth-token"],
       });
       toast.success("Sign Up successfully");
       toggleModal(false);
@@ -47,7 +53,12 @@ export default function Register({ modalIsOpen, toggleModal }) {
   };
 
   return (
-    <Modal open={modalIsOpen} onClose={() => toggleModal(false)} center>
+    <Modal
+      open={modalIsOpen}
+      onClose={() => toggleModal(false)}
+      center
+      styles={customStyles}
+    >
       <div className="container">
         <form onSubmit={handleSubmit}>
           <div className="form-row">
@@ -72,7 +83,7 @@ export default function Register({ modalIsOpen, toggleModal }) {
               />
             </div>
           </div>
-          <div className="form-group">
+          <div className="form-group mt-3">
             <label htmlFor="exampleInputEmail1">Email address</label>
             <input
               type="email"
