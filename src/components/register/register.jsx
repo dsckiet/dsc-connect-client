@@ -6,6 +6,12 @@ import { register } from "../../utils/routes";
 import { toast } from "react-toastify";
 import Modal from "react-responsive-modal";
 
+const customStyles = {
+  modal: {
+    borderRadius: "6px",
+  },
+};
+
 export default function Register({ modalIsOpen, toggleModal }) {
   const [fname, handlefNameChange] = useInputState("");
   const [lname, handlelNameChange] = useInputState("");
@@ -47,7 +53,12 @@ export default function Register({ modalIsOpen, toggleModal }) {
   };
 
   return (
-    <Modal open={modalIsOpen} onClose={() => toggleModal(false)} center>
+    <Modal
+      open={modalIsOpen}
+      onClose={() => toggleModal(false)}
+      center
+      styles={customStyles}
+    >
       <div className="container">
         <form onSubmit={handleSubmit}>
           <div className="form-row">
@@ -72,7 +83,7 @@ export default function Register({ modalIsOpen, toggleModal }) {
               />
             </div>
           </div>
-          <div className="form-group">
+          <div className="form-group mt-3">
             <label htmlFor="exampleInputEmail1">Email address</label>
             <input
               type="email"

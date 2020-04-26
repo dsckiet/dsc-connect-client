@@ -6,16 +6,11 @@ import { DispatchContext } from "../../contexts/userContext";
 import { toast } from "react-toastify";
 import Modal from "react-responsive-modal";
 
-// const customStyles = {
-//   content: {
-//     top: "50%",
-//     left: "50%",
-//     right: "auto",
-//     bottom: "auto",
-//     marginRight: "-50%",
-//     transform: "translate(-50%, -50%)"
-//   }
-// };
+const customStyles = {
+  modal: {
+    borderRadius: "6px",
+  },
+};
 
 export default function Login({ modalIsOpen, toggleModal }) {
   const [email, handleEmailChange, e, resetEmail] = useInputState("");
@@ -55,7 +50,12 @@ export default function Login({ modalIsOpen, toggleModal }) {
   };
 
   return (
-    <Modal open={modalIsOpen} onClose={() => toggleModal(false)} center>
+    <Modal
+      open={modalIsOpen}
+      onClose={() => toggleModal(false)}
+      center
+      styles={customStyles}
+    >
       <div className="container">
         <form onSubmit={handleSubmit}>
           <div className="form-group">

@@ -54,9 +54,9 @@ function NavBar(props) {
             >
               {Data.token === "" ? (
                 <>
-                  <li className="nav-item ">
+                  <li className="nav-item">
                     <NavLink
-                      className="nav-link"
+                      className={`nav-link ${styles.navLink}`}
                       onClick={() => toggleRegisterModal(true)}
                       to="/"
                       type="button"
@@ -66,7 +66,7 @@ function NavBar(props) {
                   </li>
                   <li className="nav-item">
                     <NavLink
-                      className="nav-link"
+                      className={`nav-link ${styles.navLink}`}
                       onClick={() => toggleLoginModal(true)}
                       to="/"
                       type="button"
