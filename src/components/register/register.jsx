@@ -25,7 +25,7 @@ export default function Register({ modalIsOpen, toggleModal }) {
       name: `${fname} ${lname}`,
       email: email,
       password: password,
-      isAdmin: true,
+      isAdmin: false,
     };
     try {
       const response = await axios.post(register, body);
