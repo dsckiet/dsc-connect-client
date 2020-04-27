@@ -3,7 +3,13 @@ import React from "react";
 export default function NotFound() {
   return (
     <div className="container">
-      <h1>404 Not Found</h1>
+      <div className="text-center p-4">
+        <img
+          className="img-fluid"
+          src="./assets/images/404.png"
+          alt="404 not found"
+        />
+      </div>
     </div>
   );
 }

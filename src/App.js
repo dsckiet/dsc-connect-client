@@ -11,6 +11,7 @@ import verifyEmail from "./components/verify/verifyEmail";
 import Profile from "./components/profile/profile";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import NotFound from "./components/404/404";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <PrivateRoute exact path="/add" component={Add} />
         <PrivateRoute exact path="/update" component={Update} />
         <PrivateRoute exact path="/profile" component={Profile} />
+        <Route path="*" component={NotFound} />
       </Switch>
       <Footer />
     </>
