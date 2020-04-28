@@ -156,26 +156,15 @@ export default function Homepage() {
                             Team Size: <strong>{dsc.size}</strong>
                           </p>
                           <div>
-                            {dsc.domains ? (
-                              <span className={`badge mr-2 ${styles.bW}`}>
-                                {dsc.domains[0]}
-                              </span>
-                            ) : null}
-                            {dsc.domains ? (
-                              <span className={`badge mr-2 ${styles.bM}`}>
-                                {dsc.domains[1]}
-                              </span>
-                            ) : null}
-                            {dsc.domains ? (
-                              <span className={`badge mr-2 ${styles.bC}`}>
-                                {dsc.domains[2]}
-                              </span>
-                            ) : null}
-                            {dsc.domains ? (
-                              <span className={`badge mr-2 ${styles.bF}`}>
-                                {dsc.domains[3]}
-                              </span>
-                            ) : null}
+                            {dsc.domains
+                              ? dsc.domains.map((domain) => (
+                                  <span
+                                    className={`badge mr-2 mb-1 ${styles.bW}`}
+                                  >
+                                    {domain}
+                                  </span>
+                                ))
+                              : null}
                           </div>
                           <div
                             className="align-text-bottom mt-3"

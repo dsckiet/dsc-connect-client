@@ -354,6 +354,8 @@ export default function Profile() {
                             alt=""
                           />
                           <h1>You are under review</h1>
+                          <br />
+                          <h1>It takes approx 24 hrs</h1>
                         </div>
                       ) : null}
                     </div>
@@ -367,7 +369,7 @@ export default function Profile() {
                             alt=""
                           />
                           <h1>
-                            Your data is wrong. Re-submit with correct data
+                            Your data is wrong. Re-submit with correct data.
                           </h1>
                         </div>
                       ) : null}

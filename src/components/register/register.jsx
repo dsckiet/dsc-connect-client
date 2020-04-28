@@ -106,9 +106,15 @@ export default function Register({ modalIsOpen, toggleModal }) {
               onChange={handlePasswordChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className={
+              isLoading
+                ? `loginbutton btn btn-primary ld-ext-right running`
+                : `loginbutton btn btn-primary ld-ext-right`
+            }
+          >
             {isLoading ? "Loading..." : "Register"}
-
             {isLoading ? <div className="ld ld-ring ld-spin" /> : null}
           </button>
         </form>
