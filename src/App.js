@@ -11,6 +11,8 @@ import verifyEmail from "./components/verify/verifyEmail";
 import Profile from "./components/profile/profile";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import "../src/assets/stylesheets/loading.css";
+import "../src/assets/stylesheets/loading-btn.css";
 
 function App() {
   return (
