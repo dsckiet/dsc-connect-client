@@ -347,13 +347,29 @@ export default function Profile() {
                     <div>
                       {profile.data.isPublished === false &&
                       profile.data.isRejected === false ? (
-                        <h1>You are under review</h1>
+                        <div className="text-center mx-auto p-2">
+                          <img
+                            className="img-fluid mb-4"
+                            src="./assets/images/review.png"
+                            alt=""
+                          />
+                          <h1>You are under review</h1>
+                        </div>
                       ) : null}
                     </div>
                     <div>
                       {profile.data.isPublished === false &&
                       profile.data.isRejected === true ? (
-                        <h1>Your data is wrong. Re-submit with correct data</h1>
+                        <div className="text-center mx-auto p-2">
+                          <img
+                            className="img-fluid mb-4"
+                            src="./assets/images/wrongData.png"
+                            alt=""
+                          />
+                          <h1>
+                            Your data is wrong. Re-submit with correct data
+                          </h1>
+                        </div>
                       ) : null}
                     </div>
                   </>

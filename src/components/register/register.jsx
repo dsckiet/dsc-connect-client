@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import useInputState from "../../hooks/useInputState";
 import axios from "axios";
 import { DispatchContext } from "../../contexts/userContext";
@@ -17,15 +17,17 @@ export default function Register({ modalIsOpen, toggleModal }) {
   const [lname, handlelNameChange] = useInputState("");
   const [email, handelEmailChange, e, resetEmail] = useInputState("");
   const [password, handlePasswordChange, p, resetPassword] = useInputState("");
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useContext(DispatchContext);
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     let body = {
       name: `${fname} ${lname}`,
       email: email,
       password: password,
-      isAdmin: true,
+      isAdmin: false,
     };
     try {
       const response = await axios.post(register, body);
@@ -45,6 +47,7 @@ export default function Register({ modalIsOpen, toggleModal }) {
       resetEmail();
       resetPassword();
     } catch (error) {
+      setIsLoading(false);
       resetEmail();
       resetPassword();
       // if (error.response.status === 400)
@@ -104,7 +107,9 @@ export default function Register({ modalIsOpen, toggleModal }) {
             />
           </div>
           <button type="submit" className="btn btn-primary">
-            Register
+            {isLoading ? "Loading..." : "Register"}
+
+            {isLoading ? <div className="ld ld-ring ld-spin" /> : null}
           </button>
         </form>
       </div>

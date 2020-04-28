@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import useInputState from "../../hooks/useInputState";
 import axios from "axios";
 import { login } from "../../utils/routes";
@@ -15,9 +15,11 @@ const customStyles = {
 export default function Login({ modalIsOpen, toggleModal }) {
   const [email, handleEmailChange, e, resetEmail] = useInputState("");
   const [password, handlePasswordChange, p, resetPassword] = useInputState("");
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useContext(DispatchContext);
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     let body = {
       email: email,
@@ -44,6 +46,7 @@ export default function Login({ modalIsOpen, toggleModal }) {
       resetPassword();
     } catch (error) {
       toast.error("Invalid user");
+      setIsLoading(false);
       resetEmail();
       resetPassword();
     }
@@ -78,8 +81,17 @@ export default function Login({ modalIsOpen, toggleModal }) {
               onChange={handlePasswordChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Log In
+          <button
+            type="submit"
+            className={
+              isLoading
+                ? `loginbutton btn btn-primary ld-ext-right running`
+                : `loginbutton btn btn-primary ld-ext-right`
+            }
+          >
+            {isLoading ? "Loading..." : "Log In"}
+
+            {isLoading ? <div className="ld ld-ring ld-spin" /> : null}
           </button>
         </form>
       </div>
