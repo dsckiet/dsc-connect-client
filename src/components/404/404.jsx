@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 export default function NotFound() {
   return (
@@ -6,8 +7,9 @@ export default function NotFound() {
       <div className="text-center p-4">
         <img
           className="img-fluid"
-          src="./assets/images/404.png"
+          src="./assets/images/404.svg"
           alt="404 not found"
+          width="70%"
         />
       </div>
     </div>
