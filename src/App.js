@@ -12,6 +12,8 @@ import Profile from "./components/profile/profile";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import NotFound from "./components/404/404";
+import "../src/assets/stylesheets/loading.css";
+import "../src/assets/stylesheets/loading-btn.css";
 
 function App() {
   return (
