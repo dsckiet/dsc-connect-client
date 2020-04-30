@@ -54,11 +54,15 @@ export default function Register({ modalIsOpen, toggleModal }) {
       toast.error(error.response.data.message);
     }
   };
+  const funcCall = () => {
+    toggleModal(false);
+    setIsLoading(false);
+  };
 
   return (
     <Modal
       open={modalIsOpen}
-      onClose={() => toggleModal(false)}
+      onClose={() => funcCall()}
       center
       styles={customStyles}
     >
