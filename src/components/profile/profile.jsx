@@ -353,7 +353,10 @@ export default function Profile() {
                             src="./assets/images/review.png"
                             alt=""
                           />
-                          <h4>Your community will be reviewed in less than 24 hours.</h1>
+                          <h4>
+                            Your community will be reviewed in less than 24
+                            hours.
+                          </h4>
                         </div>
                       ) : null}
                     </div>
