@@ -39,7 +39,7 @@ export default function Profile() {
         <div className={`card p-5 ${styles.cardBg}`}>
           <div className="row ">
             <div className="col-lg-8 col-sm-8 col-md-8">
-              <p style={{ fontSize: "30px", fontWeight: "700" }}>
+              <p style={{ fontSize: "28px", fontWeight: "700" }}>
                 <span style={{ color: "#F4B400" }}>Hi,</span> <br />
                 <span style={{ color: "#707070" }}>{Data.user.name}</span>
               </p>
@@ -68,7 +68,7 @@ export default function Profile() {
                             <div className="col-lg-9 col-md-9 col-sm-9 text-left">
                               <p
                                 style={{
-                                  fontSize: "23px",
+                                  fontSize: "24px",
                                 }}
                               >
                                 <span
@@ -353,9 +353,7 @@ export default function Profile() {
                             src="./assets/images/review.png"
                             alt=""
                           />
-                          <h1>You are under review</h1>
-                          <br />
-                          <h1>It takes approx 24 hrs</h1>
+                          <h4>Your community will be reviewed in less than 24 hours.</h1>
                         </div>
                       ) : null}
                     </div>
@@ -368,9 +366,9 @@ export default function Profile() {
                             src="./assets/images/wrongData.png"
                             alt=""
                           />
-                          <h1>
+                          <h4>
                             Your data is wrong. Re-submit with correct data.
-                          </h1>
+                          </h4>
                         </div>
                       ) : null}
                     </div>
