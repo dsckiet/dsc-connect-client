@@ -44,25 +44,21 @@ export default function Register({ modalIsOpen, toggleModal }) {
       });
       toast.success("Sign Up successfully");
       toggleModal(false);
+      setIsLoading(false);
       resetEmail();
       resetPassword();
     } catch (error) {
       setIsLoading(false);
       resetEmail();
       resetPassword();
-      // if (error.response.status === 400)
+      console.log(error.response);
       toast.error(error.response.data.message);
     }
   };
-  const funcCall = () => {
-    toggleModal(false);
-    setIsLoading(false);
-  };
-
   return (
     <Modal
       open={modalIsOpen}
-      onClose={() => funcCall()}
+      onClose={() => toggleModal(false)}
       center
       styles={customStyles}
     >
@@ -74,7 +70,7 @@ export default function Register({ modalIsOpen, toggleModal }) {
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputText"
+                id="fname"
                 value={fname}
                 onChange={handlefNameChange}
               />
@@ -84,7 +80,7 @@ export default function Register({ modalIsOpen, toggleModal }) {
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputText"
+                id="lname"
                 value={lname}
                 onChange={handlelNameChange}
               />
@@ -112,11 +108,7 @@ export default function Register({ modalIsOpen, toggleModal }) {
           </div>
           <button
             type="submit"
-            className={
-              isLoading
-                ? `loginbutton btn btn-primary ld-ext-right running`
-                : `loginbutton btn btn-primary ld-ext-right`
-            }
+            className="loginbutton btn btn-primary ld-ext-right running"
           >
             {isLoading ? "Loading..." : "Register"}
             {isLoading ? <div className="ld ld-ring ld-spin" /> : null}

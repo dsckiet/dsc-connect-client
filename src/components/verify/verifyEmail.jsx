@@ -16,6 +16,7 @@ export default function VerifyEmail(props) {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="container">

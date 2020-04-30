@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, Profiler } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/userContext";
 import styles from "./profile.module.css";
@@ -30,9 +30,8 @@ export default function Profile() {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(Data);
-  console.log(profile.data);
   return (
     <div className="container">
       <div className="col-lg-10 mx-auto">

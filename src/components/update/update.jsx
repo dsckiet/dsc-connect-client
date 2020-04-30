@@ -25,6 +25,7 @@ export default function Update(props) {
   const [linkedinLink, handleIN, setIN] = useInputState("");
   const [option, setOption] = useState({ selectedOption: [] });
   const [isLoading, setLoading] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
 
   const defaultOptions = [
     { value: "Web", label: "Web" },
@@ -35,6 +36,7 @@ export default function Update(props) {
   ];
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       try {
         let response = await axios.get(`${getdata}?id=${Data.user.id}`);
@@ -51,16 +53,18 @@ export default function Update(props) {
         setMedium(response.data.data.mediumLink);
         setGit(response.data.data.githubLink);
         setYT(response.data.data.youtubeLink);
+        let opt = [];
         response.data.data.domains.forEach((option) => {
-          let opt = [];
           opt.push({ value: option, label: option });
-          setOption({ selectedOption: opt });
         });
+        setOption({ selectedOption: opt });
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   const handleChangeDomain = (option) => {
@@ -68,6 +72,7 @@ export default function Update(props) {
   };
 
   const handleSubmit = async (e) => {
+    setBtnLoading(true);
     e.preventDefault();
     let domains = [];
     let all = option.selectedOption;
@@ -92,7 +97,6 @@ export default function Update(props) {
       githubLink,
       youtubeLink,
     };
-    console.log(body);
     try {
       await axios.put(`${edit}/${Data.user.id}`, body, {
         headers: {
@@ -100,8 +104,10 @@ export default function Update(props) {
         },
       });
       toast.info("DSC updated");
+      setBtnLoading(false);
       props.history.push("/profile");
     } catch (error) {
+      setBtnLoading(false);
       toast.error(error.response.data.message);
     }
   };
@@ -242,13 +248,16 @@ export default function Update(props) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-center">
+                  <div className="col-lg-6 col-sm-6 col-md-6 mx-auto text-center">
                     <button
                       type="submit"
-                      className={`col-lg-6 col-sm-6 col-md-6 btn btn-primary mx_auto ${styles.add}`}
+                      className={`loginbutton btn btn-primary ld-ext-right running btn-block ${styles.add}`}
                       onClick={handleSubmit}
                     >
-                      Add Community
+                      {btnLoading ? "loading..." : "Update Community"}
+                      {btnLoading ? (
+                        <div className="ld ld-ring ld-spin" />
+                      ) : null}
                     </button>
                   </div>
                 </form>

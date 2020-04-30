@@ -157,9 +157,10 @@ export default function Homepage() {
                           </p>
                           <div>
                             {dsc.domains
-                              ? dsc.domains.map((domain) => (
+                              ? dsc.domains.map((domain, i) => (
                                   <span
                                     className={`badge mr-2 mb-1 ${styles.bW}`}
+                                    key={i}
                                   >
                                     {domain}
                                   </span>
