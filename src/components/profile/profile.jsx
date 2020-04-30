@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, Profiler } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/userContext";
 import styles from "./profile.module.css";
@@ -30,9 +30,8 @@ export default function Profile() {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(Data);
-  console.log(profile.data);
   return (
     <div className="container">
       <div className="col-lg-10 mx-auto">
@@ -353,7 +352,10 @@ export default function Profile() {
                             src="./assets/images/review.png"
                             alt=""
                           />
-                          <h4>Your community will be reviewed in less than 24 hours.</h1>
+                          <h4>
+                            Your community will be reviewed in less than 24
+                            hours.
+                          </h4>
                         </div>
                       ) : null}
                     </div>

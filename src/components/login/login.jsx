@@ -39,8 +39,8 @@ export default function Login({ modalIsOpen, toggleModal }) {
         },
         token: response.headers["x-auth-token"],
       });
-      console.log(response);
       toast.success("Log In successfully");
+      setIsLoading(false);
       toggleModal(false);
       resetEmail();
       resetPassword();
@@ -83,11 +83,7 @@ export default function Login({ modalIsOpen, toggleModal }) {
           </div>
           <button
             type="submit"
-            className={
-              isLoading
-                ? `loginbutton btn btn-primary ld-ext-right running`
-                : `loginbutton btn btn-primary ld-ext-right`
-            }
+            className="loginbutton btn btn-primary ld-ext-right running"
           >
             {isLoading ? "Loading..." : "Log In"}
 

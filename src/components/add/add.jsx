@@ -36,6 +36,7 @@ export default function AddForm(props) {
   const [option, setOption] = useState({ selectedOption: [] });
   const [verify, setVerify] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
@@ -53,14 +54,15 @@ export default function AddForm(props) {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChangeDomain = (option) => {
-    console.log(option);
     setOption({ selectedOption: option });
   };
 
   const handleSubmit = async (e) => {
+    setBtnLoading(true);
     e.preventDefault();
     let domains = [];
     let all = option.selectedOption;
@@ -83,7 +85,6 @@ export default function AddForm(props) {
       githubLink,
       youtubeLink,
     };
-    console.log(body);
     try {
       const token = Data.token;
       await axios.post(add, body, {
@@ -108,12 +109,12 @@ export default function AddForm(props) {
       });
       props.history.push("/profile");
       toast.success("DSC added successfully");
+      setBtnLoading(false);
     } catch (error) {
+      setBtnLoading(false);
       toast.error(error.response.data.message);
     }
   };
-
-  console.log(Data);
 
   return (
     <div className="fluid-conatiner">
@@ -249,13 +250,16 @@ export default function AddForm(props) {
                         </div>
                       </div>
                     </div>
-                    <div className="text-center">
+                    <div className="col-lg-6 col-sm-6 col-md-6 mx-auto text-center">
                       <button
                         type="submit"
-                        className={`col-lg-6 col-sm-6 col-md-6 btn btn-primary mx_auto ${styles.add}`}
+                        className={`loginbutton btn btn-primary ld-ext-right running btn-block  ${styles.add}`}
                         onClick={handleSubmit}
                       >
-                        Add Community
+                        {btnLoading ? "loading..." : "Add Community"}
+                        {btnLoading ? (
+                          <div className="ld ld-ring ld-spin" />
+                        ) : null}
                       </button>
                     </div>
                   </form>
